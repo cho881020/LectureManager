@@ -1,6 +1,7 @@
 package kr.co.tjeit.lecturemanager;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -35,7 +36,12 @@ public class MainActivity extends BaseActivity {
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                Toast.makeText(mContext, "선택 된 날짜 : "+date.toString(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mContext, DailyReplyActivity.class);
+                mReservationDate = Calendar.getInstance();
+                mReservationDate.set(date.getYear(),date.getMonth(),date.getDay());
+                intent.putExtra("선택된 날짜1", mReservationDate);
+                intent.putExtra("선택된 날짜2", date);
+                startActivity(intent);
 
             }
         });
