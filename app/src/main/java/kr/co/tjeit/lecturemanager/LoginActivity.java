@@ -22,6 +22,8 @@ import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 
+import kr.co.tjeit.lecturemanager.util.ContextUtil;
+
 public class LoginActivity extends BaseActivity {
 
     private Button signUpBtn;
@@ -39,12 +41,12 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         myActivity = this;
+        LoginManager.getInstance().logOut();
+        UserManagement.requestLogout(null);
+        ContextUtil.logout(mContext);
         bindViews();
         setUpEvents();
         setValues();
-
-        LoginManager.getInstance().logOut();
-        UserManagement.requestLogout(null);
     }
 
     @Override
@@ -97,7 +99,8 @@ public class LoginActivity extends BaseActivity {
                 if (currentProfile == null) {
                     Toast.makeText(mContext, "로그아웃 처리 되었습니다.", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(mContext, currentProfile.getName() + "님 접속", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, currentProfile.getName() + "님 로그인", Toast.LENGTH_SHORT).show();
+                    ContextUtil.login(mContext, currentProfile.getId(), currentProfile.getName(), currentProfile.getProfilePictureUri(200, 200).toString());
                     Intent intent = new Intent(mContext, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -126,7 +129,6 @@ public class LoginActivity extends BaseActivity {
 
         @Override
         public void onSessionOpened() {
-            Toast.makeText(mContext, "로그인 성공", Toast.LENGTH_SHORT).show();
             UserManagement.requestMe(new MeResponseCallback() {
                 @Override
                 public void onSessionClosed(ErrorResult errorResult) {
@@ -140,8 +142,8 @@ public class LoginActivity extends BaseActivity {
 
                 @Override
                 public void onSuccess(UserProfile result) {
-                    Toast.makeText(mContext, result.getId() + "님 로그인", Toast.LENGTH_SHORT).show();
-//                    Log.d("로그", ContextUtil.getLoginUserName(mContext));
+                    Toast.makeText(mContext, result.getNickname() + "님 로그인", Toast.LENGTH_SHORT).show();
+                    ContextUtil.login(mContext, result.getId()+"", result.getNickname(), result.getProfileImagePath());
                     Intent intent = new Intent(mContext, MainActivity.class);
                     startActivity(intent);
                     finish();
