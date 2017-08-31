@@ -29,7 +29,7 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".StudentListActivity" />
         <activity android:name=".ViewStudentInfoActivity" />
         <activity
             android:name="com.kakao.auth.authorization.authcode.KakaoWebViewActivity"
@@ -57,7 +57,9 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".MyProfileActivity"></activity>
+        <activity android:name=".MyProfileActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".DailyReplyActivity"></activity>
     </application>
 
 </manifest>

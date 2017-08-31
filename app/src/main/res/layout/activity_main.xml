@@ -1,38 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context="kr.co.tjeit.lecturemanager.MainActivity">
-    <FrameLayout
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/calendarView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:mcv_showOtherDates="all"
+        app:mcv_selectionColor="#00F" />
 
-        <TextView
-            android:background="#555555"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="수강생 목록"/>
-        <Button
-            android:id="@+id/profileViewBtn"
-            android:layout_gravity="right|center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="프로필 조회"/>
-
-    </FrameLayout>
-
-
-
-    <ListView
-        android:id="@+id/studentListView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
 
 </LinearLayout>

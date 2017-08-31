@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import kr.co.tjeit.lecturemanager.R;
 import kr.co.tjeit.lecturemanager.data.User;
 import kr.co.tjeit.lecturemanager.util.GlobalData;
@@ -42,7 +43,12 @@ public class StudentAdapter extends ArrayAdapter<User> {
         }
         User data = GlobalData.allUser.get(position);
 
+        CircleImageView profileImg = (CircleImageView)row.findViewById(R.id.profileImg);
         TextView nameTxt = (TextView)row.findViewById(R.id.nameTxt);
+
+//        TODO - 회원 가입 기능 완료후에 이미지 표시 작업 필요
+//        회원가입? 실제로 회원가입
+
         nameTxt.setText(data.getName());
 
         return row;

@@ -28,16 +28,16 @@ public class ViewStudentInfoActivity extends BaseActivity {
         setValues();
 
 
-//        callBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Uri myUri = Uri.parse("tel:010-5112-3237");
-//                Intent myIntent = new Intent(Intent.ACTION_CALL, myUri);
-//                startActivity(myIntent);
-//
-//            }
-//        });
+        callBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Uri myUri = Uri.parse("tel:010-5112-3237");
+                Intent myIntent = new Intent(Intent.ACTION_DIAL, myUri);
+                startActivity(myIntent);
+
+            }
+        });
 
     }
 
