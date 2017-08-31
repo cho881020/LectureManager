@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class ViewStudentInfoActivity extends AppCompatActivity {
+public class ViewStudentInfoActivity extends BaseActivity {
 
     private TextView studentNameTxt;
     private Button callBtn;
@@ -28,11 +28,26 @@ public class ViewStudentInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Uri myUri = Uri.parse("tel:010-5112-3237");
-                Intent myIntent = new Intent(Intent.ACTION_CALL, myUri);
-                startActivity(myIntent);
+                Intent intent = new Intent(Intent.ACTION_CALL, myUri);
+                startActivity(intent);
 
             }
         });
+
+    }
+
+    @Override
+    public void setupEvents() {
+
+    }
+
+    @Override
+    public void setValues() {
+
+    }
+
+    @Override
+    public void bindViews() {
 
     }
 }

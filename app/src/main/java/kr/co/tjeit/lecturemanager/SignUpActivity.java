@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends BaseActivity {
 
     private Button signUpBtn;
 
@@ -25,6 +25,21 @@ public class SignUpActivity extends AppCompatActivity {
                 LoginActivity.myActivity.finish();
             }
         });
+    }
+
+    @Override
+    public void setupEvents() {
+
+    }
+
+    @Override
+    public void setValues() {
+
+    }
+
+    @Override
+    public void bindViews() {
+
     }
 }
 

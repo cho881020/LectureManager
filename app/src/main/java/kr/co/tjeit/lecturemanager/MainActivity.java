@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
 
 
@@ -41,13 +41,14 @@ public class MainActivity extends AppCompatActivity {
         myStudentsArrayList.add("이요한");
         myStudentsArrayList.add("한상열");
 
-        studentListView = (ListView) findViewById(R.id.studentListView);
 
-        studentAdapter = new ArrayAdapter<String>(MainActivity.this,
-                android.R.layout.simple_list_item_1,
-                myStudentsArrayList);
-        studentListView.setAdapter(studentAdapter);
 
+
+
+    }
+
+    @Override
+    public void setupEvents() {
         studentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -85,8 +86,22 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    @Override
+    public void setValues() {
+        studentAdapter = new ArrayAdapter<String>(MainActivity.this,
+                android.R.layout.simple_list_item_1,
+                myStudentsArrayList);
+        studentListView.setAdapter(studentAdapter);
 
     }
+
+    @Override
+    public void bindViews() {
+        studentListView = (ListView) findViewById(R.id.studentListView);
+    }
+
 }
 
 

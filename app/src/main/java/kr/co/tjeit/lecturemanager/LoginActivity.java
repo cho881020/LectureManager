@@ -6,8 +6,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class LoginActivity extends AppCompatActivity {
+import com.kakao.auth.ISessionCallback;
+import com.kakao.auth.Session;
+import com.kakao.network.ErrorResult;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.MeResponseCallback;
+import com.kakao.usermgmt.response.model.UserProfile;
+import com.kakao.util.exception.KakaoException;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 
+public class LoginActivity extends BaseActivity {
+
+    KakaoSessionCallback ksc;
     private Button signUpBtn;
     private Button loginBtn;
 
@@ -39,5 +50,64 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void setupEvents() {
+
+    }
+
+    @Override
+    public void setValues() {
+        ksc = new KakaoSessionCallback();
+        Session.getCurrentSession().addCallback(ksc);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
+            return;
+        }
+
+    }
+
+    @Override
+    public void bindViews() {
+
+    }
+
+    private class KakaoSessionCallback implements ISessionCallback {
+
+        @Override
+        public void onSessionOpened() {
+            UserManagement.requestMe(new MeResponseCallback() {
+                @Override
+                public void onSessionClosed(ErrorResult errorResult) {
+
+                }
+
+                @Override
+                public void onNotSignedUp() {
+
+                }
+
+                @Override
+                public void onSuccess(UserProfile result) {
+//                    ContextUtil.login(mContext,
+//                            result.getId()+"", "없음", result.getNickname(), result.getProfileImagePath());
+
+                    Intent intent = new Intent(mContext, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+        }
+
+        @Override
+        public void onSessionOpenFailed(KakaoException exception) {
+
+        }
     }
 }
