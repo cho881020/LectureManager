@@ -6,6 +6,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
+import com.facebook.login.LoginResult;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
@@ -18,17 +24,21 @@ import com.kakao.util.exception.KakaoException;
 public class LoginActivity extends BaseActivity {
 
     KakaoSessionCallback ksc;
+    CallbackManager cm;
+    ProfileTracker pt;
 
     private Button signUpBtn;
     private Button loginBtn;
 
     public static LoginActivity myActivity;
     private com.kakao.usermgmt.LoginButton kakaoLoginBtn;
+    private com.facebook.login.widget.LoginButton fbLoginBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         myActivity = this;
 
         bindViews();
@@ -63,13 +73,42 @@ public class LoginActivity extends BaseActivity {
         ksc = new KakaoSessionCallback();
         Session.getCurrentSession().addCallback(ksc);
 
+        cm = CallbackManager.Factory.create();
+
+        pt = new ProfileTracker() {
+            @Override
+            protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+                if(currentProfile!=null){
+                    Toast.makeText(mContext, currentProfile.getName()+"님 로그인", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+        fbLoginBtn.registerCallback(cm, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+
+            }
+        });
+
+
+
     }
 
     @Override
     public void bindViews() {
+        this.signUpBtn = (Button) findViewById(R.id.signUpBtn);
+        this.fbLoginBtn = (com.facebook.login.widget.LoginButton) findViewById(R.id.fbLoginBtn);
         this.kakaoLoginBtn = (LoginButton) findViewById(R.id.kakaoLoginBtn);
-        signUpBtn = (Button) findViewById(R.id.signUpBtn);
-        loginBtn = (Button) findViewById(R.id.loginBtn);
+        this.loginBtn = (Button) findViewById(R.id.loginBtn);
     }
 
     @Override
@@ -78,6 +117,7 @@ public class LoginActivity extends BaseActivity {
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);
+        cm.onActivityResult(requestCode,resultCode,data);
     }
 
     private class KakaoSessionCallback implements ISessionCallback{
