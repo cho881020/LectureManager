@@ -26,13 +26,14 @@ public class ContextUtil {
 
     public static User getLoginUser(Context context){
         SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
-        if (loginUser != null) {
-            loginUser = new User();
-            loginUser.setId(pref.getString(LOGIN_USER_ID, ""));
-            loginUser.setName(pref.getString(LOGIN_USER_NAME, ""));
-            loginUser.setProfileURL(pref.getString(LOGIN_USER_URL, ""));
+        if (pref.getString(LOGIN_USER_ID, "").equals("")) {
+            loginUser = null;
+        } else {
+            loginUser= new User();
+            loginUser.setId(pref.getString(LOGIN_USER_ID,""));
+            loginUser.setName(pref.getString(LOGIN_USER_NAME,""));
+            loginUser.setProfileURL(pref.getString(LOGIN_USER_URL,""));
         }
-
         return loginUser;
     }
 

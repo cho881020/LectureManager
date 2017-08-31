@@ -2,14 +2,13 @@ package kr.co.tjeit.lecturemanager;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.facebook.CallbackManager;
 
@@ -26,31 +25,20 @@ public class MainActivity extends BaseActivity {
     private ArrayAdapter<String> studentAdapter;
 
     CallbackManager callbackManager;
+    private android.widget.TextView profileTxt;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        myStudentsArrayList = new ArrayList<String>();
-        myStudentsArrayList.add("고동윤");
-        myStudentsArrayList.add("권성민");
-        myStudentsArrayList.add("김현철");
-        myStudentsArrayList.add("박석영");
-        myStudentsArrayList.add("박수현");
-        myStudentsArrayList.add("박영주");
-        myStudentsArrayList.add("손익상");
-        myStudentsArrayList.add("이승헌");
-        myStudentsArrayList.add("이요한");
-        myStudentsArrayList.add("한상열");
+        bindViews();
+        setUpEvents();
+        setValues();
+    }
 
-        studentListView = (ListView) findViewById(R.id.studentListView);
-
-        studentAdapter = new ArrayAdapter<String>(MainActivity.this,
-                android.R.layout.simple_list_item_1,
-                myStudentsArrayList);
-        studentListView.setAdapter(studentAdapter);
-
+    @Override
+    public void setUpEvents() {
         studentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -89,21 +77,39 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-    }
-
-    @Override
-    public void setUpEvents() {
-
+        profileTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, MyProfileActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     public void setValues() {
+        myStudentsArrayList = new ArrayList<String>();
+        myStudentsArrayList.add("고동윤");
+        myStudentsArrayList.add("권성민");
+        myStudentsArrayList.add("김현철");
+        myStudentsArrayList.add("박석영");
+        myStudentsArrayList.add("박수현");
+        myStudentsArrayList.add("박영주");
+        myStudentsArrayList.add("손익상");
+        myStudentsArrayList.add("이승헌");
+        myStudentsArrayList.add("이요한");
+        myStudentsArrayList.add("한상열");
 
+        studentAdapter = new ArrayAdapter<String>(MainActivity.this,
+                android.R.layout.simple_list_item_1,
+                myStudentsArrayList);
+        studentListView.setAdapter(studentAdapter);
     }
 
     @Override
     public void bindViews() {
-
+        this.profileTxt = (TextView) findViewById(R.id.profileTxt);
+        studentListView = (ListView) findViewById(R.id.studentListView);
     }
 }
 

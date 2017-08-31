@@ -1,10 +1,12 @@
 package kr.co.tjeit.lecturemanager.data;
 
+import java.io.Serializable;
+
 /**
  * Created by user on 2017-08-31.
  */
 
-public class User {
+public class User implements Serializable{
     String id;
     String name;
     String profileURL;
