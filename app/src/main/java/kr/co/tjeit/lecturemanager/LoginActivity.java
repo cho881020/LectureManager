@@ -59,7 +59,7 @@ public class LoginActivity extends BaseActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, StudentListActivity.class);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -110,7 +110,7 @@ public class LoginActivity extends BaseActivity {
                     User tempUser = new User (currentProfile.getId(), currentProfile.getName(), currentProfile.getProfilePictureUri(400, 400).toString());
                     ContextUtil.login(mContext, tempUser);
 
-                    Intent intent = new Intent(mContext, StudentListActivity.class);
+                    Intent intent = new Intent(mContext, MainActivity.class);
                     startActivity(intent);
                     finish();
 
@@ -160,7 +160,7 @@ public class LoginActivity extends BaseActivity {
                     User tempUser = new User (result.getId()+"", result.getNickname(), result.getProfileImagePath());
                     ContextUtil.login(mContext, tempUser);
 
-                    Intent intent = new Intent(mContext, StudentListActivity.class);
+                    Intent intent = new Intent(mContext, MainActivity.class);
                     startActivity(intent);
                     finish();
                 }

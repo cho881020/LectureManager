@@ -21,9 +21,10 @@ public class ViewStudentInfoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_student_info);
         mUser = (User) getIntent().getSerializableExtra("사용자정보");
+
         bindViews();
-        setupEvents();
         setValues();
+        setupEvents();
 
     }
 

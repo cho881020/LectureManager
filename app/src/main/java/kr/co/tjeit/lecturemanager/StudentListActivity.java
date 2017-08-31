@@ -48,7 +48,7 @@ public class StudentListActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent myIntent = new Intent(mContext, ViewStudentInfoActivity.class);
-                myIntent.putExtra("studentName", GlobalData.students.get(position));
+                myIntent.putExtra("사용자정보", GlobalData.students.get(position));
 
                 startActivity(myIntent);
 
