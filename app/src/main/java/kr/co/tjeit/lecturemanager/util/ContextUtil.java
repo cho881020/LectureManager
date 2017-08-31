@@ -19,11 +19,11 @@ public class ContextUtil {
     private static final String USER_NAME = "USER_NAME";
     private static final String USER_PROFILEIMG_PATH = "USER_PROFILEIMG_PATH";
 
-    public static void login(Context context, String id, String name, String imgPath){
+    public static void login(Context context, User loginuser){
         SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
-        pref.edit().putString(USER_ID,id).apply();
-        pref.edit().putString(USER_NAME,name).apply();
-        pref.edit().putString(USER_PROFILEIMG_PATH,imgPath).apply();
+        pref.edit().putString(USER_ID,loginuser.getId()).apply();
+        pref.edit().putString(USER_NAME,loginuser.getName()).apply();
+        pref.edit().putString(USER_PROFILEIMG_PATH,loginuser.getProfileImgPath()).apply();
     }
 
     public static void logout(Context context){

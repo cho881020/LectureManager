@@ -1,5 +1,6 @@
 package kr.co.tjeit.lecturemanager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
@@ -20,6 +22,9 @@ import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
+
+import kr.co.tjeit.lecturemanager.data.User;
+import kr.co.tjeit.lecturemanager.util.ContextUtil;
 
 public class LoginActivity extends BaseActivity {
 
@@ -70,6 +75,16 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void setValues() {
 
+//        화면이 시작되면 무조건 로그아웃 처리
+//        수업의 편의를 위해 작성하는 코드. (실제로는 안됨)
+
+//        페북 로그아웃
+        LoginManager.getInstance().logOut();;
+//        카톡 로그아웃
+        UserManagement.requestLogout(null);
+        ContextUtil.logout(mContext);
+
+
         ksc = new KakaoSessionCallback();
         Session.getCurrentSession().addCallback(ksc);
 
@@ -79,7 +94,12 @@ public class LoginActivity extends BaseActivity {
             @Override
             protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
                 if(currentProfile!=null){
-                    Toast.makeText(mContext, currentProfile.getName()+"님 로그인", Toast.LENGTH_SHORT).show();
+                    ContextUtil.login(mContext,
+                            new User(currentProfile.getId(),
+                            currentProfile.getName(),
+                            currentProfile.getProfilePictureUri(500,500).toString()));
+                    Intent intent  = new Intent(mContext, MainActivity.class);
+                    startActivity(intent);
                 }
             }
         };
@@ -137,7 +157,10 @@ public class LoginActivity extends BaseActivity {
 
                 @Override
                 public void onSuccess(UserProfile result) {
-                    Toast.makeText(mContext, result.getNickname()+"님이 로그인", Toast.LENGTH_SHORT).show();
+                    ContextUtil.login(mContext,
+                            new User(result.getId()+"",result.getNickname(),result.getProfileImagePath()));
+                    Intent intent  = new Intent(mContext, MainActivity.class);
+                    startActivity(intent);
                 }
             });
 
