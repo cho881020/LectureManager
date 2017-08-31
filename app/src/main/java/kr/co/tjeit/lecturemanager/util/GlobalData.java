@@ -3,6 +3,7 @@ package kr.co.tjeit.lecturemanager.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.co.tjeit.lecturemanager.data.Reply;
 import kr.co.tjeit.lecturemanager.data.User;
 
 /**
@@ -11,6 +12,7 @@ import kr.co.tjeit.lecturemanager.data.User;
 
 public class GlobalData {
     public static List<User> allUserList = new ArrayList<>();
+    public static List<Reply> allReplyList = new ArrayList<>();
 
     public static void initData() {
         allUserList.clear();

@@ -20,6 +20,7 @@
             app:civ_border_color="#FF000000"/>
 
         <TextView
+            android:id="@+id/nameTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="사용자 이름"
@@ -31,6 +32,7 @@
             android:layout_weight="1"/>
 
         <TextView
+            android:id="@+id/writeTimeTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="작성된 시간"/>
@@ -38,6 +40,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/contextTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
