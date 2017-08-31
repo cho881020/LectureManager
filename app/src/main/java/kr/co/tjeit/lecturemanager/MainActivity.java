@@ -13,6 +13,10 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+// 저만의 브런치 입니다. (손익상)
+
+
+
 public class MainActivity extends AppCompatActivity {
 
     String[] students = {"고동윤", "권성민", "김현철", "박석영",
