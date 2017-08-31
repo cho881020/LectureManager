@@ -11,9 +11,16 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
+import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.LoginButton;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.MeResponseCallback;
+import com.kakao.usermgmt.response.model.UserProfile;
+import com.kakao.util.exception.KakaoException;
 
 public class LoginActivity extends BaseActivity {
 
@@ -25,6 +32,7 @@ public class LoginActivity extends BaseActivity {
     private com.kakao.usermgmt.LoginButton comkakaologin;
 
     CallbackManager callbackManager;
+    SessionCallback callback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +43,12 @@ public class LoginActivity extends BaseActivity {
         setUpEvents();
         setValues();
 
+        LoginManager.getInstance().logOut();
+        UserManagement.requestLogout(null);
+    }
+
+    @Override
+    public void setUpEvents() {
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,16 +65,14 @@ public class LoginActivity extends BaseActivity {
                 finish();
             }
         });
-
-    }
-
-    @Override
-    public void setUpEvents() {
-
     }
 
     @Override
     public void setValues() {
+        callback = new SessionCallback();
+        Session.getCurrentSession().addCallback(callback);
+        Session.getCurrentSession().checkAndImplicitOpen();
+
         callbackManager = CallbackManager.Factory.create();
         fbLoginBtn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -95,6 +107,9 @@ public class LoginActivity extends BaseActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
+            return;
+        }
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
@@ -105,5 +120,38 @@ public class LoginActivity extends BaseActivity {
         this.fbLoginBtn = (com.facebook.login.widget.LoginButton) findViewById(R.id.fbLoginBtn);
         signUpBtn = (Button) findViewById(R.id.signUpBtn);
         loginBtn = (Button) findViewById(R.id.loginBtn);
+    }
+
+    private class SessionCallback implements ISessionCallback {
+
+        @Override
+        public void onSessionOpened() {
+            Toast.makeText(mContext, "로그인 성공", Toast.LENGTH_SHORT).show();
+            UserManagement.requestMe(new MeResponseCallback() {
+                @Override
+                public void onSessionClosed(ErrorResult errorResult) {
+
+                }
+
+                @Override
+                public void onNotSignedUp() {
+
+                }
+
+                @Override
+                public void onSuccess(UserProfile result) {
+                    Toast.makeText(mContext, result.getId() + "님 로그인", Toast.LENGTH_SHORT).show();
+//                    Log.d("로그", ContextUtil.getLoginUserName(mContext));
+                    Intent intent = new Intent(mContext, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+        }
+
+        @Override
+        public void onSessionOpenFailed(KakaoException exception) {
+            exception.printStackTrace();
+        }
     }
 }
