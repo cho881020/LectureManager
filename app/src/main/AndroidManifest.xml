@@ -20,11 +20,6 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".SplashActivity"></activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".StudentListActivity" />
-        <activity android:name=".ViewStudentInfoActivity" />
         <activity
             android:name="com.kakao.auth.authorization.authcode.KakaoWebViewActivity"
             android:launchMode="singleTop"
@@ -51,13 +46,22 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".MyProfileActivity" />
-        <activity android:name=".MainActivity">
+
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".StudentListActivity" />
+        <activity android:name=".ViewStudentInfoActivity" />
+
+        <activity android:name=".MyProfileActivity" />
+        <activity android:name=".MainActivity">
         </activity>
         <activity android:name=".DailyReplyActivity"></activity>
     </application>
