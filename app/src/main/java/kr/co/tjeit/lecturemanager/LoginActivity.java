@@ -66,22 +66,15 @@ public class LoginActivity extends BaseActivity {
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                UserManagement.requestLogout(new LogoutResponseCallback() {
-                    @Override
-                    public void onCompleteLogout() {
-
-                    }
-                });
-//                Intent myIntent = new Intent(LoginActivity.this, SignUpActivity.class);
-//                startActivity(myIntent);
+                Intent myIntent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(myIntent);
             }
         });
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, StudentListActivity.class);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -105,7 +98,7 @@ public class LoginActivity extends BaseActivity {
                 else {
                     Toast.makeText(mContext, currentProfile.getName() + "님 접속", Toast.LENGTH_SHORT).show();
                     ContextUtil.login(mContext, new UserData(currentProfile.getId(), currentProfile.getName(), currentProfile.getProfilePictureUri(500,500).toString()));
-                    Intent intent = new Intent(mContext, StudentListActivity.class);
+                    Intent intent = new Intent(mContext, MainActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -148,7 +141,7 @@ public class LoginActivity extends BaseActivity {
                 public void onSuccess(UserProfile result) {
                     Toast.makeText(mContext, result.getNickname() + "님 접속", Toast.LENGTH_SHORT).show();
                     ContextUtil.login(mContext, new UserData(result.getId()+"", result.getNickname(), result.getProfileImagePath()));
-                    Intent intent = new Intent(mContext, StudentListActivity.class);
+                    Intent intent = new Intent(mContext, MainActivity.class);
                     startActivity(intent);
                     finish();
                 }
