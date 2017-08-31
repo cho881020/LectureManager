@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 // 앙 기모띠~~~~~~~~
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     String[] students = {"고동윤", "권성민", "김현철", "박석영",
             "박수현", "박영주", "손익상", "이승헌", "이요한", "한상열"};
@@ -30,25 +30,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        myStudentsArrayList = new ArrayList<String>();
-        myStudentsArrayList.add("고동윤");
-        myStudentsArrayList.add("권성민");
-        myStudentsArrayList.add("김현철");
-        myStudentsArrayList.add("박석영");
-        myStudentsArrayList.add("박수현");
-        myStudentsArrayList.add("박영주");
-        myStudentsArrayList.add("손익상");
-        myStudentsArrayList.add("이승헌");
-        myStudentsArrayList.add("이요한");
-        myStudentsArrayList.add("한상열");
+        bindViews();
+        setupEvents();
+        setValues();
 
-        studentListView = (ListView) findViewById(R.id.studentListView);
 
-        studentAdapter = new ArrayAdapter<String>(MainActivity.this,
-                android.R.layout.simple_list_item_1,
-                myStudentsArrayList);
-        studentListView.setAdapter(studentAdapter);
+    }
 
+
+    @Override
+    public void setupEvents() {
         studentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -86,6 +77,35 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+    }
+
+    @Override
+    public void setValues() {
+
+        myStudentsArrayList = new ArrayList<String>();
+        myStudentsArrayList.add("고동윤");
+        myStudentsArrayList.add("권성민");
+        myStudentsArrayList.add("김현철");
+        myStudentsArrayList.add("박석영");
+        myStudentsArrayList.add("박수현");
+        myStudentsArrayList.add("박영주");
+        myStudentsArrayList.add("손익상");
+        myStudentsArrayList.add("이승헌");
+        myStudentsArrayList.add("이요한");
+        myStudentsArrayList.add("한상열");
+
+        studentListView = (ListView) findViewById(R.id.studentListView);
+
+        studentAdapter = new ArrayAdapter<String>(MainActivity.this,
+                android.R.layout.simple_list_item_1,
+                myStudentsArrayList);
+        studentListView.setAdapter(studentAdapter);
+
+    }
+
+    @Override
+    public void bindViews() {
 
     }
 }
