@@ -13,7 +13,7 @@ public class ContextUtil {
 
     private static UserData loginUser = null;
 
-    private static final String prefName = "prefName";
+    private static final String prefName = "lecturePref";
 
     private static final String USER_ID = "USER_ID";
     private static final String USER_NAME = "USER_NAME";

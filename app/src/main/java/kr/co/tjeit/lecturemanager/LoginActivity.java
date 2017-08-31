@@ -27,6 +27,8 @@ import com.kakao.util.helper.log.Logger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import kr.co.tjeit.lecturemanager.utils.ContextUtil;
+
 public class LoginActivity extends BaseActivity {
 
     private SessionCallback callback;
@@ -82,10 +84,14 @@ public class LoginActivity extends BaseActivity {
             @Override
             protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
                 if (currentProfile == null) {
-
+                    Toast.makeText(mContext, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(mContext, currentProfile.getName(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, currentProfile.getName() + "님 접속", Toast.LENGTH_SHORT).show();
+                    ContextUtil.login(mContext, currentProfile.getId(), currentProfile.getName(), currentProfile.getProfilePictureUri(500,500).toString());
+                    Intent intent = new Intent(mContext, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
         };
@@ -124,7 +130,11 @@ public class LoginActivity extends BaseActivity {
 
                 @Override
                 public void onSuccess(UserProfile result) {
-                    Toast.makeText(LoginActivity.this, result.getNickname(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, result.getNickname() + "님 접속", Toast.LENGTH_SHORT).show();
+                    ContextUtil.login(mContext, result.getId()+"", result.getNickname(), result.getProfileImagePath());
+                    Intent intent = new Intent(mContext, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
             });
         }
