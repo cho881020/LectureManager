@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+
+
     String[] students = {"고동윤", "권성민", "김현철", "박석영",
             "박수현", "박영주", "손익상", "이승헌", "이요한", "한상열"};
 
