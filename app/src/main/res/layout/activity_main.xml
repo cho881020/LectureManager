@@ -17,9 +17,17 @@
         android:layout_height="50dp"
         android:text="수강생 목록"/>
 
+    <Button
+        android:id="@+id/logoutBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="로그아웃"/>
+
+
     <ListView
         android:id="@+id/studentListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></ListView>
+
 
 </LinearLayout>

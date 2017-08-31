@@ -2,16 +2,20 @@ package kr.co.tjeit.lecturemanager;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import com.facebook.login.LoginManager;
+import com.kakao.usermgmt.UserManagement;
 
 import java.util.ArrayList;
+
+import kr.co.tjeit.lecturemanager.util.ContextUtil;
 
 public class MainActivity extends BaseActivity {
 
@@ -24,11 +28,16 @@ public class MainActivity extends BaseActivity {
 
     private ListView studentListView;
     private ArrayAdapter<String> studentAdapter;
+    private android.widget.Button logoutBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        bindViews();
+        setValues();
+        setupEvents();
+
         myStudentsArrayList = new ArrayList<String>();
         myStudentsArrayList.add("고동윤");
         myStudentsArrayList.add("권성민");
@@ -86,14 +95,31 @@ public class MainActivity extends BaseActivity {
                 return false;
             }
         });
+
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ContextUtil.logout(mContext);
+
+                LoginManager.getInstance().logOut();
+
+                UserManagement.requestLogout(null);
+
+                Intent intent = new Intent(mContext, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     @Override
     public void setValues() {
-        studentAdapter = new ArrayAdapter<String>(MainActivity.this,
+        studentAdapter = new ArrayAdapter<>(MainActivity.this,
                 android.R.layout.simple_list_item_1,
                 myStudentsArrayList);
-        studentListView.setAdapter(studentAdapter);
+
+        this.studentListView = (ListView) findViewById(R.id.studentListView);
+        this.logoutBtn = (Button) findViewById(R.id.logoutBtn);
 
     }
 

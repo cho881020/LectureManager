@@ -14,6 +14,10 @@ public class SignUpActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        bindViews();
+        setupEvents();
+        setValues();
+
         signUpBtn = (Button) findViewById(R.id.signUpBtn);
 
         signUpBtn.setOnClickListener(new View.OnClickListener() {
