@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profileImg"
+            android:src="@mipmap/ic_launcher"
+            app:civ_border_width="2dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:id="@+id/userNameTxt"
+            android:layout_marginLeft="5dp"
+            android:text="사용자이름"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/replyTimeTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="작성된 시간"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/contentTxt"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="댓글의 내용이 들어오는 부분입니다."/>
+</LinearLayout>

@@ -1,5 +1,6 @@
 package kr.co.tjeit.lecturemanager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.widget.CalendarView;
@@ -32,14 +33,16 @@ public class MainActivity extends BaseActivity {
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
 
                 String str = String.format(Locale.KOREA, "%d년 %d월 %d일", date.getYear(), (date.getMonth()+1), date.getDay());
-                Toast.makeText(mContext, str, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mContext, DailyReplyActivity.class);
+                intent.putExtra("날짜", str);
+                startActivity(intent);
             }
         });
     }
 
     @Override
     public void setValues() {
-        
+
     }
 
     @Override

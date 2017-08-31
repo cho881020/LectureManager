@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import kr.co.tjeit.lecturemanager.adapters.StudentAdapter;
-import kr.co.tjeit.lecturemanager.datas.GloblaData;
+import kr.co.tjeit.lecturemanager.utils.GloblaData;
 import kr.co.tjeit.lecturemanager.datas.UserData;
 import kr.co.tjeit.lecturemanager.utils.ContextUtil;
 

@@ -1,8 +1,10 @@
-package kr.co.tjeit.lecturemanager.datas;
+package kr.co.tjeit.lecturemanager.utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.co.tjeit.lecturemanager.datas.Reply;
+import kr.co.tjeit.lecturemanager.datas.UserData;
 import kr.co.tjeit.lecturemanager.utils.ContextUtil;
 
 /**

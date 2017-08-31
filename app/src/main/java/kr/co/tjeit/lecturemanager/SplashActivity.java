@@ -2,10 +2,9 @@ package kr.co.tjeit.lecturemanager;
 
 import android.content.Intent;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import kr.co.tjeit.lecturemanager.datas.GloblaData;
+import kr.co.tjeit.lecturemanager.utils.GloblaData;
 
 public class SplashActivity extends BaseActivity {
 
