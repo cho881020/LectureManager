@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">LectureManager</string>
+    <string name="title_activity_daily_reply">DailyReplyActivity</string>
+
 </resources>
