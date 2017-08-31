@@ -9,10 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import kr.co.tjeit.lecturemanager.R;
 import kr.co.tjeit.lecturemanager.data.User;
+import kr.co.tjeit.lecturemanager.util.GlobalData;
 
 /**
  * Created by the on 2017-08-31.
@@ -40,13 +44,16 @@ public class StudentAdapter extends ArrayAdapter<User> {
             row = inf.inflate(R.layout.student_list_item, null);
         }
 
-        
+        User data = mList.get(position);
+
+        TextView nameTxt = (TextView) row.findViewById(R.id.nameTxt);
+        CircleImageView profileImg = (CircleImageView) row.findViewById(R.id.profileImg);
+
+        nameTxt.setText(data.getName()+"");
+
+
 
         return row;
     }
 
-    @Override
-    public int getCount() {
-        return 5;
-    }
 }

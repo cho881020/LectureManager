@@ -19,13 +19,10 @@ import java.util.List;
 import kr.co.tjeit.lecturemanager.adapter.StudentAdapter;
 import kr.co.tjeit.lecturemanager.data.User;
 import kr.co.tjeit.lecturemanager.util.ContextUtil;
+import kr.co.tjeit.lecturemanager.util.GlobalData;
 
 public class MainActivity extends BaseActivity {
 
-
-
-    String[] students = {"고동윤", "권성민", "김현철", "박석영",
-            "박수현", "박영주", "손익상", "이승헌", "이요한", "한상열"};
 
     private ListView studentListView;
     private android.widget.Button logoutBtn;
@@ -50,9 +47,8 @@ public class MainActivity extends BaseActivity {
         studentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(MainActivity.this, position+"번 줄", Toast.LENGTH_SHORT).show();
 
-                Intent myIntent = new Intent(MainActivity.this, ViewStudentInfoActivity.class);
+                Intent myIntent = new Intent(mContext, ViewStudentInfoActivity.class);
                 myIntent.putExtra("studentName", mStudentList.get(position));
 
                 startActivity(myIntent);
@@ -115,7 +111,7 @@ public class MainActivity extends BaseActivity {
         this.logoutBtn = (Button) findViewById(R.id.logoutBtn);
 
 
-        mAdapter = new StudentAdapter(mContext, mStudentList);
+        mAdapter = new StudentAdapter(mContext, GlobalData.students);
         studentListView.setAdapter(mAdapter);
 
 

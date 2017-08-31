@@ -8,46 +8,45 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import kr.co.tjeit.lecturemanager.data.User;
+
 public class ViewStudentInfoActivity extends BaseActivity {
 
     private TextView studentNameTxt;
     private Button callBtn;
+    User mUser = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_student_info);
-        studentNameTxt = (TextView) findViewById(R.id.studentNameTxt);
-        callBtn = (Button) findViewById(R.id.callBtn);
+        mUser = (User) getIntent().getSerializableExtra("studentName");
 
-        String stdName = getIntent().getStringExtra("studentName");
-        studentNameTxt.setText(stdName);
-
-        callBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Uri myUri = Uri.parse("tel:010-5112-3237");
-                Intent intent = new Intent(Intent.ACTION_CALL, myUri);
-                startActivity(intent);
-
-            }
-        });
 
     }
 
     @Override
     public void setupEvents() {
+        callBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                Uri myUri = Uri.parse("tel:010-5112-3237");
+                Intent intent = new Intent(Intent.ACTION_DIAL, myUri);
+                startActivity(intent);
+
+            }
+        });
     }
 
     @Override
     public void setValues() {
-
+        studentNameTxt.setText(mUser.getName()+"");
     }
 
     @Override
     public void bindViews() {
-
+        studentNameTxt = (TextView) findViewById(R.id.studentNameTxt);
+        callBtn = (Button) findViewById(R.id.callBtn);
     }
 }
