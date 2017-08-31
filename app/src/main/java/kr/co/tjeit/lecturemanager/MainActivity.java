@@ -29,14 +29,13 @@ public class MainActivity extends BaseActivity {
     private ListView studentListView;
     private ArrayAdapter<String> studentAdapter;
     private android.widget.Button logoutBtn;
+    private Button myProfileBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bindViews();
-        setValues();
-        setupEvents();
 
         myStudentsArrayList = new ArrayList<String>();
         myStudentsArrayList.add("고동윤");
@@ -49,6 +48,12 @@ public class MainActivity extends BaseActivity {
         myStudentsArrayList.add("이승헌");
         myStudentsArrayList.add("이요한");
         myStudentsArrayList.add("한상열");
+
+        bindViews();
+        setValues();
+        setupEvents();
+
+
 
 
 
@@ -110,22 +115,33 @@ public class MainActivity extends BaseActivity {
                 finish();
             }
         });
+
+        myProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, MyProfileActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     public void setValues() {
+        this.studentListView = (ListView) findViewById(R.id.studentListView);
+        this.logoutBtn = (Button) findViewById(R.id.logoutBtn);
+
         studentAdapter = new ArrayAdapter<>(MainActivity.this,
                 android.R.layout.simple_list_item_1,
                 myStudentsArrayList);
 
-        this.studentListView = (ListView) findViewById(R.id.studentListView);
-        this.logoutBtn = (Button) findViewById(R.id.logoutBtn);
 
     }
 
     @Override
     public void bindViews() {
-        studentListView = (ListView) findViewById(R.id.studentListView);
+        this.studentListView = (ListView) findViewById(R.id.studentListView);
+        this.logoutBtn = (Button) findViewById(R.id.logoutBtn);
+        this.myProfileBtn = (Button) findViewById(R.id.myProfileBtn);
     }
 
 }

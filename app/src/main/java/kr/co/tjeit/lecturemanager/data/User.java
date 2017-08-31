@@ -13,13 +13,15 @@ public class User {
 
     private String userId;
     private String name;
+    private String profileURL;
 
     public User() {
     }
 
-    public User(String userId, String name) {
+    public User(String userId, String name, String profileURL) {
         this.userId = userId;
         this.name = name;
+        this.profileURL = profileURL;
     }
 
     public String getUserId() {
@@ -38,5 +40,11 @@ public class User {
         this.name = name;
     }
 
+    public String getProfileURL() {
+        return profileURL;
+    }
 
+    public void setProfileURL(String profileURL) {
+        this.profileURL = profileURL;
+    }
 }

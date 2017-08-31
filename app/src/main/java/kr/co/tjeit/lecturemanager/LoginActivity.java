@@ -2,6 +2,7 @@ package kr.co.tjeit.lecturemanager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -11,6 +12,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
@@ -73,6 +75,13 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void setValues() {
+
+//        페북 로그아웃
+        LoginManager.getInstance().logOut();
+//        카톡 로그아웃
+        UserManagement.requestLogout(null);
+
+
         ksc = new KakaoSessionCallback();
         Session.getCurrentSession().addCallback(ksc);
 
@@ -97,23 +106,16 @@ public class LoginActivity extends BaseActivity {
         ProfileTracker pt = new ProfileTracker() {
             @Override
             protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
-                if (currentProfile == null) {
-
-                    Toast.makeText(mContext, "로그아웃 처리 완료.", Toast.LENGTH_SHORT).show();
-
-                }
-                else {
+                if (currentProfile != null) {
 
                     Toast.makeText(mContext, currentProfile.getName()+"님 접속", Toast.LENGTH_SHORT).show();
 
-
-
                     ContextUtil.login(mContext, currentProfile.getId(),
-                            currentProfile.getName());
+                            currentProfile.getName(), currentProfile.getProfilePictureUri(400, 400).toString());
 
                     Intent intent = new Intent(mContext, MainActivity.class);
                     startActivity(intent);
-
+                    finish();
                 }
             }
         };
@@ -158,7 +160,7 @@ public class LoginActivity extends BaseActivity {
                 @Override
                 public void onSuccess(UserProfile result) {
                     ContextUtil.login(mContext,
-                            result.getId()+"", result.getNickname());
+                            result.getId()+"", result.getNickname(), result.getProfileImagePath());
 
                     Intent intent = new Intent(mContext, MainActivity.class);
                     startActivity(intent);
