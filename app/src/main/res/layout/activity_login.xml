@@ -67,6 +67,14 @@
     </LinearLayout>
 
 
+    <!--페이스북 로그인-->
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/fbLoginBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp" />
     <!--카카오톡 로그인-->
     <!--로그인 성공하면 Toast 로그인한 사람 닉네임임-->
 
@@ -77,6 +85,7 @@
         android:layout_marginBottom="30dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"
