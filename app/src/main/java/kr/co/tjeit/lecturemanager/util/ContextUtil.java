@@ -19,12 +19,21 @@ public class ContextUtil {
     private static final String USER_PROFILE = "USER_PROFILE";
 
 
-    public static void setLogin(Context context, String id, String name, String url) {
+    public static void login(Context context, User loginUser) {
         SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
-        pref.edit().putString(USER_ID, id).apply();
-        pref.edit().putString(USER_NAME, name).apply();
-        pref.edit().putString(USER_PROFILE, url).apply();
 
+        pref.edit().putString(USER_ID, loginUser.getUserId()).commit();
+        pref.edit().putString(USER_NAME, loginUser.getUserName()).commit();
+        pref.edit().putString(USER_PROFILE, loginUser.getProfileUrl()).commit();
+
+    }
+
+    public static void logout(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
+        pref.edit().putString(USER_ID, "").commit();
+        pref.edit().putString(USER_NAME, "").commit();
+        pref.edit().putString(USER_PROFILE, "").commit();
+        loginUser = null;
     }
 
     public static User getLoginUser(Context context) {
@@ -40,12 +49,6 @@ public class ContextUtil {
         return loginUser;
     }
 
-    public static void logout(Context context) {
-        SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
-        pref.edit().putString(USER_ID, "").apply();
-        pref.edit().putString(USER_NAME, "").apply();
-        pref.edit().putString(USER_PROFILE, "").apply();
-        loginUser = null;
-    }
+
 
 }
