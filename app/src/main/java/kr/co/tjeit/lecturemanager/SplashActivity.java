@@ -5,6 +5,8 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import kr.co.tjeit.lecturemanager.datas.GloblaData;
+
 public class SplashActivity extends BaseActivity {
 
     @Override
@@ -24,6 +26,7 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     public void setValues() {
+        GloblaData.initGlobaldata();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

@@ -2,27 +2,34 @@ package kr.co.tjeit.lecturemanager;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class ViewStudentInfoActivity extends AppCompatActivity {
+import kr.co.tjeit.lecturemanager.datas.UserData;
 
+public class ViewStudentInfoActivity extends BaseActivity {
+
+    UserData student;
     private TextView studentNameTxt;
     private Button callBtn;
+    private TextView studentIdTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_student_info);
-        studentNameTxt = (TextView) findViewById(R.id.studentNameTxt);
-        callBtn = (Button) findViewById(R.id.callBtn);
 
-        String stdName = getIntent().getStringExtra("studentName");
-        studentNameTxt.setText(stdName);
+        bindViews();
+        setValues();
+        setUpEvents();
 
+
+    }
+
+    @Override
+    public void setUpEvents() {
         callBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -34,5 +41,19 @@ public class ViewStudentInfoActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void setValues() {
+        student = (UserData) getIntent().getSerializableExtra("student");
+        studentNameTxt.setText(student.getUserName());
+        studentIdTxt.setText(student.getUserId());
+    }
+
+    @Override
+    public void bindViews() {
+        this.callBtn = (Button) findViewById(R.id.callBtn);
+        this.studentIdTxt = (TextView) findViewById(R.id.studentIdTxt);
+        this.studentNameTxt = (TextView) findViewById(R.id.studentNameTxt);
     }
 }
