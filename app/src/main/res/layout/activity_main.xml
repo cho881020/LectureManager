@@ -17,10 +17,7 @@
         app:mcv_selectionColor="#000000"
         app:mcv_leftArrowMask="@mipmap/ic_launcher_round"
         app:mcv_rightArrowMask="@mipmap/ic_launcher_round"
-        app:mcv_arrowColor="#00000000"
-        app:mcv_dateTextAppearance="@drawable/my_custom_day_color"
-
-        />
+        app:mcv_arrowColor="#00000000"/>
 
 
 
