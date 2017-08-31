@@ -90,7 +90,6 @@ public class LoginActivity extends BaseActivity {
             }
         };
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (Session.getCurrentSession().handleActivityResult(requestCode,resultCode,data)){
