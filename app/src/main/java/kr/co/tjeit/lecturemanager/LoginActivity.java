@@ -14,11 +14,13 @@ import android.widget.Toast;
 import com.facebook.CallbackManager;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
+import com.facebook.login.LoginManager;
 import com.facebook.login.widget.LoginButton;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
@@ -27,6 +29,7 @@ import com.kakao.util.helper.log.Logger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import kr.co.tjeit.lecturemanager.datas.UserData;
 import kr.co.tjeit.lecturemanager.utils.ContextUtil;
 
 public class LoginActivity extends BaseActivity {
@@ -46,6 +49,9 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        LoginManager.getInstance().logOut();
+
+
         bindViews();
         setValues();
         setUpEvents();
@@ -55,11 +61,14 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void setUpEvents() {
+
+
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(LoginActivity.this, SignUpActivity.class);
-                startActivity(myIntent);
+                Session.getCurrentSession().close();
+//                Intent myIntent = new Intent(LoginActivity.this, SignUpActivity.class);
+//                startActivity(myIntent);
             }
         });
 
@@ -78,7 +87,7 @@ public class LoginActivity extends BaseActivity {
         callbackManager = CallbackManager.Factory.create();
         callback = new SessionCallback();
         Session.getCurrentSession().addCallback(callback);
-        Session.getCurrentSession().checkAndImplicitOpen();
+//        Session.getCurrentSession().checkAndImplicitOpen();
 
         profileTracker = new ProfileTracker() {
             @Override
@@ -88,7 +97,7 @@ public class LoginActivity extends BaseActivity {
                 }
                 else {
                     Toast.makeText(mContext, currentProfile.getName() + "님 접속", Toast.LENGTH_SHORT).show();
-                    ContextUtil.login(mContext, currentProfile.getId(), currentProfile.getName(), currentProfile.getProfilePictureUri(500,500).toString());
+                    ContextUtil.login(mContext, new UserData(currentProfile.getId(), currentProfile.getName(), currentProfile.getProfilePictureUri(500,500).toString()));
                     Intent intent = new Intent(mContext, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -131,7 +140,7 @@ public class LoginActivity extends BaseActivity {
                 @Override
                 public void onSuccess(UserProfile result) {
                     Toast.makeText(mContext, result.getNickname() + "님 접속", Toast.LENGTH_SHORT).show();
-                    ContextUtil.login(mContext, result.getId()+"", result.getNickname(), result.getProfileImagePath());
+                    ContextUtil.login(mContext, new UserData(result.getId()+"", result.getNickname(), result.getProfileImagePath()));
                     Intent intent = new Intent(mContext, MainActivity.class);
                     startActivity(intent);
                     finish();

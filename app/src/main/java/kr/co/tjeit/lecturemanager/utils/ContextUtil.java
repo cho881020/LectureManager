@@ -19,12 +19,12 @@ public class ContextUtil {
     private static final String USER_NAME = "USER_NAME";
     private static final String USER_PROFILE_URL = "USER_PROFILE_URL";
 
-    public static void login(Context context, String id, String name, String url) {
+    public static void login(Context context, UserData loginUser) {
         SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
 
-        pref.edit().putString(USER_ID, id).commit();
-        pref.edit().putString(USER_NAME, name).commit();
-        pref.edit().putString(USER_PROFILE_URL, url).commit();
+        pref.edit().putString(USER_ID, loginUser.getUserId()).commit();
+        pref.edit().putString(USER_NAME, loginUser.getUserName()).commit();
+        pref.edit().putString(USER_PROFILE_URL, loginUser.getUserProfilImg()).commit();
     }
 
     public static UserData getLoginUser(Context context) {

@@ -28,7 +28,7 @@ public class ViewStudentInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Uri myUri = Uri.parse("tel:010-5112-3237");
-                Intent myIntent = new Intent(Intent.ACTION_CALL, myUri);
+                Intent myIntent = new Intent(Intent.ACTION_DIAL, myUri);
                 startActivity(myIntent);
 
             }
