@@ -65,9 +65,7 @@ public class LoginActivity extends BaseActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                intentMain();
             }
         });
     }
@@ -107,9 +105,7 @@ public class LoginActivity extends BaseActivity {
                     loginUser.setName(currentProfile.getName());
                     loginUser.setProfileURL(currentProfile.getProfilePictureUri(200, 200).toString());
                     ContextUtil.login(mContext, loginUser);
-                    Intent intent = new Intent(mContext, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                    intentMain();
                 }
             }
         };
@@ -153,9 +149,7 @@ public class LoginActivity extends BaseActivity {
                     loginUser.setName(result.getNickname());
                     loginUser.setProfileURL(result.getProfileImagePath());
                     ContextUtil.login(mContext, loginUser);
-                    Intent intent = new Intent(mContext, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                    intentMain();
                 }
             });
         }
@@ -164,5 +158,11 @@ public class LoginActivity extends BaseActivity {
         public void onSessionOpenFailed(KakaoException exception) {
             exception.printStackTrace();
         }
+    }
+
+    private void intentMain() {
+        Intent intent = new Intent(mContext, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

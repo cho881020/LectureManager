@@ -7,34 +7,15 @@
     android:orientation="vertical"
     tools:context="kr.co.tjeit.lecturemanager.MainActivity">
 
-    <FrameLayout
+
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/calendarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#555555">
-
-        <TextView
-            android:id="@+id/profileTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="프로필"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:text="수강생 목록"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
-
-    </FrameLayout>
-
-    <ListView
-        android:id="@+id/studentListView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        app:mcv_showOtherDates="all"
+        app:mcv_selectionColor="#6D6E72"
+        app:mcv_arrowColor="#9299f4"
+        />
 
 </LinearLayout>
