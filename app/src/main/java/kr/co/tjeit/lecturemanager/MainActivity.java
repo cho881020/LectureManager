@@ -40,8 +40,6 @@ public class MainActivity extends BaseActivity {
         studentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(MainActivity.this, position+"번 줄", Toast.LENGTH_SHORT).show();
-
                 Intent myIntent = new Intent(MainActivity.this, ViewStudentInfoActivity.class);
                 myIntent.putExtra("studentName", GlobalData.allUserList.get(position));
 
