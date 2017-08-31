@@ -66,6 +66,16 @@
 
     </LinearLayout>
 
+    <!-- 카카오톡 로그인 -->
+    <com.kakao.usermgmt.LoginButton
+        android:id="@+id/kakaoLoginBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+    <!-- 로그인 성공하면 Toast 로그인한 사람 닉네임-->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
