@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+
+// 앙 기모띠~~~~~~~~
+
 public class MainActivity extends AppCompatActivity {
 
     String[] students = {"고동윤", "권성민", "김현철", "박석영",
