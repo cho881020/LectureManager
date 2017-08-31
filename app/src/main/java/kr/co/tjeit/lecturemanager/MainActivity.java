@@ -30,10 +30,10 @@ public class MainActivity extends BaseActivity {
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                String dateStr = String.format(Locale.KOREA, "%d년 %d월 %d일", date.getYear(), date.getMonth()+1, date.getDay());
+//                String dateStr = String.format(Locale.KOREA, "%d년 %d월 %d일", date.getYear(), date.getMonth()+1, date.getDay());
 //                Toast.makeText(mContext, dateStr, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, DailyReplyActivity.class);
-                intent.putExtra("date", dateStr);
+                intent.putExtra("date", date);
                 startActivity(intent);
             }
         });
