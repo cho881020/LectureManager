@@ -17,11 +17,11 @@ public class ContextUtil {
     private final static String LOGIN_USER_NAME = "LOGIN_USER_NAME";
     private final static String LOGIN_USER_URL = "LOGIN_USER_URL";
 
-    public static void login(Context context, String id, String name, String url) {
+    public static void login(Context context, User user) {
         SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
-        pref.edit().putString(LOGIN_USER_ID, id).commit();
-        pref.edit().putString(LOGIN_USER_NAME, name).commit();
-        pref.edit().putString(LOGIN_USER_URL, url).commit();
+        pref.edit().putString(LOGIN_USER_ID, user.getId()).commit();
+        pref.edit().putString(LOGIN_USER_NAME, user.getName()).commit();
+        pref.edit().putString(LOGIN_USER_URL, user.getProfileURL()).commit();
     }
 
     public static User getLoginUser(Context context){

@@ -14,15 +14,13 @@ import com.facebook.CallbackManager;
 
 import java.util.ArrayList;
 
+import kr.co.tjeit.lecturemanager.adapter.StudentAdapter;
+import kr.co.tjeit.lecturemanager.util.GlobalData;
+
 public class MainActivity extends BaseActivity {
 
-    String[] students = {"고동윤", "권성민", "김현철", "박석영",
-            "박수현", "박영주", "손익상", "이승헌", "이요한", "한상열"};
-
-    ArrayList<String> myStudentsArrayList;
-
     private ListView studentListView;
-    private ArrayAdapter<String> studentAdapter;
+    StudentAdapter mAdapter;
 
     CallbackManager callbackManager;
     private android.widget.TextView profileTxt;
@@ -45,7 +43,7 @@ public class MainActivity extends BaseActivity {
 //                Toast.makeText(MainActivity.this, position+"번 줄", Toast.LENGTH_SHORT).show();
 
                 Intent myIntent = new Intent(MainActivity.this, ViewStudentInfoActivity.class);
-                myIntent.putExtra("studentName", myStudentsArrayList.get(position));
+                myIntent.putExtra("studentName", GlobalData.allUserList.get(position));
 
                 startActivity(myIntent);
 
@@ -65,8 +63,8 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        myStudentsArrayList.remove(position);
-                        studentAdapter.notifyDataSetChanged();
+                        GlobalData.allUserList.remove(position);
+                        mAdapter.notifyDataSetChanged();
 
                     }
                 });
@@ -88,22 +86,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void setValues() {
-        myStudentsArrayList = new ArrayList<String>();
-        myStudentsArrayList.add("고동윤");
-        myStudentsArrayList.add("권성민");
-        myStudentsArrayList.add("김현철");
-        myStudentsArrayList.add("박석영");
-        myStudentsArrayList.add("박수현");
-        myStudentsArrayList.add("박영주");
-        myStudentsArrayList.add("손익상");
-        myStudentsArrayList.add("이승헌");
-        myStudentsArrayList.add("이요한");
-        myStudentsArrayList.add("한상열");
-
-        studentAdapter = new ArrayAdapter<String>(MainActivity.this,
-                android.R.layout.simple_list_item_1,
-                myStudentsArrayList);
-        studentListView.setAdapter(studentAdapter);
+        mAdapter = new StudentAdapter(mContext, GlobalData.allUserList);
+        studentListView.setAdapter(mAdapter);
     }
 
     @Override

@@ -22,6 +22,7 @@ import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 
+import kr.co.tjeit.lecturemanager.data.User;
 import kr.co.tjeit.lecturemanager.util.ContextUtil;
 
 public class LoginActivity extends BaseActivity {
@@ -35,6 +36,8 @@ public class LoginActivity extends BaseActivity {
 
     CallbackManager callbackManager;
     SessionCallback callback;
+
+    User loginUser = new User();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +103,10 @@ public class LoginActivity extends BaseActivity {
                     Toast.makeText(mContext, "로그아웃 처리 되었습니다.", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(mContext, currentProfile.getName() + "님 로그인", Toast.LENGTH_SHORT).show();
-                    ContextUtil.login(mContext, currentProfile.getId(), currentProfile.getName(), currentProfile.getProfilePictureUri(200, 200).toString());
+                    loginUser.setId(currentProfile.getId());
+                    loginUser.setName(currentProfile.getName());
+                    loginUser.setProfileURL(currentProfile.getProfilePictureUri(200, 200).toString());
+                    ContextUtil.login(mContext, loginUser);
                     Intent intent = new Intent(mContext, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -143,7 +149,10 @@ public class LoginActivity extends BaseActivity {
                 @Override
                 public void onSuccess(UserProfile result) {
                     Toast.makeText(mContext, result.getNickname() + "님 로그인", Toast.LENGTH_SHORT).show();
-                    ContextUtil.login(mContext, result.getId()+"", result.getNickname(), result.getProfileImagePath());
+                    loginUser.setId(result.getId()+"");
+                    loginUser.setName(result.getNickname());
+                    loginUser.setProfileURL(result.getProfileImagePath());
+                    ContextUtil.login(mContext, loginUser);
                     Intent intent = new Intent(mContext, MainActivity.class);
                     startActivity(intent);
                     finish();
