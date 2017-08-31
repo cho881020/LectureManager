@@ -29,9 +29,8 @@ public class MyProfileActivity extends BaseActivity {
 
     @Override
     public void setValues() {
-        nameTxt.setText(ContextUtil.getUserName(mContext));
-
-        Glide.with(this).load(ContextUtil.getUserProfileUrl(mContext)).into(profileImg);
+        nameTxt.setText(ContextUtil.getLoginUser(mContext).getName());
+        Glide.with(this).load(ContextUtil.getLoginUser(mContext).getProfileURL()).into(profileImg);
     }
 
     @Override

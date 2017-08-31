@@ -14,7 +14,10 @@ import com.facebook.login.LoginManager;
 import com.kakao.usermgmt.UserManagement;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import kr.co.tjeit.lecturemanager.adapter.StudentAdapter;
+import kr.co.tjeit.lecturemanager.data.User;
 import kr.co.tjeit.lecturemanager.util.ContextUtil;
 
 public class MainActivity extends BaseActivity {
@@ -24,40 +27,21 @@ public class MainActivity extends BaseActivity {
     String[] students = {"고동윤", "권성민", "김현철", "박석영",
             "박수현", "박영주", "손익상", "이승헌", "이요한", "한상열"};
 
-    ArrayList<String> myStudentsArrayList;
-
     private ListView studentListView;
-    private ArrayAdapter<String> studentAdapter;
     private android.widget.Button logoutBtn;
     private Button myProfileBtn;
+
+    List<User> mStudentList = new ArrayList<>();
+    StudentAdapter mAdapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        myStudentsArrayList = new ArrayList<String>();
-        myStudentsArrayList.add("고동윤");
-        myStudentsArrayList.add("권성민");
-        myStudentsArrayList.add("김현철");
-        myStudentsArrayList.add("박석영");
-        myStudentsArrayList.add("박수현");
-        myStudentsArrayList.add("박영주");
-        myStudentsArrayList.add("손익상");
-        myStudentsArrayList.add("이승헌");
-        myStudentsArrayList.add("이요한");
-        myStudentsArrayList.add("한상열");
-
         bindViews();
         setValues();
         setupEvents();
-
-
-
-
-
-
 
     }
 
@@ -69,7 +53,7 @@ public class MainActivity extends BaseActivity {
 //                Toast.makeText(MainActivity.this, position+"번 줄", Toast.LENGTH_SHORT).show();
 
                 Intent myIntent = new Intent(MainActivity.this, ViewStudentInfoActivity.class);
-                myIntent.putExtra("studentName", myStudentsArrayList.get(position));
+                myIntent.putExtra("studentName", mStudentList.get(position));
 
                 startActivity(myIntent);
 
@@ -89,8 +73,8 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        myStudentsArrayList.remove(position);
-                        studentAdapter.notifyDataSetChanged();
+                        mStudentList.remove(position);
+                        mAdapter.notifyDataSetChanged();
 
                     }
                 });
@@ -130,9 +114,9 @@ public class MainActivity extends BaseActivity {
         this.studentListView = (ListView) findViewById(R.id.studentListView);
         this.logoutBtn = (Button) findViewById(R.id.logoutBtn);
 
-        studentAdapter = new ArrayAdapter<>(MainActivity.this,
-                android.R.layout.simple_list_item_1,
-                myStudentsArrayList);
+
+        mAdapter = new StudentAdapter(mContext, mStudentList);
+        studentListView.setAdapter(mAdapter);
 
 
     }

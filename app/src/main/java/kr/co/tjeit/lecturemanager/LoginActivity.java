@@ -23,6 +23,7 @@ import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 
+import kr.co.tjeit.lecturemanager.data.User;
 import kr.co.tjeit.lecturemanager.util.ContextUtil;
 
 public class LoginActivity extends BaseActivity {
@@ -108,14 +109,13 @@ public class LoginActivity extends BaseActivity {
             protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
                 if (currentProfile != null) {
 
-                    Toast.makeText(mContext, currentProfile.getName()+"님 접속", Toast.LENGTH_SHORT).show();
-
-                    ContextUtil.login(mContext, currentProfile.getId(),
-                            currentProfile.getName(), currentProfile.getProfilePictureUri(400, 400).toString());
+                    User tempUser = new User (currentProfile.getId(), currentProfile.getName(), currentProfile.getProfilePictureUri(400, 400).toString());
+                    ContextUtil.login(mContext, tempUser);
 
                     Intent intent = new Intent(mContext, MainActivity.class);
                     startActivity(intent);
                     finish();
+
                 }
             }
         };
@@ -159,8 +159,8 @@ public class LoginActivity extends BaseActivity {
 
                 @Override
                 public void onSuccess(UserProfile result) {
-                    ContextUtil.login(mContext,
-                            result.getId()+"", result.getNickname(), result.getProfileImagePath());
+                    User tempUser = new User (result.getId()+"", result.getNickname(), result.getProfileImagePath());
+                    ContextUtil.login(mContext, tempUser);
 
                     Intent intent = new Intent(mContext, MainActivity.class);
                     startActivity(intent);

@@ -2,6 +2,7 @@ package kr.co.tjeit.lecturemanager.data;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -9,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
  * Created by the on 2017-08-31.
  */
 
-public class User {
+public class User implements Serializable{
 
     private String userId;
     private String name;
@@ -18,10 +19,10 @@ public class User {
     public User() {
     }
 
-    public User(String userId, String name, String profileURL) {
-        this.userId = userId;
+    public User(String id, String name, String profileImagePath) {
+        this.userId = id;
         this.name = name;
-        this.profileURL = profileURL;
+        this.profileURL = profileImagePath;
     }
 
     public String getUserId() {

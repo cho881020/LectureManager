@@ -7,56 +7,49 @@
     android:orientation="vertical"
     tools:context="kr.co.tjeit.lecturemanager.MainActivity">
 
-    <ScrollView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <FrameLayout
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="#555555"
-                    android:gravity="center"
-                    android:text="수강생 목록"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20sp" />
-
-                <Button
-                    android:id="@+id/myProfileBtn"
-                    android:layout_gravity="right"
-                    android:layout_width="80dp"
-                    android:layout_height="50dp"
-                    android:text="내 프로필"/>
-
-
-            </FrameLayout>
-
-
+                android:layout_height="50dp"
+                android:background="#555555"
+                android:gravity="center"
+                android:text="수강생 목록"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
 
             <Button
-                android:id="@+id/logoutBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="로그아웃" />
+                android:id="@+id/myProfileBtn"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:layout_gravity="right|center_vertical"
+                android:text="내 프로필" />
 
 
-            <ListView
-                android:id="@+id/studentListView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"></ListView>
+        </FrameLayout>
 
 
-        </LinearLayout>
+        <Button
+            android:id="@+id/logoutBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="로그아웃" />
 
-    </ScrollView>
 
+        <ListView
+            android:id="@+id/studentListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
+
+
+    </LinearLayout>
 
 </LinearLayout>
