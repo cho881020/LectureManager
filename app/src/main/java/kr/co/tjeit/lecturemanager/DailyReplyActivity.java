@@ -7,10 +7,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import kr.co.tjeit.lecturemanager.adapter.ReplyAdapter;
 import kr.co.tjeit.lecturemanager.util.GlobalData;
@@ -52,7 +54,6 @@ public class DailyReplyActivity extends BaseActivity {
     public void setValues() {
         SimpleDateFormat fm1 = new SimpleDateFormat("yyyy년 M월 dd일");
         dateTxt.setText(fm1.format(mCalendarDay.getDate()));
-//        dateTxt.setText(getIntent().getStringExtra("date"));
 
         mAdapter = new ReplyAdapter(mContext, GlobalData.allReplyList);
         replyListView.setAdapter(mAdapter);
