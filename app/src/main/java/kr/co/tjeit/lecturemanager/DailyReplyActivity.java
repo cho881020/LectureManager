@@ -1,11 +1,14 @@
 package kr.co.tjeit.lecturemanager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,11 +23,13 @@ public class DailyReplyActivity extends BaseActivity {
 
     private List<Reply> replyList = new ArrayList<>();
     ReplyAdapter mReplyAdapter;
+    CalendarDay mCalendarDay;
 
     private ListView replyListView;
     private TextView dateTxt;
     private EditText replyEdt;
     private Button addBtn;
+    private TextView checkTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,15 +51,27 @@ public class DailyReplyActivity extends BaseActivity {
                 replyEdt.setText("");
             }
         });
+
+        checkTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, DailyCheckActivity.class);
+                intent.putExtra("date", mCalendarDay);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     public void setValues() {
-        String dateStr = getIntent().getStringExtra("날짜");
+//        String dateStr = getIntent().getParcelableExtra("날짜");
+        mCalendarDay = getIntent().getParcelableExtra("날짜");
         mReplyAdapter = new ReplyAdapter(mContext, replyList);
         replyListView.setAdapter(mReplyAdapter);
         mReplyAdapter.notifyDataSetChanged();
-        dateTxt.setText(dateStr);
+//        dateTxt.setText(dateStr);
+        SimpleDateFormat fm1 = new SimpleDateFormat("yyyy년 M월 dd일");
+        dateTxt.setText(fm1.format(mCalendarDay.getDate()));
     }
 
     @Override
@@ -62,6 +79,7 @@ public class DailyReplyActivity extends BaseActivity {
         this.addBtn = (Button) findViewById(R.id.addBtn);
         this.replyEdt = (EditText) findViewById(R.id.replyEdt);
         this.replyListView = (ListView) findViewById(R.id.replyListView);
+        this.checkTxt = (TextView) findViewById(R.id.checkTxt);
         this.dateTxt = (TextView) findViewById(R.id.dateTxt);
     }
 }

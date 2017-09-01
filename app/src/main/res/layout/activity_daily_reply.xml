@@ -20,6 +20,16 @@
             android:textStyle="bold"
             android:textSize="17sp"
             android:text="날짜가 표시됩니다."/>
+
+        <TextView
+            android:id="@+id/checkTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="출석체크"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="10dp"/>
     </FrameLayout>
 
     <ListView
