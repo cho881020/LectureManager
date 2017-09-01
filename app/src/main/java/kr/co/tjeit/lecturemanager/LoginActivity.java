@@ -45,7 +45,6 @@ public class LoginActivity extends BaseActivity {
         setupEvents();
         setValues();
     }
-
     @Override
     public void setupEvents() {
 
