@@ -25,7 +25,7 @@ import kr.co.tjeit.lecturemanager.data.User;
 import kr.co.tjeit.lecturemanager.util.ContextUtil;
 
 public class LoginActivity extends BaseActivity {
-
+// 테스트
     private Button signUpBtn;
     private Button loginBtn;
     public static LoginActivity myActivity;
