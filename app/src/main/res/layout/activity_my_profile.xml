@@ -24,4 +24,18 @@
         android:layout_marginTop="20dp"
         android:text="이름"/>
 
+    <TextView
+        android:id="@+id/genderTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="성별"/>
+
+    <Button
+        android:id="@+id/linkBtn"
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="페이스북 페이지 방문"/>
+
 </LinearLayout>

@@ -7,12 +7,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 import kr.co.tjeit.lecturemanager.adapter.ReplyAdapter;
 import kr.co.tjeit.lecturemanager.util.GlobalData;
@@ -27,6 +25,7 @@ public class DailyReplyActivity extends BaseActivity {
 
     ReplyAdapter mAdapter;
     private TextView checkTxt;
+    private TextView studentListTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +47,14 @@ public class DailyReplyActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+
+        studentListTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, StudentListActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -64,6 +71,7 @@ public class DailyReplyActivity extends BaseActivity {
         this.replyBtn = (Button) findViewById(R.id.replyBtn);
         this.replyEdt = (EditText) findViewById(R.id.replyEdt);
         this.replyListView = (ListView) findViewById(R.id.replyListView);
+        this.studentListTxt = (TextView) findViewById(R.id.studentListTxt);
         this.dateTxt = (TextView) findViewById(R.id.dateTxt);
         this.checkTxt = (TextView) findViewById(R.id.checkTxt);
     }
