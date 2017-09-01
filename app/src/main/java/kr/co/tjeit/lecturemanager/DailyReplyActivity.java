@@ -27,14 +27,16 @@ public class DailyReplyActivity extends BaseActivity {
     ReplyAdapter mAdapter;
     List<Reply> mReplyList = new ArrayList<>();
     private android.widget.Button attendanceChkBtn;
+    private Button studentListBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_reply);
 
-        mCalendar = (Calendar)getIntent().getSerializableExtra("선택된 날짜1");
-        mCalendarDay = (CalendarDay)getIntent().getParcelableExtra("선택된 날짜2");
+
+        mCalendar = (Calendar) getIntent().getSerializableExtra("선택된 날짜1");
+        mCalendarDay = (CalendarDay) getIntent().getParcelableExtra("선택된 날짜2");
 
         bindViews();
         setupEvents();
@@ -43,11 +45,20 @@ public class DailyReplyActivity extends BaseActivity {
 
     @Override
     public void setupEvents() {
+
+        studentListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext,StudentListActivity.class);
+                startActivity(intent);
+            }
+        });
+
         attendanceChkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext,DailyCheckActivity.class);
-                intent.putExtra("선택된 날짜",mCalendarDay);
+                Intent intent = new Intent(mContext, DailyCheckActivity.class);
+                intent.putExtra("선택된 날짜", mCalendarDay);
                 startActivity(intent);
             }
         });
@@ -73,5 +84,6 @@ public class DailyReplyActivity extends BaseActivity {
         this.replyListView = (ListView) findViewById(R.id.replyListView);
         this.attendanceChkBtn = (Button) findViewById(R.id.attendanceChkBtn);
         this.selectedDayTxt = (TextView) findViewById(R.id.selectedDayTxt);
+        this.studentListBtn = (Button) findViewById(R.id.studentListBtn);
     }
 }
