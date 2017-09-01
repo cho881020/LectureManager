@@ -55,10 +55,21 @@ public class DailyCheckActivity extends BaseActivity {
         selectedDayTxt.setText(myDateFormat.format(mCalendarDay.getDate()));
         teacherConfirmTB.setEnabled(false);
         Date today = Calendar.getInstance().getTime();
-        Date attendenceday = mCalendarDay.getDate();
-        if( today.after(attendenceday)){
-            studentConfirmTB.setText("출첵불가");
+        Date selectedDay = mCalendarDay.getDate();
+
+//        선택된 날짜가 오늘보다 이후인가? ||  오늘인가
+        if(selectedDay.after(today)){
+            if((Calendar.getInstance().get(Calendar.YEAR) == mCalendarDay.getYear() &&
+                    Calendar.getInstance().get(Calendar.MONTH) == mCalendarDay.getMonth() &&
+                    Calendar.getInstance().get(Calendar.DAY_OF_MONTH) == mCalendarDay.getDay())){
+                Toast.makeText(mContext, "오늘보다 이후의 날짜", Toast.LENGTH_SHORT).show();
+            }
+            Toast.makeText(mContext, "오늘보다 이후의 날짜", Toast.LENGTH_SHORT).show();
+
+        }
+        else{
             studentConfirmTB.setEnabled(false);
+            Toast.makeText(mContext, "오늘보다 이후의 날짜", Toast.LENGTH_SHORT).show();
         }
 
     }
