@@ -21,6 +21,12 @@
             android:textColor="#FFFFFF"
             android:textSize="17sp" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:text="출석체크"/>
+
     </FrameLayout>
 
 
