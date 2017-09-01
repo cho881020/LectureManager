@@ -34,17 +34,18 @@ public class DailyCheckActivity extends BaseActivity {
 
     @Override
     public void setupEvents() {
-        studentConfirmTB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Date today = Calendar.getInstance().getTime();
-                Date attendenceday = mCalendarDay.getDate();
-                if( today.after(attendenceday)){
-                    Toast.makeText(mContext, "이미 지나간 시간입니다", Toast.LENGTH_SHORT).show();
-                    studentConfirmTB.setEnabled(false);
-                }
-            }
-        });
+//        studentConfirmTB.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Date today = Calendar.getInstance().getTime();
+//                Date attendenceday = mCalendarDay.getDate();
+//                if( today.after(attendenceday)){
+//                    Toast.makeText(mContext, "이미 지나간 시간입니다", Toast.LENGTH_SHORT).show();
+//                    studentConfirmTB.setText("출첵불가");
+//                    studentConfirmTB.setEnabled(false);
+//                }
+//            }
+//        });
 
     }
 
@@ -53,6 +54,12 @@ public class DailyCheckActivity extends BaseActivity {
         SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy년 M월 d일");
         selectedDayTxt.setText(myDateFormat.format(mCalendarDay.getDate()));
         teacherConfirmTB.setEnabled(false);
+        Date today = Calendar.getInstance().getTime();
+        Date attendenceday = mCalendarDay.getDate();
+        if( today.after(attendenceday)){
+            studentConfirmTB.setText("출첵불가");
+            studentConfirmTB.setEnabled(false);
+        }
 
     }
 

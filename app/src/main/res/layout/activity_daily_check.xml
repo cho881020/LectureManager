@@ -51,6 +51,7 @@
                 android:textColor="#000000"/>
             <ToggleButton
                 android:id="@+id/teacherConfirmTB"
+                android:enabled="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
