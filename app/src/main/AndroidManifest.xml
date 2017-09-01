@@ -59,7 +59,8 @@
         </activity>
         <activity android:name=".MyProfileActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".DailyReplyActivity"></activity>
+        <activity android:name=".DailyReplyActivity" />
+        <activity android:name=".DailyCheckActivity"></activity>
     </application>
 
 </manifest>

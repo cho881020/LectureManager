@@ -1,6 +1,9 @@
 package kr.co.tjeit.lecturemanager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,11 +26,13 @@ public class DailyReplyActivity extends BaseActivity {
 
     ReplyAdapter mAdapter;
     List<Reply> mReplyList = new ArrayList<>();
+    private android.widget.Button attendanceChkBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_reply);
+
         mCalendar = (Calendar)getIntent().getSerializableExtra("선택된 날짜1");
         mCalendarDay = (CalendarDay)getIntent().getParcelableExtra("선택된 날짜2");
 
@@ -38,6 +43,14 @@ public class DailyReplyActivity extends BaseActivity {
 
     @Override
     public void setupEvents() {
+        attendanceChkBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext,DailyCheckActivity.class);
+                intent.putExtra("선택된 날짜",mCalendarDay);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -58,7 +71,7 @@ public class DailyReplyActivity extends BaseActivity {
     @Override
     public void bindViews() {
         this.replyListView = (ListView) findViewById(R.id.replyListView);
+        this.attendanceChkBtn = (Button) findViewById(R.id.attendanceChkBtn);
         this.selectedDayTxt = (TextView) findViewById(R.id.selectedDayTxt);
-
     }
 }
