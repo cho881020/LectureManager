@@ -11,7 +11,6 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import kr.co.tjeit.lecturemanager.adapter.ReplyAdapter;
@@ -27,6 +26,7 @@ public class DailyReplyActivity extends BaseActivity {
 
     CalendarDay mCalendarDay = null;
     private android.widget.Button checkBtn;
+    private Button studentListBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,14 @@ public class DailyReplyActivity extends BaseActivity {
 
     @Override
     public void setupEvents() {
+
+        studentListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, StudentListActivity.class);
+                startActivity(intent);
+            }
+        });
 
         checkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +76,7 @@ public class DailyReplyActivity extends BaseActivity {
         this.replyListView = (ListView) findViewById(R.id.replyListView);
         this.checkBtn = (Button) findViewById(R.id.checkBtn);
         this.dateTxt = (TextView) findViewById(R.id.dateTxt);
+        this.studentListBtn = (Button) findViewById(R.id.studentListBtn);
 
     }
 }
