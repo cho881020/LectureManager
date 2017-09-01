@@ -11,6 +11,7 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import kr.co.tjeit.lecturemanager.adapter.ReplyAdapter;
@@ -43,6 +44,7 @@ public class DailyReplyActivity extends BaseActivity {
         checkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(mContext, DailyCheckActivity.class);
                 intent.putExtra("출석확인날짜", mCalendarDay);
                 startActivity(intent);
