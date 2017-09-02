@@ -98,7 +98,7 @@ public class LoginActivity extends BaseActivity {
                 else {
                     Toast.makeText(mContext, currentProfile.getName() + "님 접속", Toast.LENGTH_SHORT).show();
                     ContextUtil.login(mContext, new UserData(currentProfile.getId(), currentProfile.getName(), currentProfile.getProfilePictureUri(500,500).toString()));
-                    Intent intent = new Intent(mContext, MainActivity.class);
+                    Intent intent = new Intent(mContext, MyProfileActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -141,7 +141,7 @@ public class LoginActivity extends BaseActivity {
                 public void onSuccess(UserProfile result) {
                     Toast.makeText(mContext, result.getNickname() + "님 접속", Toast.LENGTH_SHORT).show();
                     ContextUtil.login(mContext, new UserData(result.getId()+"", result.getNickname(), result.getProfileImagePath()));
-                    Intent intent = new Intent(mContext, MainActivity.class);
+                    Intent intent = new Intent(mContext, MyProfileActivity.class);
                     startActivity(intent);
                     finish();
                 }
