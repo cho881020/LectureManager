@@ -104,6 +104,7 @@ public class LoginActivity extends BaseActivity {
                     loginUser.setId(currentProfile.getId());
                     loginUser.setName(currentProfile.getName());
                     loginUser.setProfileURL(currentProfile.getProfilePictureUri(200, 200).toString());
+                    loginUser.setPhoneNum("임시");
                     ContextUtil.login(mContext, loginUser);
                     intentMain();
                 }
@@ -148,6 +149,7 @@ public class LoginActivity extends BaseActivity {
                     loginUser.setId(result.getId()+"");
                     loginUser.setName(result.getNickname());
                     loginUser.setProfileURL(result.getProfileImagePath());
+                    loginUser.setPhoneNum("임시");
                     ContextUtil.login(mContext, loginUser);
                     intentMain();
                 }

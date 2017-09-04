@@ -16,16 +16,16 @@ public class GlobalData {
 
     public static void initData() {
         allUserList.clear();
-        allUserList.add(new User("1", "고동윤", "tmpURL"));
-        allUserList.add(new User("2", "권성민", "tmpURL"));
-        allUserList.add(new User("3", "김현철", "tmpURL"));
-        allUserList.add(new User("4", "박석영", "tmpURL"));
-        allUserList.add(new User("5", "박수현", "tmpURL"));
-        allUserList.add(new User("6", "박영주", "tmpURL"));
-        allUserList.add(new User("7", "손익상", "tmpURL"));
-        allUserList.add(new User("8", "이승헌", "tmpURL"));
-        allUserList.add(new User("9", "이요한", "tmpURL"));
-        allUserList.add(new User("10", "최종환", "tmpURL"));
-        allUserList.add(new User("11", "한상열", "tmpURL"));
+        allUserList.add(new User("1", "고동윤", "tmpURL", "임시"));
+        allUserList.add(new User("2", "권성민", "tmpURL", "임시"));
+        allUserList.add(new User("3", "김현철", "tmpURL", "임시"));
+        allUserList.add(new User("4", "박석영", "tmpURL", "임시"));
+        allUserList.add(new User("5", "박수현", "tmpURL", "임시"));
+        allUserList.add(new User("6", "박영주", "tmpURL", "임시"));
+        allUserList.add(new User("7", "손익상", "tmpURL", "임시"));
+        allUserList.add(new User("8", "이승헌", "tmpURL", "임시"));
+        allUserList.add(new User("9", "이요한", "tmpURL", "임시"));
+        allUserList.add(new User("10", "최종환", "tmpURL", "임시"));
+        allUserList.add(new User("11", "한상열", "tmpURL", "임시"));
     }
 }

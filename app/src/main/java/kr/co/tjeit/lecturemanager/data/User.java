@@ -10,14 +10,24 @@ public class User implements Serializable{
     String id;
     String name;
     String profileURL;
+    String phoneNum;
 
     public User() {
     }
 
-    public User(String id, String name, String profileURL) {
+    public User(String id, String name, String profileURL, String phoneNum) {
         this.id = id;
         this.name = name;
         this.profileURL = profileURL;
+        this.phoneNum = phoneNum;
+    }
+
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
     }
 
     public String getId() {
