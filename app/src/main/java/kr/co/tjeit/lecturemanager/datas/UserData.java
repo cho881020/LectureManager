@@ -11,14 +11,24 @@ public class UserData implements Serializable {
     private String userId;
     private String userName;
     private String userProfilImg;
+    private String phoneNum;
 
     public UserData() {
     }
 
-    public UserData(String userId, String userName, String userProfilImg) {
+    public UserData(String userId, String userName, String userProfilImg, String phoneNum) {
         this.userId = userId;
         this.userName = userName;
         this.userProfilImg = userProfilImg;
+        this.phoneNum = phoneNum;
+    }
+
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
     }
 
     public String getUserId() {
