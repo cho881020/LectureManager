@@ -1,6 +1,7 @@
 package kr.co.tjeit.lecturemanager;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,7 +9,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.Locale;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+import kr.co.tjeit.lecturemanager.data.User;
 import kr.co.tjeit.lecturemanager.util.ContextUtil;
 
 public class MyProfileActivity extends BaseActivity {
@@ -19,6 +23,8 @@ public class MyProfileActivity extends BaseActivity {
     private TextView genderTxt;
     private TextView userIdTxt;
     private Button profileEdtBtn;
+    private TextView myPhoneTxt;
+    private Button callBtn;
 
 
     @Override
@@ -85,12 +91,26 @@ public class MyProfileActivity extends BaseActivity {
 //        request.executeAsync();
 
         nameTxt.setText(ContextUtil.getLoginUser(mContext).getName());
+        myPhoneTxt.setText(ContextUtil.getLoginUser(mContext).getPhoneNum());
+        userIdTxt.setText(ContextUtil.getLoginUser(mContext).getUserId());
+
+        callBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String phoneNum = ContextUtil.getLoginUser(mContext).getPhoneNum();
+                Uri myUri = Uri.parse("tel:"+phoneNum);
+                Intent intent = new Intent(Intent.ACTION_DIAL, myUri);
+                startActivity(intent);
+            }
+        });
         Glide.with(this).load(ContextUtil.getLoginUser(mContext).getProfileURL()).into(profileImg);
     }
 
     @Override
     public void bindViews() {
         this.profileEdtBtn = (Button) findViewById(R.id.profileEdtBtn);
+        this.callBtn = (Button) findViewById(R.id.callBtn);
+        this.myPhoneTxt = (TextView) findViewById(R.id.myPhoneTxt);
         this.userIdTxt = (TextView) findViewById(R.id.userIdTxt);
         this.nameTxt = (TextView) findViewById(R.id.nameTxt);
         this.profileImg = (CircleImageView) findViewById(R.id.profileImg);
