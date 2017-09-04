@@ -76,6 +76,7 @@ public class DailyReplyActivity extends BaseActivity {
                                     if (json.getBoolean("result")) {
                                         Toast.makeText(mContext, json.getString("message"), Toast.LENGTH_SHORT).show();
                                         mAdapter.notifyDataSetChanged();
+                                        replyListView.smoothScrollToPosition(GlobalData.allReplyList.size() - 1);
                                         replyEdt.setText("");
                                     } else {
                                         Toast.makeText(mContext, json.getString("message"), Toast.LENGTH_SHORT).show();
