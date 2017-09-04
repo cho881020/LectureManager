@@ -16,6 +16,7 @@ public class ViewStudentInfoActivity extends BaseActivity {
     private TextView userIdTxt;
 
     User mUser = null;
+    private TextView phoneTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +28,19 @@ public class ViewStudentInfoActivity extends BaseActivity {
         setValues();
     }
 
+//    1.사용자 정보를 보러 들어오면 핸드폰 번호가 나타나도록.
+//    2. 전화걸기를 누르면, 해당 사용자의 전화번호로 걸 수 있도록.
+
+
     @Override
     public void setupEvents() {
+
 
         callBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Uri myUri = Uri.parse("tel:010-5112-3237");
+                Uri myUri = Uri.parse("tel:" + phoneTxt.getText().toString());
                 Intent myIntent = new Intent(Intent.ACTION_DIAL, myUri);
                 startActivity(myIntent);
 
@@ -48,11 +54,14 @@ public class ViewStudentInfoActivity extends BaseActivity {
         userIdTxt.setText(mUser.getUserId());
         studentNameTxt.setText(mUser.getName());
 
+        phoneTxt.setText(mUser.getPhoneNum());
+
     }
 
     @Override
     public void bindViews() {
         this.callBtn = (Button) findViewById(R.id.callBtn);
+        this.phoneTxt = (TextView) findViewById(R.id.phoneTxt);
         this.userIdTxt = (TextView) findViewById(R.id.userIdTxt);
         this.studentNameTxt = (TextView) findViewById(R.id.studentNameTxt);
 

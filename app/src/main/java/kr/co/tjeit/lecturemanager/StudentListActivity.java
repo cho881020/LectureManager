@@ -9,8 +9,14 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import kr.co.tjeit.lecturemanager.adapter.StudentAdapter;
+import kr.co.tjeit.lecturemanager.data.User;
 import kr.co.tjeit.lecturemanager.util.GlobalData;
+import kr.co.tjeit.lecturemanager.util.ServerUtil;
 
 // 저만의 브런치 입니다. (조경진)
 
@@ -86,6 +92,32 @@ public class StudentListActivity extends BaseActivity {
     public void setValues() {
         mAdapter = new StudentAdapter(mContext, GlobalData.allUsers);
         studentListView.setAdapter(mAdapter);
+
+        ServerUtil.get_all_users(mContext, new ServerUtil.JsonResponseHandler() {
+            @Override
+            public void onResponse(JSONObject json) {
+
+                try {
+                    JSONArray users = json.getJSONArray("users");
+
+                    for ( int i = 0; i < users.length();i++){
+                        JSONObject user = users.getJSONObject(i);
+
+                     User tempUser = User.getUserFromJsonObject(user);
+
+                        GlobalData.allUsers.add(tempUser);
+
+                    }
+
+                    mAdapter.notifyDataSetChanged();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
     }
 
     @Override

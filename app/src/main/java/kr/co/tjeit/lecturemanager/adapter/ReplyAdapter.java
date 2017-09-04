@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -41,11 +42,18 @@ public class ReplyAdapter extends ArrayAdapter<Reply> {
             row = inf.inflate(R.layout.reply_list_item, null);
         }
 
+        Reply data = mList.get(position);
+
+        TextView writerNameTxt = (TextView) row.findViewById(R.id.writerNameTxt);
+        TextView contentTxt = (TextView) row.findViewById(R.id.contentTxt);
+
+        writerNameTxt.setText(data.getWriter().getName());
+        contentTxt.setText(data.getContent());
+
+
+
         return row;
     }
 
-    @Override
-    public int getCount() {
-        return 20;
-    }
+
 }

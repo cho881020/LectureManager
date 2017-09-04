@@ -8,13 +8,13 @@
     tools:context="kr.co.tjeit.lecturemanager.SignUpActivity">
 
     <TextView
-        android:background="#555555"
         android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#555555"
+        android:gravity="center"
         android:text="회원가입"
         android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:gravity="center"
-        android:layout_height="50dp" />
+        android:textSize="20sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="아이디"/>
+            android:text="아이디" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,77 +34,83 @@
             android:orientation="horizontal">
 
             <EditText
+                android:id="@+id/idEdt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="5"
                 android:hint="아이디를 입력하세요."
-                android:singleLine="true"
-                android:layout_weight="5"/>
+                android:singleLine="true" />
 
             <Button
-                android:layout_marginLeft="10dp"
+                android:id="@+id/checkDuplBtn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="중복확인"
-                android:layout_weight="2"/>
+                android:layout_marginLeft="10dp"
+                android:layout_weight="2"
+                android:text="중복확인" />
 
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="이름"/>
+            android:text="이름" />
 
         <EditText
+            android:id="@+id/nameEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:hint="이름을 입력하세요."/>
+            android:hint="이름을 입력하세요."
+            android:singleLine="true" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="비밀번호"/>
+            android:text="비밀번호" />
 
         <EditText
+            android:id="@+id/pwEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="비밀번호를 입력하세요."
-            android:inputType="textPassword"/>
+            android:inputType="textPassword" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="생일"/>
+            android:text="생일"
+            android:visibility="gone" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="생일을 입력하세요."
             android:inputType="date"
-            android:hint="생일을 입력하세요."/>
+            android:visibility="gone" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="핸드폰번호"/>
+            android:text="핸드폰번호" />
 
         <EditText
+            android:id="@+id/phoneEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="phone"
-            android:hint="폰번을 입력하세요."/>
+            android:hint="번호을 입력하세요."
+            android:inputType="phone" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/signUpBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="회원가입"/>
+            android:text="회원가입" />
     </LinearLayout>
-
 
 
 </LinearLayout>
