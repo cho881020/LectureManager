@@ -12,16 +12,16 @@ import kr.co.tjeit.lecturemanager.data.User;
 public class GlobalData {
     public static List<User> allUser = new ArrayList<>();
     public static void initUserData(){
-        allUser.add(new User("1","고동윤","tempURL"));
-        allUser.add(new User("2","권성민","tempURL"));
-        allUser.add(new User("3","김현철","tempURL"));
-        allUser.add(new User("4","박석영","tempURL"));
-        allUser.add(new User("5","박수현","tempURL"));
-        allUser.add(new User("6","박영주","tempURL"));
-        allUser.add(new User("7","손익상","tempURL"));
-        allUser.add(new User("8","이승헌","tempURL"));
-        allUser.add(new User("9","이요한","tempURL"));
-        allUser.add(new User("10","최종환","tempURL"));
-        allUser.add(new User("11","한상열","tempURL"));
+//        allUser.add(new User("1","고동윤","tempURL","임시폰번"));
+//        allUser.add(new User("2","권성민","tempURL","임시폰번"));
+//        allUser.add(new User("3","김현철","tempURL","임시폰번"));
+//        allUser.add(new User("4","박석영","tempURL","임시폰번"));
+//        allUser.add(new User("5","박수현","tempURL","임시폰번"));
+//        allUser.add(new User("6","박영주","tempURL","임시폰번"));
+//        allUser.add(new User("7","손익상","tempURL","임시폰번"));
+//        allUser.add(new User("8","이승헌","tempURL","임시폰번"));
+//        allUser.add(new User("9","이요한","tempURL","임시폰번"));
+//        allUser.add(new User("10","최종환","tempURL","임시폰번"));
+//        allUser.add(new User("11","한상열","tempURL","임시폰번"));
     }
 }

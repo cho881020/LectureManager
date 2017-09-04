@@ -40,19 +40,17 @@ public class ReplyAdapter extends ArrayAdapter<Reply> {
         if(row == null){
             row = inf.inflate(R.layout.reply_list_item,null);
         }
-//        Reply data = mList.get(position);
-//
-//        CircleImageView profileImg = (CircleImageView)row.findViewById(R.id.profileImg);
-//        TextView userNameTxt = (TextView)row.findViewById(R.id.userNameTxt);
-//
-//
-//        userNameTxt.setText(data.getWriter().getName());
+        Reply data = mList.get(position);
+
+        CircleImageView profileImg = (CircleImageView)row.findViewById(R.id.profileImg);
+        TextView userNameTxt = (TextView)row.findViewById(R.id.userNameTxt);
+        TextView contentTxt = (TextView)row.findViewById(R.id.contentTxt);
+
+
+        userNameTxt.setText(data.getWriter().getName());
+        contentTxt.setText(data.getContent());
 
         return row;
     }
 
-    @Override
-    public int getCount() {
-        return 10;
-    }
 }

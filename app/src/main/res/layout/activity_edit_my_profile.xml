@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="kr.co.tjeit.lecturemanager.SignUpActivity">
+    tools:context="kr.co.tjeit.lecturemanager.EditMyProfileActivity">
 
     <TextView
         android:background="#555555"
         android:layout_width="match_parent"
-        android:text="회원가입"
+        android:text="회원 정보 수정"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:gravity="center"
@@ -23,33 +23,7 @@
         android:padding="15dp">
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="아이디"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/idEdt"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="아이디를 입력하세요."
-                android:singleLine="true"
-                android:layout_weight="5"/>
-
-            <Button
-                android:id="@+id/checkDuplBtn"
-                android:layout_marginLeft="10dp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="중복확인"
-                android:layout_weight="2"/>
-
-        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -64,11 +38,13 @@
             android:hint="이름을 입력하세요."/>
 
         <TextView
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="비밀번호"/>
 
         <EditText
+            android:visibility="gone"
             android:id="@+id/pwEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -104,17 +80,18 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="1"/>
-
-        <Button
-            android:id="@+id/signUpBtn"
+        <EditText
+            android:id="@+id/userIdEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="회원가입"/>
+            android:hint=""/>
+
+
+        <Button
+            android:id="@+id/editProfileBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="회원정보 수정"/>
     </LinearLayout>
 
-
-
 </LinearLayout>
-
-
-
