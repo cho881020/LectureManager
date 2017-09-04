@@ -9,6 +9,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -20,17 +21,20 @@ import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
-import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import kr.co.tjeit.lecturemanager.datas.UserData;
 import kr.co.tjeit.lecturemanager.utils.ContextUtil;
+import kr.co.tjeit.lecturemanager.utils.ServerUtil;
 
 public class LoginActivity extends BaseActivity {
 
@@ -43,6 +47,8 @@ public class LoginActivity extends BaseActivity {
     public static LoginActivity myActivity;
     private com.kakao.usermgmt.LoginButton kakaoLoginBtn;
     private com.facebook.login.widget.LoginButton facebookLoginBtn;
+    private android.widget.EditText idEdt;
+    private android.widget.EditText pwEdt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,11 +85,27 @@ public class LoginActivity extends BaseActivity {
                 // 로그인에 성공하면 학생 목록을 띄워주기
                 // 실패시 Toast로 로그인에 실패했습니다. 아이디와 비번을 확인해주세요 띄우기
 
+                ServerUtil.sign_in(mContext, idEdt.getText().toString(), pwEdt.getText().toString(), new ServerUtil.JsonResponseHandler() {
+                    @Override
+                    public void onResponse(JSONObject json) {
+                        try {
+                            String message = json.getString("message");
+                            if (json.getBoolean("result")) {
+                                Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(mContext, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                            else {
+                                Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
 
 
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
             }
         });
     }
@@ -127,6 +149,8 @@ public class LoginActivity extends BaseActivity {
         this.facebookLoginBtn = (LoginButton) findViewById(R.id.facebookLoginBtn);
         this.kakaoLoginBtn = (com.kakao.usermgmt.LoginButton) findViewById(R.id.kakaoLoginBtn);
         this.loginBtn = (Button) findViewById(R.id.loginBtn);
+        this.pwEdt = (EditText) findViewById(R.id.pwEdt);
+        this.idEdt = (EditText) findViewById(R.id.idEdt);
     }
 
     private class SessionCallback implements ISessionCallback {

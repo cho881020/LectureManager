@@ -71,14 +71,14 @@ public class ServerUtil {
     }
 
     // 회원가입
-    public static void sign_up(final Context context, final String id, final String name, final String pw, final  String profileImg, final String phone, final JsonResponseHandler handler) {
+    public static void sign_up(final Context context, final String id, final String pw, final String name, final  String profileImg, final String phone, final JsonResponseHandler handler) {
         String url = BASE_URL+"mobile/sign_up";
         //		String registrationId = ContextUtil.getRegistrationId(context);
 
         Map<String, String> data = new HashMap<String, String>();
         data.put("user_id", id);
-        data.put("name", name);
         data.put("password", pw);
+        data.put("name", name);
         data.put("profile_photo", profileImg);
         data.put("phone_num", phone);
 
@@ -115,16 +115,13 @@ public class ServerUtil {
     }
 
     // 자체 로그인 기능
-    public static void sign_in(final Context context, final String id, final String name, final String pw, final  String profileImg, final String phone, final JsonResponseHandler handler) {
+    public static void sign_in(final Context context, final String id, final String pw, final JsonResponseHandler handler) {
         String url = BASE_URL+"mobile/sign_in";
         //		String registrationId = ContextUtil.getRegistrationId(context);
 
         Map<String, String> data = new HashMap<String, String>();
         data.put("user_id", id);
-        data.put("name", name);
         data.put("password", pw);
-        data.put("profile_photo", profileImg);
-        data.put("phone_num", phone);
 
         AsyncHttpRequest.post(context, url,  data, false, new AsyncHttpRequest.HttpResponseHandler() {
 

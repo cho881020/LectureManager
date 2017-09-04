@@ -116,7 +116,7 @@ public class SignUpActivity extends BaseActivity {
                     return;
                 }
 
-                ServerUtil.sign_up(mContext, idEdt.getText().toString(), nameEdt.getText().toString(), pwEdt.getText().toString(), "tempURL", phoneEdt.getText().toString(), new ServerUtil.JsonResponseHandler() {
+                ServerUtil.sign_up(mContext, idEdt.getText().toString(), pwEdt.getText().toString(), nameEdt.getText().toString() , "tempURL", phoneEdt.getText().toString(), new ServerUtil.JsonResponseHandler() {
                     @Override
                     public void onResponse(JSONObject json) {
                         try {
