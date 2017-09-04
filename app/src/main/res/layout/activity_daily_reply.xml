@@ -22,10 +22,18 @@
             android:textSize="17sp" />
 
         <Button
+            android:id="@+id/studentListBtn"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="학생 목록"/>
+
+        <Button
+            android:id="@+id/attendBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
-            android:text="출석체크"/>
+            android:text="출석 체크"/>
 
     </FrameLayout>
 

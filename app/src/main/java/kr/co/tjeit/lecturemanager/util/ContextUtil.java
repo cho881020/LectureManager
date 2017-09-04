@@ -17,7 +17,9 @@ public class ContextUtil {
 
     private static final String USER_ID = "USER_ID";
     private static final String USER_NAME = "USER_NAME";
+    private static final String USER_GENDER = "USER_GENDER";
     private static final String USER_PROFILE_URL = "USER_PROFILE_URL";
+
 
     public static void logout(Context context) {
         SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
@@ -25,6 +27,7 @@ public class ContextUtil {
         pref.edit().putString(USER_ID, "").commit();
         pref.edit().putString(USER_NAME, "").commit();
         pref.edit().putString(USER_PROFILE_URL, "").commit();
+        pref.edit().putInt(USER_GENDER, -1).commit();
 
     }
 

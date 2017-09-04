@@ -12,6 +12,10 @@ import android.widget.ListView;
 import com.facebook.login.LoginManager;
 import com.kakao.usermgmt.UserManagement;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +23,7 @@ import kr.co.tjeit.lecturemanager.adapter.StudentAdapter;
 import kr.co.tjeit.lecturemanager.data.User;
 import kr.co.tjeit.lecturemanager.util.ContextUtil;
 import kr.co.tjeit.lecturemanager.util.GlobalData;
+import kr.co.tjeit.lecturemanager.util.ServerUtil;
 
 public class StudentListActivity extends BaseActivity {
 
@@ -112,6 +117,33 @@ public class StudentListActivity extends BaseActivity {
 
         mAdapter = new StudentAdapter(mContext, GlobalData.students);
         studentListView.setAdapter(mAdapter);
+
+        ServerUtil.get_all_users(mContext, new ServerUtil.JsonResponseHandler() {
+            @Override
+            public void onResponse(JSONObject json) {
+
+                try {
+                    JSONArray users = json.getJSONArray("users");
+
+                    for (int i = 0; i<users.length(); i++) {
+                        JSONObject user = users.getJSONObject(i);
+
+                        User tempUser = new User();
+                        tempUser.setUserId(user.getString("user_id"));
+                        tempUser.setName(user.getString("name"));
+                        tempUser.setProfileURL(user.getString("profile_photo"));
+                        tempUser.setPhoneNum(user.getString("phone_num"));
+
+                        GlobalData.students.add(tempUser);
+                    }
+                    mAdapter.notifyDataSetChanged();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
 
 
     }

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -21,8 +23,12 @@ import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import kr.co.tjeit.lecturemanager.data.User;
 import kr.co.tjeit.lecturemanager.util.ContextUtil;
+import kr.co.tjeit.lecturemanager.util.ServerUtil;
 
 public class LoginActivity extends BaseActivity {
 
@@ -35,6 +41,8 @@ public class LoginActivity extends BaseActivity {
     public static LoginActivity myActivity;
     private com.facebook.login.widget.LoginButton fbLoginBtn;
     private com.kakao.usermgmt.LoginButton comkakaologin;
+    private android.widget.EditText idEdt;
+    private android.widget.EditText pwEdt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +53,11 @@ public class LoginActivity extends BaseActivity {
         setValues();
 
 
-        signUpBtn = (Button) findViewById(R.id.signUpBtn);
-        loginBtn = (Button) findViewById(R.id.loginBtn);
+
+    }
+
+    @Override
+    public void setupEvents() {
 
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,18 +70,52 @@ public class LoginActivity extends BaseActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+
+                ServerUtil.sign_in(mContext, idEdt.getText().toString(),
+                        pwEdt.getText().toString(), new ServerUtil.JsonResponseHandler() {
+                            @Override
+                            public void onResponse(JSONObject json) {
+
+                                try {
+                                    if (json.getBoolean("result")) {
+//                                        로그인에 성공
+
+                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                        JSONObject user = json.getJSONObject("user");
+
+                                        String loginUserName = user.getString("name");
+                                        String loginUserId = user.getString("user_id");
+                                        String loginUserPhoto = user.getString("profile_photo");
+                                        String loginUserPhoneNum = user.getString("phone_num");
+
+                                        User tempUser = new User(loginUserId, loginUserName, loginUserPhoto, loginUserPhoneNum);
+                                        ContextUtil.login(mContext, tempUser);
+//                                        실제로 로그인했다는 사실을 기록
+//                                        로그인처리가 되고 나면, 실제 사용자 정보가 프로필 조회 화면에서 나타나도록 만들어 보자.
+
+                                        Toast.makeText(mContext, loginUserName+"님이 로그인했습니다.", Toast.LENGTH_SHORT).show();
+
+//                                        로그인에 성공하면
+//                                        ~~님이 로그인했습니다. Toast 띄우기.
+                                    }
+                                    else {
+//                                        로그인에 실패
+
+                                        Toast.makeText(mContext, "로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
+
             }
         });
-
     }
 
-    @Override
-    public void setupEvents() {
-
-    }
 
     @Override
     public void setValues() {
@@ -107,7 +152,7 @@ public class LoginActivity extends BaseActivity {
             protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
                 if (currentProfile != null) {
 
-                    User tempUser = new User (currentProfile.getId(), currentProfile.getName(), currentProfile.getProfilePictureUri(400, 400).toString());
+                    User tempUser = new User(currentProfile.getId(), currentProfile.getName(), currentProfile.getProfilePictureUri(400, 400).toString(), "임시폰번");
                     ContextUtil.login(mContext, tempUser);
 
                     Intent intent = new Intent(mContext, MainActivity.class);
@@ -138,6 +183,10 @@ public class LoginActivity extends BaseActivity {
     public void bindViews() {
         this.comkakaologin = (LoginButton) findViewById(R.id.com_kakao_login);
         this.fbLoginBtn = (com.facebook.login.widget.LoginButton) findViewById(R.id.fbLoginBtn);
+        this.pwEdt = (EditText) findViewById(R.id.pwEdt);
+        this.idEdt = (EditText) findViewById(R.id.idEdt);
+        signUpBtn = (Button) findViewById(R.id.signUpBtn);
+        loginBtn = (Button) findViewById(R.id.loginBtn);
     }
 
     private class KakaoSessionCallback implements ISessionCallback {
@@ -157,7 +206,7 @@ public class LoginActivity extends BaseActivity {
 
                 @Override
                 public void onSuccess(UserProfile result) {
-                    User tempUser = new User (result.getId()+"", result.getNickname(), result.getProfileImagePath());
+                    User tempUser = new User(result.getId() + "", result.getNickname(), result.getProfileImagePath(), "임시폰번");
                     ContextUtil.login(mContext, tempUser);
 
                     Intent intent = new Intent(mContext, MainActivity.class);
