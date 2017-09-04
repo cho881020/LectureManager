@@ -7,13 +7,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 
 import kr.co.tjeit.lecturemanager.adapter.ReplyAdapter;
+import kr.co.tjeit.lecturemanager.data.Reply;
+import kr.co.tjeit.lecturemanager.util.ContextUtil;
 import kr.co.tjeit.lecturemanager.util.GlobalData;
+import kr.co.tjeit.lecturemanager.util.ServerUtil;
 
 public class DailyReplyActivity extends BaseActivity {
 
@@ -55,6 +63,30 @@ public class DailyReplyActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+
+        replyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String id = ContextUtil.getLoginUser(mContext).getId() + "";
+                ServerUtil.register_reply(mContext, id, replyEdt.getText().toString(),
+                        new ServerUtil.JsonResponseHandler() {
+                            @Override
+                            public void onResponse(JSONObject json) {
+                                try {
+                                    if (json.getBoolean("result")) {
+                                        Toast.makeText(mContext, json.getString("message"), Toast.LENGTH_SHORT).show();
+                                        mAdapter.notifyDataSetChanged();
+                                        replyEdt.setText("");
+                                    } else {
+                                        Toast.makeText(mContext, json.getString("message"), Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+            }
+        });
     }
 
     @Override
@@ -64,6 +96,22 @@ public class DailyReplyActivity extends BaseActivity {
 
         mAdapter = new ReplyAdapter(mContext, GlobalData.allReplyList);
         replyListView.setAdapter(mAdapter);
+
+        ServerUtil.get_all_replies(mContext, new ServerUtil.JsonResponseHandler() {
+            @Override
+            public void onResponse(JSONObject json) {
+                try {
+                    JSONArray replies = json.getJSONArray("replies");
+                    for (int i=0; i<replies.length(); i++) {
+                        Reply tmpReply = Reply.getReplyFromJson(replies.getJSONObject(i));
+                        GlobalData.allReplyList.add(tmpReply);
+                    }
+                    mAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override

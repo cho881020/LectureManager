@@ -283,5 +283,85 @@ public class ServerUtil {
         });
     }
 
+    //    댓글 작성
+    public static void register_reply(final Context context, final String user_id, final String content, final JsonResponseHandler handler) {
+        String url = BASE_URL + "mobile/register_reply";
+        //		String registrationId = ContextUtil.getRegistrationId(context);
 
+        Map<String, String> data = new HashMap<String, String>();
+        data.put("user_id", user_id);
+        data.put("content", content);
+
+        AsyncHttpRequest.post(context, url, data, false, new AsyncHttpRequest.HttpResponseHandler() {
+
+            @Override
+            public boolean onPrepare() {
+                return true;
+            }
+
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                try {
+                    JSONObject json = new JSONObject(response);
+
+                    if (handler != null)
+                        handler.onResponse(json);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onCancelled() {
+
+            }
+
+        });
+    }
+
+    //    모든 댓글 불러오기
+    public static void get_all_replies(final Context context, final JsonResponseHandler handler) {
+        String url = BASE_URL + "mobile/get_all_replies";
+        //		String registrationId = ContextUtil.getRegistrationId(context);
+
+        Map<String, String> data = new HashMap<String, String>();
+
+        AsyncHttpRequest.post(context, url, data, false, new AsyncHttpRequest.HttpResponseHandler() {
+
+            @Override
+            public boolean onPrepare() {
+                return true;
+            }
+
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                try {
+                    JSONObject json = new JSONObject(response);
+
+                    if (handler != null)
+                        handler.onResponse(json);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onCancelled() {
+
+            }
+
+        });
+    }
 }

@@ -41,11 +41,15 @@ public class ReplyAdapter extends ArrayAdapter<Reply> {
             row = inf.inflate(R.layout.reply_list_item, null);
         }
 
+        Reply data = mList.get(position);
+
+        TextView nameTxt = (TextView) row.findViewById(R.id.nameTxt);
+        TextView contextTxt = (TextView) row.findViewById(R.id.contextTxt);
+
+        nameTxt.setText(data.getWriter().getName());
+        contextTxt.setText(data.getContext());
+
         return row;
     }
 
-    @Override
-    public int getCount() {
-        return 20;
-    }
 }

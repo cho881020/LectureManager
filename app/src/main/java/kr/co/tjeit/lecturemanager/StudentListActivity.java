@@ -98,13 +98,9 @@ public class StudentListActivity extends BaseActivity {
                     for (int i=0; i<users.length(); i++) {
                         JSONObject user = users.getJSONObject(i);
 
-                        User tmpUser = new User();
-                        tmpUser.setId(user.getString("user_id"));
-                        tmpUser.setName(user.getString("name"));
-                        tmpUser.setPhoneNum(user.getString("phone_num"));
-                        tmpUser.setProfileURL(user.getString("profile_photo"));
+                        User tempUser = User.getUserFromJsonObject(user);
 
-                        GlobalData.allUserList.add(tmpUser);
+                        GlobalData.allUserList.add(tempUser);
                     }
 
                     mAdapter.notifyDataSetChanged();

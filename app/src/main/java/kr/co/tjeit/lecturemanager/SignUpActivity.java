@@ -140,20 +140,19 @@ public class SignUpActivity extends BaseActivity {
                                 public void onResponse(JSONObject json) {
                                     try {
                                         if (json.getBoolean("result")) {
-//                                            6. 로그인 처리가 완료되면 학생 목록 화면으로 이동
-                                            Toast.makeText(mContext, json.getString("message"), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(mContext, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show();
 
-                                            loginUser = new User(idEdt.getText().toString(), nameEdt.getText().toString(), "tmpURL",
-                                                    phoneNumEdt.getText().toString());
-                                            ContextUtil.login(mContext, loginUser);
 
                                             Intent myIntent = new Intent(SignUpActivity.this, StudentListActivity.class);
                                             startActivity(myIntent);
                                             finish();
                                             LoginActivity.myActivity.finish();
-                                        } else {
-                                            Toast.makeText(mContext, json.getString("message"), Toast.LENGTH_SHORT).show();
+//                                        ContextUtil.login();
                                         }
+                                        else {
+                                            Toast.makeText(mContext, "회원가입에 실패했습니다. 아이디 변경후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                                        }
+
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }

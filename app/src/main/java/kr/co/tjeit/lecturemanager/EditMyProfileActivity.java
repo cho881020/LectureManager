@@ -36,23 +36,18 @@ public class EditMyProfileActivity extends BaseActivity {
 
     @Override
     public void setUpEvents() {
+
         editProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ServerUtil.update_user_info(mContext, loginUser.getId(), nameEdt.getText().toString(), phoneNumEdt.getText().toString(),
+                ServerUtil.update_user_info(mContext,
+                        loginUser.getUserId(),
+                        nameEdt.getText().toString(),
+                        phoneNumEdt.getText().toString(),
                         new ServerUtil.JsonResponseHandler() {
                             @Override
                             public void onResponse(JSONObject json) {
-                                try {
-                                    if (json.getBoolean("result")) {
-                                        Toast.makeText(mContext, json.getString("message"), Toast.LENGTH_SHORT).show();
-                                        finish();
-                                    } else {
-                                        Toast.makeText(mContext, json.getString("message"), Toast.LENGTH_SHORT).show();
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+
                             }
                         });
             }
