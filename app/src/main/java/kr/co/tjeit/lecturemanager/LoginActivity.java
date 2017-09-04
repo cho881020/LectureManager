@@ -74,6 +74,13 @@ public class LoginActivity extends BaseActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // 아이디와 비번 입력하고 로그인 버튼 누루면 서버에 로그인 요청
+                // 로그인에 성공하면 학생 목록을 띄워주기
+                // 실패시 Toast로 로그인에 실패했습니다. 아이디와 비번을 확인해주세요 띄우기
+
+
+
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();

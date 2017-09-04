@@ -14,6 +14,8 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import kr.co.tjeit.lecturemanager.datas.UserData;
+import kr.co.tjeit.lecturemanager.utils.ContextUtil;
 import kr.co.tjeit.lecturemanager.utils.ServerUtil;
 
 public class SignUpActivity extends BaseActivity {
@@ -114,10 +116,25 @@ public class SignUpActivity extends BaseActivity {
                     return;
                 }
 
-                Toast.makeText(mContext, "회원가입 완료", Toast.LENGTH_SHORT).show();
-                Intent myIntent = new Intent(mContext, StudentListActivity.class);
-                startActivity(myIntent);
-                finishAffinity();
+                ServerUtil.sign_up(mContext, idEdt.getText().toString(), nameEdt.getText().toString(), pwEdt.getText().toString(), "tempURL", phoneEdt.getText().toString(), new ServerUtil.JsonResponseHandler() {
+                    @Override
+                    public void onResponse(JSONObject json) {
+                        try {
+                            if (json.getBoolean("result")) {
+                                Toast.makeText(mContext, json.getString("message"), Toast.LENGTH_SHORT).show();
+
+                                Intent myIntent = new Intent(mContext, StudentListActivity.class);
+                                startActivity(myIntent);
+                                finishAffinity();
+                            }
+                            else {
+                                Toast.makeText(mContext, "회원가입에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
 
