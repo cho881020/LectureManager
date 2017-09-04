@@ -22,18 +22,42 @@
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="이름"/>
+        android:text="이름표시"/>
 
     <TextView
-        android:id="@+id/genderTxt"
+        android:id="@+id/idTxt"
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="성별"/>
+        android:text="아이디표시"/>
+
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/editProfileBtn"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="전화번호 표시"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="전화걸기"/>
+
+
+    </LinearLayout>
 
     <Button
-        android:id="@+id/linkBtn"
+        android:id="@+id/profileEdtBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="페이스북 페이지 방문"/>
+        android:textSize="17sp"
+        android:text="프로필 수정"/>
+
 </LinearLayout>

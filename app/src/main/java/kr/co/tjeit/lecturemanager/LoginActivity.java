@@ -97,7 +97,7 @@ public class LoginActivity extends BaseActivity {
                         try {
                             if (json.getBoolean("result")) {
 
-                                Intent intent = new Intent(LoginActivity.this, StudentListActivity.class);
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();
 

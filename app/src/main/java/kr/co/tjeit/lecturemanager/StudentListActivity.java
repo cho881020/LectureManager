@@ -4,13 +4,20 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import kr.co.tjeit.lecturemanager.adapter.StudentInfoAdapter;
+import kr.co.tjeit.lecturemanager.data.User;
 import kr.co.tjeit.lecturemanager.util.GlobalData;
+import kr.co.tjeit.lecturemanager.util.ServerUtil;
 
 
 // 앙 기모띠~~~~~~~~
@@ -20,11 +27,11 @@ public class StudentListActivity extends BaseActivity {
     String[] students = {"고동윤", "권성민", "김현철", "박석영",
             "박수현", "박영주", "손익상", "이승헌", "이요한", "한상열"};
 
-//    ArrayList<String> myStudentsArrayList;
+    //    ArrayList<String> myStudentsArrayList;
     StudentInfoAdapter madapter;
 
     private ListView studentListView;
-//    private ArrayAdapter<String> studentAdapter;
+    //    private ArrayAdapter<String> studentAdapter;
     private android.widget.Button profileBtn;
 
     @Override
@@ -93,6 +100,34 @@ public class StudentListActivity extends BaseActivity {
 
     @Override
     public void setValues() {
+
+        ServerUtil.get_all_users(mContext, new ServerUtil.JsonResponseHandler() {
+            @Override
+            public void onResponse(JSONObject json) {
+
+                try {
+                    JSONArray users = json.getJSONArray("users");
+
+                    for (int i = 0; i < users.length(); i++) {
+                        JSONObject user = users.getJSONObject(i);
+
+                        User tempUser = new User();
+                        tempUser.setUserId(user.getString("user_id"));
+                        tempUser.setUserName(user.getString("name"));
+                        tempUser.setProfileUrl(user.getString("profile_photo"));
+                        tempUser.setPhoneNum(user.getString("phone_num"));
+
+                        GlobalData.allUsers.add(tempUser);
+                    }
+
+                    madapter.notifyDataSetChanged();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
 
 //        myStudentsArrayList = new ArrayList<String>();
 //        myStudentsArrayList.add("고동윤");
