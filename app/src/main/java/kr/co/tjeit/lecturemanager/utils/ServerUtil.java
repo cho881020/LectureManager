@@ -70,6 +70,48 @@ public class ServerUtil {
         });
     }
 
+    // 회원가입
+    public static void signup(final Context context, final String id, final String name, final String pw, final String phone,  final JsonResponseHandler handler) {
+        String url = BASE_URL+"mobile/check_dupl_id";
+        //		String registrationId = ContextUtil.getRegistrationId(context);
+
+        Map<String, String> data = new HashMap<String, String>();
+        data.put("user_id", id);
+        data.put("user_name", name);
+        data.put("user_pw", pw);
+        data.put("user_phone", phone);
+
+        AsyncHttpRequest.post(context, url,  data, false, new AsyncHttpRequest.HttpResponseHandler() {
+
+            @Override
+            public boolean onPrepare() {
+                return true;
+            }
+
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                try {
+                    JSONObject json = new JSONObject(response);
+
+                    if (handler != null)
+                        handler.onResponse(json);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onCancelled() {
+
+            }
+
+        });
+    }
 
     // 회원 가입
     public static void facebook_login(final Context context, final String name, final String uid, final String email, final JsonResponseHandler handler) {

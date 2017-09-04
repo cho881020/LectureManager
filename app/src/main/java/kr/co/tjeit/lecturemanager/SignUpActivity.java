@@ -89,34 +89,35 @@ public class SignUpActivity extends BaseActivity {
                 // 4. 서버에 실제로 가입 요청
                 // 5. 가입요청의 응답을 보고 가입승인이 났으면 로그인 처리
 
+
                 AlertDialog.Builder checkEmpty = new AlertDialog.Builder(mContext);
                 checkEmpty.setTitle("회원가입 실패");
-                if (!isIdupl) {
-                    if(idEdt.getText().toString().equals("")){
-                        checkEmpty.setMessage("아이디를 입력해주세요.").show();
-                    }
-                    else if (nameEdt.getText().toString().equals("")) {
-                        checkEmpty.setMessage("이름을 입력해주세요.").show();
-                    }
-                    else if (pwEdt.getText().toString().equals("")) {
-                        checkEmpty.setMessage("비밀번호를 입력해주세요.").show();
-                    }
-                    else if (phoneEdt.getText().toString().equals("")) {
-                        checkEmpty.setMessage("전화번호를 입력해주세요.").show();
-                    }
-                    else {
 
-
-
-                        Toast.makeText(mContext, "회원가입 완료", Toast.LENGTH_SHORT).show();
-                        Intent myIntent = new Intent(mContext, StudentListActivity.class);
-                        startActivity(myIntent);
-                        finishAffinity();
-                    }
+                if(idEdt.getText().toString().equals("")){
+                    checkEmpty.setMessage("아이디를 입력해주세요.").show();
+                    return;
                 }
-                else {
-                    checkEmpty.setMessage("아이디 중복확인을 해주세요").show();
+                else if (nameEdt.getText().toString().equals("")) {
+                    checkEmpty.setMessage("이름을 입력해주세요.").show();
+                    return;
                 }
+                else if (pwEdt.getText().toString().equals("")) {
+                    checkEmpty.setMessage("비밀번호를 입력해주세요.").show();
+                    return;
+                }
+                else if (phoneEdt.getText().toString().equals("")) {
+                    checkEmpty.setMessage("전화번호를 입력해주세요.").show();
+                    return;
+                }
+                if (isIdupl) {
+                    Toast.makeText(mContext, "중복확인을 해주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Toast.makeText(mContext, "회원가입 완료", Toast.LENGTH_SHORT).show();
+                Intent myIntent = new Intent(mContext, StudentListActivity.class);
+                startActivity(myIntent);
+                finishAffinity();
             }
         });
 
