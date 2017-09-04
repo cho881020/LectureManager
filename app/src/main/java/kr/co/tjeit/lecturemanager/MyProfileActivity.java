@@ -68,43 +68,43 @@ public class MyProfileActivity extends BaseActivity {
         nameTxt.setText(me.getUserName());
         Glide.with(mContext).load(me.getUserProfilImg()).into(profileImg);
 
-        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-            @Override
-            public void onCompleted(final JSONObject object, GraphResponse response) {
-                Log.d("사용자정보", object.toString());
-                try {
-                    String gender = object.getString("gender");
-                    if(gender.equals("male")) {
-                        genderTxt.setText("남성");
-                    }
-                    else {
-                        genderTxt.setText("여성");
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                linkBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent();
-                        intent.setAction(Intent.ACTION_VIEW);
-
-                        try {
-                            String link = object.getString("link");
-                            intent.setData(Uri.parse(link));
-                            startActivity(intent);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            }
-        });
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,gender,name,link");
-        request.setParameters(parameters);
-        request.executeAsync();
+//        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+//            @Override
+//            public void onCompleted(final JSONObject object, GraphResponse response) {
+//                Log.d("사용자정보", object.toString());
+//                try {
+//                    String gender = object.getString("gender");
+//                    if(gender.equals("male")) {
+//                        genderTxt.setText("남성");
+//                    }
+//                    else {
+//                        genderTxt.setText("여성");
+//                    }
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                linkBtn.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Intent intent = new Intent();
+//                        intent.setAction(Intent.ACTION_VIEW);
+//
+//                        try {
+//                            String link = object.getString("link");
+//                            intent.setData(Uri.parse(link));
+//                            startActivity(intent);
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
+//            }
+//        });
+//        Bundle parameters = new Bundle();
+//        parameters.putString("fields", "id,gender,name,link");
+//        request.setParameters(parameters);
+//        request.executeAsync();
     }
 
     @Override

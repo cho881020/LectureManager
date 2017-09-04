@@ -90,9 +90,13 @@ public class LoginActivity extends BaseActivity {
                     public void onResponse(JSONObject json) {
                         try {
                             String message = json.getString("message");
+
+
                             if (json.getBoolean("result")) {
-                                Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(mContext, MainActivity.class);
+                                JSONObject user = json.getJSONObject("user");
+                                ContextUtil.login(mContext, new UserData(user.getString("user_id"), user.getString("name"), user.getString("profile_photo"), user.getString("phone_num")));
+                                Toast.makeText(mContext, user.getString("name") + "님이 로그인하셨습니다.", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(mContext, MyProfileActivity.class);
                                 startActivity(intent);
                                 finish();
                             }
