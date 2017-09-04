@@ -2,8 +2,10 @@ package kr.co.tjeit.lecturemanager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -22,8 +24,12 @@ import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import kr.co.tjeit.lecturemanager.data.User;
 import kr.co.tjeit.lecturemanager.util.ContextUtil;
+import kr.co.tjeit.lecturemanager.util.ServerUtil;
 
 public class LoginActivity extends BaseActivity {
 
@@ -38,6 +44,8 @@ public class LoginActivity extends BaseActivity {
     SessionCallback callback;
 
     User loginUser = new User();
+    private android.widget.EditText idEdt;
+    private android.widget.EditText pwEdt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +73,29 @@ public class LoginActivity extends BaseActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intentMain();
+                ServerUtil.sign_in(mContext, idEdt.getText().toString(), pwEdt.getText().toString(), new ServerUtil.JsonResponseHandler() {
+                    @Override
+                    public void onResponse(JSONObject json) {
+                        try {
+                            if (json.getBoolean("result")) {
+                                JSONObject user = json.getJSONObject("user");
+                                Toast.makeText(mContext, user.getString("name") + "님이 로그인하였습니다.", Toast.LENGTH_SHORT).show();
+
+                                loginUser.setId(user.getString("user_id"));
+                                loginUser.setName(user.getString("name"));
+                                loginUser.setProfileURL(user.getString("profile_photo"));
+                                loginUser.setPhoneNum(user.getString("phone_num"));
+                                ContextUtil.login(mContext, loginUser);
+                                Log.d("로그", loginUser.getPhoneNum());
+                                intentMain();
+                            } else {
+                                Toast.makeText(mContext, json.getString("message"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
     }
@@ -124,8 +154,10 @@ public class LoginActivity extends BaseActivity {
     public void bindViews() {
         this.comkakaologin = (LoginButton) findViewById(R.id.com_kakao_login);
         this.fbLoginBtn = (com.facebook.login.widget.LoginButton) findViewById(R.id.fbLoginBtn);
-        signUpBtn = (Button) findViewById(R.id.signUpBtn);
-        loginBtn = (Button) findViewById(R.id.loginBtn);
+        this.signUpBtn = (Button) findViewById(R.id.signUpBtn);
+        this.loginBtn = (Button) findViewById(R.id.loginBtn);
+        this.pwEdt = (EditText) findViewById(R.id.pwEdt);
+        this.idEdt = (EditText) findViewById(R.id.idEdt);
     }
 
     private class SessionCallback implements ISessionCallback {

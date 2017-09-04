@@ -11,8 +11,14 @@ import android.widget.TextView;
 
 import com.facebook.CallbackManager;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import kr.co.tjeit.lecturemanager.adapter.StudentAdapter;
+import kr.co.tjeit.lecturemanager.data.User;
 import kr.co.tjeit.lecturemanager.util.GlobalData;
+import kr.co.tjeit.lecturemanager.util.ServerUtil;
 
 public class StudentListActivity extends BaseActivity {
 
@@ -83,6 +89,30 @@ public class StudentListActivity extends BaseActivity {
     public void setValues() {
         mAdapter = new StudentAdapter(mContext, GlobalData.allUserList);
         studentListView.setAdapter(mAdapter);
+
+        ServerUtil.get_all_users(mContext, new ServerUtil.JsonResponseHandler() {
+            @Override
+            public void onResponse(JSONObject json) {
+                try {
+                    JSONArray users = json.getJSONArray("users");
+                    for (int i=0; i<users.length(); i++) {
+                        JSONObject user = users.getJSONObject(i);
+
+                        User tmpUser = new User();
+                        tmpUser.setId(user.getString("user_id"));
+                        tmpUser.setName(user.getString("name"));
+                        tmpUser.setPhoneNum(user.getString("phone_num"));
+                        tmpUser.setProfileURL(user.getString("profile_photo"));
+
+                        GlobalData.allUserList.add(tmpUser);
+                    }
+
+                    mAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override

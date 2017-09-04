@@ -13,6 +13,8 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import kr.co.tjeit.lecturemanager.data.User;
+import kr.co.tjeit.lecturemanager.util.ContextUtil;
 import kr.co.tjeit.lecturemanager.util.ServerUtil;
 
 public class SignUpActivity extends BaseActivity {
@@ -28,6 +30,8 @@ public class SignUpActivity extends BaseActivity {
     private EditText pwEdt;
     private EditText bitrhEdt;
     private EditText phoneNumEdt;
+
+    User loginUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,17 +133,20 @@ public class SignUpActivity extends BaseActivity {
                 } else {
 //                4. 서버에 가입 요청
 //                5. 가입요청의 응답을 보고 가입 승인이 나면 로그인 처리
-//                6. 로그인 처리가 완료되면 학생 목록 화면으로 이동
 //                 => 프로필 사진 경로x : tempURL이라고 프사 경로 지정
                     ServerUtil.sign_up(mContext, idEdt.getText().toString(), pwEdt.getText().toString(), nameEdt.getText().toString(),
                             "tmpURL", phoneNumEdt.getText().toString(), new ServerUtil.JsonResponseHandler() {
                                 @Override
                                 public void onResponse(JSONObject json) {
                                     try {
-                                        boolean isSignUpOk = json.getBoolean("result");
-
-                                        if (isSignUpOk) {
+                                        if (json.getBoolean("result")) {
+//                                            6. 로그인 처리가 완료되면 학생 목록 화면으로 이동
                                             Toast.makeText(mContext, json.getString("message"), Toast.LENGTH_SHORT).show();
+
+                                            loginUser = new User(idEdt.getText().toString(), nameEdt.getText().toString(), "tmpURL",
+                                                    phoneNumEdt.getText().toString());
+                                            ContextUtil.login(mContext, loginUser);
+
                                             Intent myIntent = new Intent(SignUpActivity.this, StudentListActivity.class);
                                             startActivity(myIntent);
                                             finish();
