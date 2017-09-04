@@ -29,13 +29,60 @@ public class ServerUtil {
 
     // 사용자 관련 함수 모음
 
-//    회원 가입 기능
-    public static void sign_up(final Context context, final String id, final JsonResponseHandler handler) {
+    //    자체 로그인 기능
+    public static void sign_in(final Context context, final String id, final String pw, final JsonResponseHandler handler) {
+        String url = BASE_URL + "mobile/sign_in";
+        //		String registrationId = ContextUtil.getRegistrationId(context);
+
+        Map<String, String> data = new HashMap<String, String>();
+        data.put("user_id", id);
+        data.put("password", pw);
+
+        AsyncHttpRequest.post(context, url, data, true, new AsyncHttpRequest.HttpResponseHandler() {
+
+            @Override
+            public boolean onPrepare() {
+                return true;
+            }
+
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                try {
+                    JSONObject json = new JSONObject(response);
+
+                    if (handler != null)
+                        handler.onResponse(json);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onCancelled() {
+
+            }
+
+        });
+    }
+
+
+    //    회원 가입 기능
+    public static void sign_up(final Context context, final String id, final String pw, final String name,final String profilePhoto, final String phoneNum, final JsonResponseHandler handler) {
         String url = BASE_URL + "mobile/sign_up";
         //		String registrationId = ContextUtil.getRegistrationId(context);
 
         Map<String, String> data = new HashMap<String, String>();
         data.put("user_id", id);
+        data.put("password", pw);
+        data.put("name", name);
+        data.put("profile_photo", profilePhoto);
+        data.put("phone_num", phoneNum);
 
         AsyncHttpRequest.post(context, url, data, true, new AsyncHttpRequest.HttpResponseHandler() {
 

@@ -1,5 +1,7 @@
 package kr.co.tjeit.lecturemanager.data;
 
+import android.content.Context;
+
 import java.io.Serializable;
 
 /**

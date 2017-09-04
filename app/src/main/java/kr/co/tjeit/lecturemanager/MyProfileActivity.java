@@ -49,44 +49,44 @@ public class MyProfileActivity extends BaseActivity {
     @Override
     public void setValues() {
 
-        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(final JSONObject object, GraphResponse response) {
-                        Log.d("사용자정보", object.toString());
-
-
-                        linkBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-                                Intent intent = new Intent();
-                                intent.setAction(Intent.ACTION_VIEW);
-                                try {
-                                    String link = object.getString("link");
-                                    intent.setData(Uri.parse(link));
-                                    startActivity(intent);
-
-                                    String gender = object.getString("gender");
-                                    if (gender.equals("male")) {
-                                        genderTxt.setText("남성");
-                                    } else {
-                                        genderTxt.setText("여성");
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
-
-
-                    }
-                }
-        );
-
-        Bundle params = new Bundle();
-        params.putString("fields", "id,name,gender,link,email");
-        request.setParameters(params);
-        request.executeAsync();
+//        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+//                    @Override
+//                    public void onCompleted(final JSONObject object, GraphResponse response) {
+//                        Log.d("사용자정보", object.toString());
+//
+//
+//                        linkBtn.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//
+//                                Intent intent = new Intent();
+//                                intent.setAction(Intent.ACTION_VIEW);
+//                                try {
+//                                    String link = object.getString("link");
+//                                    intent.setData(Uri.parse(link));
+//                                    startActivity(intent);
+//
+//                                    String gender = object.getString("gender");
+//                                    if (gender.equals("male")) {
+//                                        genderTxt.setText("남성");
+//                                    } else {
+//                                        genderTxt.setText("여성");
+//                                    }
+//                                } catch (JSONException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        });
+//
+//
+//                    }
+//                }
+//        );
+//
+//        Bundle params = new Bundle();
+//        params.putString("fields", "id,name,gender,link,email");
+//        request.setParameters(params);
+//        request.executeAsync();
 
 
         me = ContextUtil.getLoginUser(mContext);

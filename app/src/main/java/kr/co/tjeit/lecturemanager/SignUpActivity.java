@@ -1,5 +1,6 @@
 package kr.co.tjeit.lecturemanager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import kr.co.tjeit.lecturemanager.util.ContextUtil;
 import kr.co.tjeit.lecturemanager.util.ServerUtil;
 
 public class SignUpActivity extends BaseActivity {
@@ -39,6 +41,24 @@ public class SignUpActivity extends BaseActivity {
 
     @Override
     public void setupEvents() {
+
+        idEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                      타이핑이 되는 매 순간마다, 중복 검사를 통과 못한값으로 변경
+                isIdDupl = true;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         checkDuplBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,9 +109,11 @@ public class SignUpActivity extends BaseActivity {
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
 //                현재 코드는 무조건 학생 목록으로 넘어감.
 
-//                1. 중복확인을 통과 해야함
+                //                1. 중복확인을 통과 해야함
                 if (isIdDupl) {
 //                    중복된 아이디라면 아이디가 중복되었다고 토스트
                     Toast.makeText(mContext, "중복된 아이디입니다.", Toast.LENGTH_SHORT).show();
@@ -114,35 +136,41 @@ public class SignUpActivity extends BaseActivity {
                     builder.setMessage("이름이 입력되지 않았습니다.");
                     builder.show();
                     return;
-                }
-                else if (pwEdt.getText().toString().equals("")) {
+                } else if (pwEdt.getText().toString().equals("")) {
                     builder.setMessage("비밀번호가 입력되지 않았습니다.");
                     builder.show();
                     return;
-                }
-                else if (phoneEdt.getText().toString().equals("")) {
+                } else if (phoneEdt.getText().toString().equals("")) {
                     builder.setMessage("핸드폰번호가  입력되지 않았습니다.");
                     builder.show();
                     return;
                 }
 
-                TextWatcher textWatcher = new TextWatcher() {
+
+                ServerUtil.sign_up(mContext, idEdt.getText().toString(), pwEdt.getText().toString(), nameEdt.getText().toString(), "tempURL", phoneEdt.getText().toString(),  new ServerUtil.JsonResponseHandler() {
                     @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    public void onResponse(JSONObject json) {
+
+                        try {
+                            if (json.getBoolean("result")) {
+                                Toast.makeText(mContext, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+//                                ContextUtil.login(mContext, );
+                                Intent myIntent = new Intent(SignUpActivity.this, StudentListActivity.class);
+                                startActivity(myIntent);
+                                finish();
+                                LoginActivity.myActivity.finish();
+
+                            } else {
+                                Toast.makeText(mContext, "회원가입에 실패했습니다. 아이디 변경후에 ..", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
 
                     }
+                });
 
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        String inputEdt = idEdt.getText().toString();
-//                        if (inputEdt.equals())
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-
-                    }
-                };
 
 //                2. 입력칸 중에 빈칸이 없어야함.
 //                => 위에서부터 하나하나 검사하다가, 빈칸을 발견하면 해당 칸이 비어있음을 경고창으로 알려주기.
@@ -151,10 +179,7 @@ public class SignUpActivity extends BaseActivity {
 //                5. 가입요청의 응답을 보고, 가입 승인이 났으면 로그인 처리.
 //                => 프로필 사진 경로 X : tempURL 이라고 프사 경로 지정.
 //                6. 로그인 처리가 완료되면, 학생 목록 화면으로 이동.
-//                Intent myIntent = new Intent(SignUpActivity.this, StudentListActivity.class);
-//                startActivity(myIntent);
-//                finish();
-//                LoginActivity.myActivity.finish();
+
             }
         });
 
