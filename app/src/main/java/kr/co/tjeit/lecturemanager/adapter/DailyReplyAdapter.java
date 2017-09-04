@@ -46,13 +46,18 @@ public class DailyReplyAdapter extends ArrayAdapter<Reply> {
             row = inf.inflate(R.layout.reply_list_item, null);
         }
 
+        Reply data = mList.get(position);
+
+        TextView nameTxt = (TextView) row.findViewById(R.id.nameTxt);
+        TextView timeTxt = (TextView) row.findViewById(R.id.timeTxt);
+        TextView contentTxt = (TextView) row.findViewById(R.id.contentTxt);
+
+        nameTxt.setText(data.getWriter().getName());
+        contentTxt.setText(data.getContent());
+
         return row;
     }
 
-    @Override
-    public int getCount() {
-        return 20;
-    }
 }
 
 

@@ -28,6 +28,7 @@
             android:text="사용자명" />
 
         <EditText
+            android:id="@+id/idEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"/>
@@ -38,6 +39,7 @@
             android:text="암호" />
 
         <EditText
+            android:id="@+id/pwEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"/>

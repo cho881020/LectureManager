@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".utill.GlobalApplication"
@@ -59,7 +60,8 @@
         </activity>
         <activity android:name=".MyProfileActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".DailyReplyActivity"></activity>
+        <activity android:name=".DailyReplyActivity" />
+        <activity android:name=".EditMyprofileActivity"></activity>
     </application>
 
 </manifest>

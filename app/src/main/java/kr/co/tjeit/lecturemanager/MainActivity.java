@@ -29,7 +29,7 @@ public class MainActivity extends BaseActivity {
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                Intent intent = new Intent(mContext, DailyReplyActivity.class);
+                Intent intent = new Intent(mContext, StudentListActivity.class);
                 intent.putExtra("클릭된날짜", data);
                 startActivity(intent);
 

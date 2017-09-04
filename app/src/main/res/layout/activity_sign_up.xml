@@ -34,6 +34,7 @@
             android:orientation="horizontal">
 
             <EditText
+                android:id="@+id/idEdt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:hint="아이디를 입력하세요."
@@ -41,6 +42,7 @@
                 android:layout_weight="5"/>
 
             <Button
+                android:id="@+id/checkDuplBtn"
                 android:layout_marginLeft="10dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -55,6 +57,7 @@
             android:text="이름"/>
 
         <EditText
+            android:id="@+id/nameEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
@@ -66,17 +69,21 @@
             android:text="비밀번호"/>
 
         <EditText
+            android:id="@+id/pwEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="비밀번호를 입력하세요."
             android:inputType="textPassword"/>
 
         <TextView
+            android:visibility="gone"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="생일"/>
 
         <EditText
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="date"
@@ -88,6 +95,7 @@
             android:text="핸드폰번호"/>
 
         <EditText
+            android:id="@+id/phoneNumEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="phone"

@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import kr.co.tjeit.lecturemanager.utill.GlobaData;
+import kr.co.tjeit.lecturemanager.utill.GlobalData;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -24,7 +24,7 @@ public class SplashActivity extends AppCompatActivity {
 
         }, 2000);
 
-        GlobaData.initGlobalData();
+        GlobalData.initGlobalData();
     }
 
 }
