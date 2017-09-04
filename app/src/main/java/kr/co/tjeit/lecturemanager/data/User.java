@@ -11,15 +11,17 @@ public class User implements Serializable {
     private String userId;
     private String userName;
     private String profileUrl;
+    private String phoneNum;
 
     public User() {
 
     }
 
-    public User(String userId, String userName, String profileUrl) {
+    public User(String userId, String userName, String profileUrl, String phoneNum) {
         this.userId = userId;
         this.userName = userName;
         this.profileUrl = profileUrl;
+        this.phoneNum = phoneNum;
     }
 
     public String getUserId() {
@@ -44,5 +46,13 @@ public class User implements Serializable {
 
     public void setProfileUrl(String profileUrl) {
         this.profileUrl = profileUrl;
+    }
+
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
     }
 }

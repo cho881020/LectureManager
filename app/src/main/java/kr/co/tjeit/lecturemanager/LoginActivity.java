@@ -92,7 +92,7 @@ public class LoginActivity extends BaseActivity {
                 if (currentProfile != null) {
 
 
-                    User tempUser = new User(currentProfile.getId(), currentProfile.getName(), currentProfile.getProfilePictureUri(500, 500).toString());
+                    User tempUser = new User(currentProfile.getId(), currentProfile.getName(), currentProfile.getProfilePictureUri(500, 500).toString(), "임시폰번");
                     ContextUtil.login(mContext, tempUser);
 //                    Toast.makeText(mContext, currentProfile.getName() + "로그인", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mContext, StudentListActivity.class);
@@ -162,7 +162,7 @@ public class LoginActivity extends BaseActivity {
                 @Override
                 public void onSuccess(UserProfile result) {
 
-                    User tempUser = new User(result.getId()+"",result.getNickname(),result.getProfileImagePath());
+                    User tempUser = new User(result.getId()+"",result.getNickname(),result.getProfileImagePath(), "임시폰번");
                     ContextUtil.login(mContext, tempUser);
 //                    Toast.makeText(mContext, result.getNickname() + "로그인성공", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mContext, StudentListActivity.class);
