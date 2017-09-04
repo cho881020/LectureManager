@@ -25,22 +25,56 @@
         <TextView
             android:layout_marginTop="10dp"
             android:id="@+id/nameTxt"
-            android:text="이름"
+            android:text="이름표시"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:visibility="gone"
             android:layout_marginTop="10dp"
             android:id="@+id/genderTxt"
             android:text="성별"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/idTxt"
+            android:text="아이디표시"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/phoneTxt"
+                android:text="전화번호"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/callBtn"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="전화걸기"/>
+        </LinearLayout>
         <Button
+            android:id="@+id/profileEditBtn"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="프로필 수정"/>
+
+        <Button
+            android:visibility="gone"
             android:id="@+id/linkBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="페이스북 페이지 열기"/>
 
         <Button
+            android:visibility="gone"
             android:layout_marginTop="10dp"
             android:id="@+id/testBtn"
             android:text="로그아웃"

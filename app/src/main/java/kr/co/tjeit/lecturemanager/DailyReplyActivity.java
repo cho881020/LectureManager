@@ -30,6 +30,7 @@ public class DailyReplyActivity extends BaseActivity {
     private EditText replyEdt;
     private Button addBtn;
     private TextView checkTxt;
+    private TextView studentListTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,15 @@ public class DailyReplyActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+
+        studentListTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, StudentListActivity.class);
+                intent.putExtra("date", mCalendarDay);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -79,6 +89,7 @@ public class DailyReplyActivity extends BaseActivity {
         this.addBtn = (Button) findViewById(R.id.addBtn);
         this.replyEdt = (EditText) findViewById(R.id.replyEdt);
         this.replyListView = (ListView) findViewById(R.id.replyListView);
+        this.studentListTxt = (TextView) findViewById(R.id.studentListTxt);
         this.checkTxt = (TextView) findViewById(R.id.checkTxt);
         this.dateTxt = (TextView) findViewById(R.id.dateTxt);
     }

@@ -9,15 +9,20 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import kr.co.tjeit.lecturemanager.adapters.StudentAdapter;
 import kr.co.tjeit.lecturemanager.utils.GloblaData;
 import kr.co.tjeit.lecturemanager.datas.UserData;
 import kr.co.tjeit.lecturemanager.utils.ContextUtil;
+import kr.co.tjeit.lecturemanager.utils.ServerUtil;
 
 public class StudentListActivity extends BaseActivity {
 
-    String[] students = {"고동윤", "권성민", "김현철", "박석영",
-            "박수현", "박영주", "손익상", "이승헌", "이요한", "한상열"};
+//    String[] students = {"고동윤", "권성민", "김현철", "박석영",
+//            "박수현", "박영주", "손익상", "이승헌", "이요한", "한상열"};
     private UserData tempUser = null;
 
     private ListView studentListView;
@@ -88,6 +93,31 @@ public class StudentListActivity extends BaseActivity {
     public void setValues() {
         tempUser = ContextUtil.getLoginUser(mContext);
         mStudentAdapter = new StudentAdapter(mContext, GloblaData.allUsers);
+
+        ServerUtil.get_all_users(mContext, new ServerUtil.JsonResponseHandler() {
+            @Override
+            public void onResponse(JSONObject json) {
+                try {
+                    JSONArray users = json.getJSONArray("users");
+
+                    for (int i = 0; i < users.length(); i++) {
+                        JSONObject user = users.getJSONObject(i);
+
+                        UserData tempUser = new UserData();
+                        tempUser.setUserId(user.getString("user_id"));
+                        tempUser.setUserName(user.getString("name"));
+                        tempUser.setUserProfilImg(user.getString("profile_photo"));
+                        tempUser.setPhoneNum(user.getString("phone_num"));
+
+                        GloblaData.allUsers.add(tempUser);
+                    }
+
+                    mStudentAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         studentListView.setAdapter(mStudentAdapter);
         mStudentAdapter.notifyDataSetChanged();
     }

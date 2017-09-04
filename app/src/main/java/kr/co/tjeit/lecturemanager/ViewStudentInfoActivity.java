@@ -15,6 +15,7 @@ public class ViewStudentInfoActivity extends BaseActivity {
     private TextView studentNameTxt;
     private Button callBtn;
     private TextView studentIdTxt;
+    private TextView phoneTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public class ViewStudentInfoActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                Uri myUri = Uri.parse("tel:010-5112-3237");
+                Uri myUri = Uri.parse("tel:" + student.getPhoneNum());
                 Intent myIntent = new Intent(Intent.ACTION_DIAL, myUri);
                 startActivity(myIntent);
 
@@ -48,11 +49,13 @@ public class ViewStudentInfoActivity extends BaseActivity {
         student = (UserData) getIntent().getSerializableExtra("student");
         studentNameTxt.setText(student.getUserName());
         studentIdTxt.setText(student.getUserId());
+        phoneTxt.setText(student.getPhoneNum());
     }
 
     @Override
     public void bindViews() {
         this.callBtn = (Button) findViewById(R.id.callBtn);
+        this.phoneTxt = (TextView) findViewById(R.id.phoneTxt);
         this.studentIdTxt = (TextView) findViewById(R.id.studentIdTxt);
         this.studentNameTxt = (TextView) findViewById(R.id.studentNameTxt);
     }

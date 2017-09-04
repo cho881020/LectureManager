@@ -96,7 +96,7 @@ public class LoginActivity extends BaseActivity {
                                 JSONObject user = json.getJSONObject("user");
                                 ContextUtil.login(mContext, new UserData(user.getString("user_id"), user.getString("name"), user.getString("profile_photo"), user.getString("phone_num")));
                                 Toast.makeText(mContext, user.getString("name") + "님이 로그인하셨습니다.", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(mContext, MyProfileActivity.class);
+                                Intent intent = new Intent(mContext, MainActivity.class);
                                 startActivity(intent);
                                 finish();
                             }

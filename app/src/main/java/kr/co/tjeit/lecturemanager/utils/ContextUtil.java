@@ -18,6 +18,7 @@ public class ContextUtil {
     private static final String USER_ID = "USER_ID";
     private static final String USER_NAME = "USER_NAME";
     private static final String USER_PROFILE_URL = "USER_PROFILE_URL";
+    private static final String USER_PHONE_NUM = "USER_PHONE_NUM";
 
     public static void login(Context context, UserData loginUser) {
         SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
@@ -25,6 +26,7 @@ public class ContextUtil {
         pref.edit().putString(USER_ID, loginUser.getUserId()).commit();
         pref.edit().putString(USER_NAME, loginUser.getUserName()).commit();
         pref.edit().putString(USER_PROFILE_URL, loginUser.getUserProfilImg()).commit();
+        pref.edit().putString(USER_PHONE_NUM, loginUser.getPhoneNum()).commit();
     }
 
     public static UserData getLoginUser(Context context) {
@@ -39,6 +41,7 @@ public class ContextUtil {
             loginUser.setUserId(pref.getString(USER_ID, ""));
             loginUser.setUserName(pref.getString(USER_NAME, ""));
             loginUser.setUserProfilImg(pref.getString(USER_PROFILE_URL, ""));
+            loginUser.setPhoneNum(pref.getString(USER_PHONE_NUM, ""));
         }
         return loginUser;
     }
@@ -49,6 +52,7 @@ public class ContextUtil {
         pref.edit().putString(USER_ID, "").commit();
         pref.edit().putString(USER_NAME, "").commit();
         pref.edit().putString(USER_PROFILE_URL, "").commit();
+        pref.edit().putString(USER_PHONE_NUM, "").commit();
 
         loginUser = null;
     }

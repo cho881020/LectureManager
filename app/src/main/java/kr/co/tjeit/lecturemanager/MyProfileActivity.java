@@ -3,21 +3,14 @@ package kr.co.tjeit.lecturemanager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.kakao.auth.Session;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import kr.co.tjeit.lecturemanager.datas.UserData;
@@ -31,6 +24,10 @@ public class MyProfileActivity extends BaseActivity {
     private android.widget.Button testBtn;
     private TextView genderTxt;
     private Button linkBtn;
+    private TextView idTxt;
+    private TextView phoneTxt;
+    private Button callBtn;
+    private Button profileEditBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +57,30 @@ public class MyProfileActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+
+        profileEditBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, EditMyProfile.class);
+                startActivity(intent);
+            }
+        });
+
+        callBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + me.getPhoneNum()));
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     public void setValues() {
         me = ContextUtil.getLoginUser(mContext);
         nameTxt.setText(me.getUserName());
+        idTxt.setText(me.getUserId());
+        phoneTxt.setText(me.getPhoneNum());
         Glide.with(mContext).load(me.getUserProfilImg()).into(profileImg);
 
 //        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
@@ -111,6 +126,10 @@ public class MyProfileActivity extends BaseActivity {
     public void bindViews() {
         this.testBtn = (Button) findViewById(R.id.testBtn);
         this.linkBtn = (Button) findViewById(R.id.linkBtn);
+        this.profileEditBtn = (Button) findViewById(R.id.profileEditBtn);
+        this.callBtn = (Button) findViewById(R.id.callBtn);
+        this.phoneTxt = (TextView) findViewById(R.id.phoneTxt);
+        this.idTxt = (TextView) findViewById(R.id.idTxt);
         this.genderTxt = (TextView) findViewById(R.id.genderTxt);
         this.nameTxt = (TextView) findViewById(R.id.nameTxt);
         this.profileImg = (CircleImageView) findViewById(R.id.profileImg);
