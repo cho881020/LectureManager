@@ -13,10 +13,12 @@ import kr.co.tjeit.lecturemanager.utils.ContextUtil;
 
 public class GloblaData {
     public static List<UserData> allUsers = new ArrayList<>();
+    public static List<Reply> allReply = new ArrayList<>();
 
     public static void initGlobaldata() {
 
         allUsers.clear();
+        allReply.clear();
 //        allUsers.add(new UserData("1", "고동윤", "tempURL", "임시폰번"));
 //        allUsers.add(new UserData("2", "권성민", "tempURL", "임시폰번"));
 //        allUsers.add(new UserData("3", "김현철", "tempURL", "임시폰번"));

@@ -24,7 +24,7 @@ public class MyProfileActivity extends BaseActivity {
     private android.widget.Button testBtn;
     private TextView genderTxt;
     private Button linkBtn;
-    private TextView idTxt;
+    private TextView userIdTxt;
     private TextView phoneTxt;
     private Button callBtn;
     private Button profileEditBtn;
@@ -79,7 +79,7 @@ public class MyProfileActivity extends BaseActivity {
     public void setValues() {
         me = ContextUtil.getLoginUser(mContext);
         nameTxt.setText(me.getUserName());
-        idTxt.setText(me.getUserId());
+        userIdTxt.setText(me.getUserId());
         phoneTxt.setText(me.getPhoneNum());
         Glide.with(mContext).load(me.getUserProfilImg()).into(profileImg);
 
@@ -129,7 +129,7 @@ public class MyProfileActivity extends BaseActivity {
         this.profileEditBtn = (Button) findViewById(R.id.profileEditBtn);
         this.callBtn = (Button) findViewById(R.id.callBtn);
         this.phoneTxt = (TextView) findViewById(R.id.phoneTxt);
-        this.idTxt = (TextView) findViewById(R.id.idTxt);
+        this.userIdTxt = (TextView) findViewById(R.id.userIdTxt);
         this.genderTxt = (TextView) findViewById(R.id.genderTxt);
         this.nameTxt = (TextView) findViewById(R.id.nameTxt);
         this.profileImg = (CircleImageView) findViewById(R.id.profileImg);

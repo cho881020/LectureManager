@@ -15,6 +15,7 @@ public class ContextUtil {
 
     private static final String prefName = "lecturePref";
 
+    private static final String ID = "ID";
     private static final String USER_ID = "USER_ID";
     private static final String USER_NAME = "USER_NAME";
     private static final String USER_PROFILE_URL = "USER_PROFILE_URL";
@@ -23,6 +24,7 @@ public class ContextUtil {
     public static void login(Context context, UserData loginUser) {
         SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
 
+        pref.edit().putInt(ID, loginUser.getId()).commit();
         pref.edit().putString(USER_ID, loginUser.getUserId()).commit();
         pref.edit().putString(USER_NAME, loginUser.getUserName()).commit();
         pref.edit().putString(USER_PROFILE_URL, loginUser.getUserProfilImg()).commit();
@@ -38,6 +40,7 @@ public class ContextUtil {
         }
         else {
             loginUser = new UserData();
+            loginUser.setId(pref.getInt(ID, -1));
             loginUser.setUserId(pref.getString(USER_ID, ""));
             loginUser.setUserName(pref.getString(USER_NAME, ""));
             loginUser.setUserProfilImg(pref.getString(USER_PROFILE_URL, ""));
@@ -49,6 +52,7 @@ public class ContextUtil {
     public static void logoutProcess(Context context) {
         SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
 
+        pref.edit().putInt(ID, -1).commit();
         pref.edit().putString(USER_ID, "").commit();
         pref.edit().putString(USER_NAME, "").commit();
         pref.edit().putString(USER_PROFILE_URL, "").commit();

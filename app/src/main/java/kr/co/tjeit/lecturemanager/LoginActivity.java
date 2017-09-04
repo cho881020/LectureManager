@@ -22,6 +22,7 @@ import com.kakao.auth.Session;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.MeResponseCallback;
+import com.kakao.usermgmt.response.model.User;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.kakao.util.helper.log.Logger;
@@ -41,6 +42,7 @@ public class LoginActivity extends BaseActivity {
     private SessionCallback callback;
     private CallbackManager callbackManager;
     private ProfileTracker profileTracker;
+
     private Button signUpBtn;
     private Button loginBtn;
 
@@ -92,10 +94,13 @@ public class LoginActivity extends BaseActivity {
                             String message = json.getString("message");
 
 
+
+
                             if (json.getBoolean("result")) {
-                                JSONObject user = json.getJSONObject("user");
-                                ContextUtil.login(mContext, new UserData(user.getString("user_id"), user.getString("name"), user.getString("profile_photo"), user.getString("phone_num")));
-                                Toast.makeText(mContext, user.getString("name") + "님이 로그인하셨습니다.", Toast.LENGTH_SHORT).show();
+                                UserData loginUser = UserData.getUserDataFromJsonObject(json.getJSONObject("user"));
+
+                                ContextUtil.login(mContext, loginUser);
+                                Toast.makeText(mContext, loginUser.getUserName() + "님이 로그인하셨습니다.", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(mContext, MainActivity.class);
                                 startActivity(intent);
                                 finish();
@@ -130,7 +135,7 @@ public class LoginActivity extends BaseActivity {
                 }
                 else {
                     Toast.makeText(mContext, currentProfile.getName() + "님 접속", Toast.LENGTH_SHORT).show();
-                    ContextUtil.login(mContext, new UserData(currentProfile.getId(), currentProfile.getName(), currentProfile.getProfilePictureUri(500,500).toString(), "임시폰번"));
+//                    ContextUtil.login(mContext, new UserData(currentProfile.getId(), currentProfile.getName(), currentProfile.getProfilePictureUri(500,500).toString(), "임시폰번"));
                     Intent intent = new Intent(mContext, MyProfileActivity.class);
                     startActivity(intent);
                     finish();
@@ -175,7 +180,7 @@ public class LoginActivity extends BaseActivity {
                 @Override
                 public void onSuccess(UserProfile result) {
                     Toast.makeText(mContext, result.getNickname() + "님 접속", Toast.LENGTH_SHORT).show();
-                    ContextUtil.login(mContext, new UserData(result.getId()+"", result.getNickname(), result.getProfileImagePath(), "임시폰번"));
+//                    ContextUtil.login(mContext, new UserData(result.getId()+"", result.getNickname(), result.getProfileImagePath(), "임시폰번"));
                     Intent intent = new Intent(mContext, MyProfileActivity.class);
                     startActivity(intent);
                     finish();

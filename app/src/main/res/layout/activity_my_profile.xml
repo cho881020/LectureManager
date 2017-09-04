@@ -37,7 +37,7 @@
             android:layout_height="wrap_content" />
         <TextView
             android:layout_marginTop="10dp"
-            android:id="@+id/idTxt"
+            android:id="@+id/userIdTxt"
             android:text="아이디표시"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

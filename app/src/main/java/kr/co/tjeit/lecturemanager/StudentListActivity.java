@@ -94,6 +94,7 @@ public class StudentListActivity extends BaseActivity {
         tempUser = ContextUtil.getLoginUser(mContext);
         mStudentAdapter = new StudentAdapter(mContext, GloblaData.allUsers);
 
+        // 서버에서 수강생 정보 받아와서 뿌려주기 (GlobalData 활용)
         ServerUtil.get_all_users(mContext, new ServerUtil.JsonResponseHandler() {
             @Override
             public void onResponse(JSONObject json) {
@@ -102,13 +103,7 @@ public class StudentListActivity extends BaseActivity {
 
                     for (int i = 0; i < users.length(); i++) {
                         JSONObject user = users.getJSONObject(i);
-
-                        UserData tempUser = new UserData();
-                        tempUser.setUserId(user.getString("user_id"));
-                        tempUser.setUserName(user.getString("name"));
-                        tempUser.setUserProfilImg(user.getString("profile_photo"));
-                        tempUser.setPhoneNum(user.getString("phone_num"));
-
+                        UserData tempUser = UserData.getUserDataFromJsonObject(user);
                         GloblaData.allUsers.add(tempUser);
                     }
 

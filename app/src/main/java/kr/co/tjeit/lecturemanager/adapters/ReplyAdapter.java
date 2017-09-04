@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -17,6 +19,8 @@ import java.util.List;
 import kr.co.tjeit.lecturemanager.R;
 import kr.co.tjeit.lecturemanager.datas.Reply;
 import kr.co.tjeit.lecturemanager.datas.UserData;
+import kr.co.tjeit.lecturemanager.utils.ContextUtil;
+import kr.co.tjeit.lecturemanager.utils.ServerUtil;
 
 /**
  * Created by the on 2017-08-31.
@@ -49,6 +53,8 @@ public class ReplyAdapter extends ArrayAdapter<Reply> {
         TextView userNameTxt = (TextView) row.findViewById(R.id.userNameTxt);
         TextView replyTimeTxt = (TextView) row.findViewById(R.id.replyTimeTxt);
         TextView contentTxt = (TextView) row.findViewById(R.id.contentTxt);
+
+
 
         userNameTxt.setText(data.getWriter().getUserName());
         SimpleDateFormat myDataFormat = new SimpleDateFormat("mm:ss a");
