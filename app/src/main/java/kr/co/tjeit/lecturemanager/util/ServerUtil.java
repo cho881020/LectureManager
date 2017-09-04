@@ -79,7 +79,7 @@ public class ServerUtil {
         Map<String, String> data = new HashMap<String, String>();
         data.put("user_id", id);
 
-        AsyncHttpRequest.post(context, url, data, true, new AsyncHttpRequest.HttpResponseHandler() {
+        AsyncHttpRequest.post(context, url, data, false, new AsyncHttpRequest.HttpResponseHandler() {
 
             @Override
             public boolean onPrepare() {

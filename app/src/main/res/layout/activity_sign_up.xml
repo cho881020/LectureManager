@@ -57,6 +57,7 @@
             android:text="이름"/>
 
         <EditText
+            android:id="@+id/nameEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
@@ -68,6 +69,7 @@
             android:text="비밀번호"/>
 
         <EditText
+            android:id="@+id/pwEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="비밀번호를 입력하세요."
@@ -92,6 +94,7 @@
             android:text="핸드폰번호"/>
 
         <EditText
+            android:id="@+id/phoneEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="phone"
