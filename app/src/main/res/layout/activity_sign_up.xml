@@ -34,13 +34,15 @@
             android:orientation="horizontal">
 
             <EditText
+                android:id="@+id/idEdt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="5"
                 android:hint="아이디를 입력하세요."
-                android:singleLine="true"
-                android:layout_weight="5"/>
+                android:singleLine="true" />
 
             <Button
+                android:id="@+id/checkDuplBtn"
                 android:layout_marginLeft="10dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
