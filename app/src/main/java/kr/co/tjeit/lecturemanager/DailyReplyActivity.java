@@ -59,6 +59,7 @@ public class DailyReplyActivity extends BaseActivity {
                     public void onResponse(JSONObject json) {
                         try {
                             if (json.getBoolean("result")) {
+                                replyEdt.setText("");
                                 getRepliesFromServer();
                             }
                         } catch (JSONException e) {
