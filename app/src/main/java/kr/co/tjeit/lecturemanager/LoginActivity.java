@@ -47,8 +47,6 @@ public class LoginActivity extends BaseActivity {
     private android.widget.EditText pwEdt;
 
 
-
-
 //    아이디 / 비번 입력 후 로그인 버튼 누르면
 //    1. 서버에 실제로 로그인요청
 //    2. 로그인에 성공하면 학생 목록 띄워주기
@@ -76,8 +74,6 @@ public class LoginActivity extends BaseActivity {
     public void setupEvents() {
 
 
-
-
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,23 +98,19 @@ public class LoginActivity extends BaseActivity {
                                 finish();
 
 //                                사용자 이름 추출
-                                String loginUserName = json.getJSONObject("user").getString("name");
-                                String loginUserId = json.getJSONObject("user").getString("user_id");
-                                String loginUserProfileURL = json.getJSONObject("user").getString("profile_photo");
-                                String loginUserPhoneNum = json.getJSONObject("user").getString("phone_num");
+                                User loginUserId = User.getUserFromJsonObject(json.getJSONObject("user"));
 
 //                                실제로 로그인 했다는 사실을 기록.
 //                                로그인 처리가 되고나면, 실제 사용자 정보가
 //                                프로필 조회화면에서 나타나도록
 
 
-                                ContextUtil.login(mContext, new User(loginUserId, loginUserName, loginUserProfileURL, loginUserPhoneNum));
+                                ContextUtil.login(mContext, loginUserId);
 
-                                Toast.makeText(mContext, loginUserName + "님이 로그인 했습니다.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, loginUserId.getUserName() + "님이 로그인 했습니다.", Toast.LENGTH_SHORT).show();
 
 
-                            }
-                            else {
+                            } else {
                                 Toast.makeText(mContext, "로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show();
                             }
 
@@ -150,8 +142,8 @@ public class LoginActivity extends BaseActivity {
                 if (currentProfile != null) {
 
 
-                    User tempUser = new User(currentProfile.getId(), currentProfile.getName(), currentProfile.getProfilePictureUri(500, 500).toString(), "임시폰번");
-                    ContextUtil.login(mContext, tempUser);
+//                    User tempUser = new User(currentProfile.getId(), currentProfile.getName(), currentProfile.getProfilePictureUri(500, 500).toString(), "임시폰번");
+//                    ContextUtil.login(mContext, tempUser);
 //                    Toast.makeText(mContext, currentProfile.getName() + "로그인", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mContext, StudentListActivity.class);
                     startActivity(intent);
@@ -222,8 +214,8 @@ public class LoginActivity extends BaseActivity {
                 @Override
                 public void onSuccess(UserProfile result) {
 
-                    User tempUser = new User(result.getId() + "", result.getNickname(), result.getProfileImagePath(), "임시폰번");
-                    ContextUtil.login(mContext, tempUser);
+//                    User tempUser = new User(result.getId() + "", result.getNickname(), result.getProfileImagePath(), "임시폰번");
+//                    ContextUtil.login(mContext, tempUser);
 //                    Toast.makeText(mContext, result.getNickname() + "로그인성공", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mContext, StudentListActivity.class);
                     startActivity(intent);
