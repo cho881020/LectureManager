@@ -9,11 +9,11 @@ import kr.co.tjeit.lecturemanager.data.User;
  * Created by the on 2017-08-31.
  */
 
-public class GlobalData  {
+public class GlobalData {
 
     public static List<User> allUsers = new ArrayList<>();
 
-    public static void initData () {
+    public static void initData() {
 
         allUsers.clear();
         allUsers.add(new User("1", "고동윤", "tempURL", "임시폰번"));

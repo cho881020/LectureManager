@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import kr.co.tjeit.lecturemanager.util.ContextUtil;
@@ -49,25 +50,32 @@ public class SignUpActivity extends BaseActivity {
 //                        json 내부에서 중복 여부를 파악.
 //                        파악된 중복 여부에 따라 중복확인 후처리 작업 진행.
 
-//                        json 파싱해서 isIdDupl을 상황에 맞는 값으로 세팅.
-                        boolean isIdDupl = true;
 
-                        if (isIdDupl) {
+//                        json 파싱해서 isIdDupl을 상황에 맞는 값으로 세팅.
+                        boolean isIdDupl = false;
+                        try {
+                            isIdDupl = json.getBoolean("result");
+                            if (isIdDupl) {
 //                    아이디가 중복된 상황.
 //                    아이디가 중복되었다면,
 //                    중복 확인 (제목), 이미 사용중인 아이디 입니다. (메세지)
 //                    확인 버튼만 있는 경고창 띄워주기.
-                            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                            builder.setTitle("중복 확인");
-                            builder.setMessage("이미 사용중인 아이디 입니다.");
-                            builder.setPositiveButton("확인", null);
-                            builder.show();
+                                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                                builder.setTitle("중복 확인");
+                                builder.setMessage("이미 사용중인 아이디 입니다.");
+                                builder.setPositiveButton("확인", null);
+                                builder.show();
 
-                        } else {
+                            } else {
 //                    아이디가 중복되지 않는 상황.
-                            Toast.makeText(mContext, "사용해도 좋은 아이디 입니다.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "사용해도 좋은 아이디 입니다.", Toast.LENGTH_SHORT).show();
 //                    아이디가 중복되지 않으면, 사용해도 좋은 아이디 입니다. Toast
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
+
+
 
 
                     }
