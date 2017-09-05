@@ -2,6 +2,7 @@ package kr.co.tjeit.lecturemanager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,8 +28,11 @@ import com.kakao.util.exception.KakaoException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Locale;
+
 import kr.co.tjeit.lecturemanager.data.User;
 import kr.co.tjeit.lecturemanager.util.ContextUtil;
+import kr.co.tjeit.lecturemanager.util.GlobalData;
 import kr.co.tjeit.lecturemanager.util.ServerUtil;
 
 public class LoginActivity extends BaseActivity {
@@ -75,41 +79,47 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                ServerUtil.sign_in(mContext, UserIdEdt.getText().toString(), UserPwEdt.getText().toString(),
-                        new ServerUtil.JsonResponseHandler() {
-                            @Override
-                            public void onResponse(JSONObject json) {
-                                try {
-                                    if (json.getBoolean("result")) {
-//                                        로그인에 성공
-                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
+                ServerUtil.sign_in(mContext, UserIdEdt.getText().toString(), UserPwEdt.getText().toString(), new ServerUtil.JsonResponseHandler() {
+                    @Override
+                    public void onResponse(JSONObject json) {
 
-//                                        로그인에 성공하면
-//                                        ---님이 로그인했습니다. Toast 띄우기.
+                        try {
+                            if (json.getBoolean("result")){
+//                                User loginUser = User.getUserFromJsonObject(json.getJSONObject("user"));
+                                User temp = new User();
+                                temp.setId(json.getJSONObject("user").getInt("id"));
+                                temp.setUserId(json.getJSONObject("user").getString("user_id"));
+                                temp.setName(json.getJSONObject("user").getString("name"));
+                                temp.setProfileURL(json.getJSONObject("user").getString("profile_photo"));
+                                temp.setPhoneNum(json.getJSONObject("user").getString("phone_num"));
 
-                                       User loginUser = User.getUserFromJsonObject(json.getJSONObject("user"));
+                                String wecomMessageStr = String.format(Locale.KOREA, "%s님이 로그인 했습니다.", temp.getName());
+                                Toast.makeText(mContext, wecomMessageStr, Toast.LENGTH_SHORT).show();
 
-                                        ContextUtil.login(mContext, loginUser);
+                                ContextUtil.login(mContext, temp);
 
-                                        Toast.makeText(mContext, loginUser.getName() + "님이 로그인 했습니다.", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(mContext, MainActivity.class);
+                                startActivity(intent);
+                                finish();
 
-                                    } else {
-//                                        로그인에 실패
-                                        Toast.makeText(mContext, "로그인에 실패했습니다. 아이디와 비번을 확인해주세요.", Toast.LENGTH_SHORT).show();
-                                    }
+                            }else {
 
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                                builder.setTitle("로그인 실패");
+                                builder.setMessage("아아디/비밀번호 확인");
+                                builder.setPositiveButton("확인", null);
+                                builder.show();
                             }
-                        });
-
-
-
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
+
+
+
     }
 
     @Override
@@ -134,6 +144,28 @@ public class LoginActivity extends BaseActivity {
                 } else {
 //                    로그인 됨.
 
+                    ServerUtil.facebook_login(mContext, currentProfile.getId(), currentProfile.getName(), currentProfile.getProfilePictureUri(300, 300).toString(), new ServerUtil.JsonResponseHandler() {
+                        @Override
+                        public void onResponse(JSONObject json) {
+                            try {
+                                if (json.getBoolean("result")){
+                                    User fbUser = User.getUserFromJsonObject(json.getJSONObject("userinfo"));
+                                    ContextUtil.login(mContext, fbUser);
+                                    Toast.makeText(mContext, fbUser.getName() + "님이 로그인 하셨습니다.", Toast.LENGTH_SHORT).show();
+
+                                }else {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                                    builder.setTitle("로그인 실패");
+                                    builder.setMessage("아아디/비밀번호 확인");
+                                    builder.setPositiveButton("확인", null);
+                                    builder.show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
 //                    Toast.makeText(mContext, currentProfile.getName() + "님 접속", Toast.LENGTH_SHORT).show();
 //
 //                    User tempUser = new User(currentProfile.getId(),
@@ -153,6 +185,8 @@ public class LoginActivity extends BaseActivity {
         fbLoginBtn.registerCallback(cm, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+
+
 
             }
 

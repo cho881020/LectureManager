@@ -29,6 +29,99 @@ public class ServerUtil {
 
     // 사용자 관련 함수 모음
 
+//    페이스북 로그인 기능
+
+    public static void facebook_login(final Context context, final String userId, final String name, final String profileURL, final JsonResponseHandler handler) {
+        String url = BASE_URL+"mobile/facebook_login";
+        //		String registrationId = ContextUtil.getRegistrationId(context);
+
+        Map<String, String> data = new HashMap<String, String>();
+        data.put("uid", userId);
+        data.put("name", name);
+        data.put("profile_url", profileURL);
+
+
+
+        AsyncHttpRequest.post(context, url,  data, false, new AsyncHttpRequest.HttpResponseHandler() {
+
+            @Override
+            public boolean onPrepare() {
+                return true;
+            }
+
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                try {
+                    JSONObject json = new JSONObject(response);
+
+                    if (handler != null)
+                        handler.onResponse(json);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onCancelled() {
+
+            }
+
+        });
+    }
+
+
+
+//    로그인 기능
+
+    public static void sign_in(final Context context, final String id, final String pw, final JsonResponseHandler handler) {
+        String url = BASE_URL+"mobile/sign_in";
+        //		String registrationId = ContextUtil.getRegistrationId(context);
+
+        Map<String, String> data = new HashMap<String, String>();
+        data.put("user_id", id);
+        data.put("password", pw);
+
+
+
+        AsyncHttpRequest.post(context, url,  data, false, new AsyncHttpRequest.HttpResponseHandler() {
+
+            @Override
+            public boolean onPrepare() {
+                return true;
+            }
+
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                try {
+                    JSONObject json = new JSONObject(response);
+
+                    if (handler != null)
+                        handler.onResponse(json);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onCancelled() {
+
+            }
+
+        });
+    }
+
+
+
 //    모든 댓글 불러오기
 
     public static void get_all_replies(final Context context, final JsonResponseHandler handler) {
@@ -203,48 +296,8 @@ public class ServerUtil {
         });
     }
 
-//    자체 로그인 기능
+//   로그인 기능
 
-    public static void sign_in(final Context context, final String id, final String pw, final JsonResponseHandler handler) {
-        String url = BASE_URL+"mobile/sign_in";
-        //		String registrationId = ContextUtil.getRegistrationId(context);
-
-        Map<String, String> data = new HashMap<String, String>();
-        data.put("user_id", id);
-        data.put("password", pw);
-
-
-        AsyncHttpRequest.post(context, url,  data, false, new AsyncHttpRequest.HttpResponseHandler() {
-
-            @Override
-            public boolean onPrepare() {
-                return true;
-            }
-
-            @Override
-            public void onResponse(String response) {
-                System.out.println(response);
-                try {
-                    JSONObject json = new JSONObject(response);
-
-                    if (handler != null)
-                        handler.onResponse(json);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onCancelled() {
-
-            }
-
-        });
-    }
 
 //    회원가입기능
 
