@@ -83,7 +83,7 @@ public class MyProfileActivity extends BaseActivity {
 //        request.executeAsync();
 
         me = ContextUtil.getLoginUser(mContext);
-        nameTxt.setText(me.getName());
+        nameTxt.setText(me.getUserId());
         phoneNumTxt.setText(me.getPhoneNum());
         Log.d("로그", me.getPhoneNum());
         Glide.with(mContext).load(Uri.parse(me.getProfileURL())).into(profileimage);

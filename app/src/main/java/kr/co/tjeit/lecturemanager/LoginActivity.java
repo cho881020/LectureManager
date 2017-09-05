@@ -1,5 +1,6 @@
 package kr.co.tjeit.lecturemanager;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +28,8 @@ import com.kakao.util.exception.KakaoException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Locale;
+
 import kr.co.tjeit.lecturemanager.data.User;
 import kr.co.tjeit.lecturemanager.util.ContextUtil;
 import kr.co.tjeit.lecturemanager.util.ServerUtil;
@@ -45,7 +48,6 @@ public class LoginActivity extends BaseActivity {
     CallbackManager cm;
     ProfileTracker pt;
 
-    User loginUser = new User();
     private android.widget.EditText idEdt;
     private android.widget.EditText pwEdt;
 
@@ -76,50 +78,29 @@ public class LoginActivity extends BaseActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                ServerUtil.sign_in(mContext, idEdt.getText().toString(),
-                        pwEdt.getText().toString(), new ServerUtil.JsonResponseHandler() {
+                ServerUtil.sign_in(mContext, idEdt.getText().toString(), pwEdt.getText().toString(),
+                        new ServerUtil.JsonResponseHandler() {
                             @Override
                             public void onResponse(JSONObject json) {
-
                                 try {
                                     if (json.getBoolean("result")) {
-//                                        로그인에 성공
-
-                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
-
-//                                        로그인에 성공하면
-//                                        ~~님이 로그인했습니다. Toast 띄우기.
-
-//                                        사용자 이름 추출
-
                                         User loginUser = User.getUserFromJsonObject(json.getJSONObject("user"));
-
-
-//                                        실제로 로그인 했다는 사실을 기록.
-//                                        로그인 처리가 되고나면, 실제 사용자 정보가
-//                                        프로필 조회화면에서 나타나도록.
-
                                         ContextUtil.login(mContext, loginUser);
-
-                                        Toast.makeText(mContext, loginUser.getName()+"님이 로그인 했습니다.", Toast.LENGTH_SHORT).show();
-
-
-                                    }
-                                    else {
-//                                        로그인에 실패
-
-                                        Toast.makeText(mContext, "로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show();
+                                        String welcomMessageStr = String.format(Locale.KOREA, "%s님이 로그인 했습니다.", loginUser.getName());
+                                        Toast.makeText(LoginActivity.this, welcomMessageStr, Toast.LENGTH_SHORT).show();
+                                        intentMain();
+                                    } else {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                                        builder.setTitle("로그인 실패");
+                                        builder.setMessage("아이디와 비밀번호를 확인해주세요.");
+                                        builder.setPositiveButton("확인", null);
+                                        builder.show();
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-
                             }
                         });
-
             }
         });
     }
@@ -142,22 +123,24 @@ public class LoginActivity extends BaseActivity {
             @Override
             protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
                 if (currentProfile == null) {
-//                    로그아웃 됨.
-                }
-                else {
+                    LoginManager.getInstance().logOut();
+                } else {
 //                    로그인 됨.
-
-//                    Toast.makeText(mContext, currentProfile.getName() + "님 접속", Toast.LENGTH_SHORT).show();
-
-//                    User tempUser = new User(currentProfile.getId(),
-//                            currentProfile.getName(),
-//                            currentProfile.getProfilePictureUri(500,500).toString(), "");
-
-//                    ContextUtil.login(mContext, tempUser);
-
-                    Intent intent = new Intent(mContext, MainActivity.class);
-                    startActivity(intent);
-
+                    ServerUtil.facebook_login(mContext, currentProfile.getId(), currentProfile.getName(), currentProfile.getProfilePictureUri(200, 200).toString(),
+                            new ServerUtil.JsonResponseHandler() {
+                                @Override
+                                public void onResponse(JSONObject json) {
+                                    try {
+                                        User loginUser = User.getUserFromJsonObject(json.getJSONObject("userInfo"));
+                                        ContextUtil.login(mContext, loginUser);
+                                        String welcomMessageStr = String.format(Locale.KOREA, "%s님이 로그인 했습니다.", loginUser.getName());
+                                        Toast.makeText(LoginActivity.this, welcomMessageStr, Toast.LENGTH_SHORT).show();
+                                        intentMain();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
                 }
             }
         };
@@ -219,15 +202,6 @@ public class LoginActivity extends BaseActivity {
                 @Override
                 public void onSuccess(UserProfile result) {
 
-//                    User tempUser = new User(result.getId()+"",
-//                            result.getNickname(),
-//                            result.getProfileImagePath(),
-//                            "임시폰번");
-//
-//                    ContextUtil.login(mContext, tempUser);
-
-                    Intent intent = new Intent(mContext, MainActivity.class);
-                    startActivity(intent);
                 }
             });
         }
