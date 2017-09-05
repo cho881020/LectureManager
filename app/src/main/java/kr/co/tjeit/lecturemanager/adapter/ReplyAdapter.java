@@ -9,12 +9,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import kr.co.tjeit.lecturemanager.R;
 import kr.co.tjeit.lecturemanager.data.Reply;
 import kr.co.tjeit.lecturemanager.data.User;
+import kr.co.tjeit.lecturemanager.util.ContextUtil;
+import kr.co.tjeit.lecturemanager.util.ServerUtil;
 
 /**
  * Created by the on 2017-08-31.
@@ -42,14 +47,19 @@ public class ReplyAdapter extends ArrayAdapter<Reply> {
             row = inf.inflate(R.layout.reply_list_item, null);
         }
 
-//        Reply data = mList.get(position);
+        Reply data = mList.get(position);
+        TextView nameTxt = (TextView) row.findViewById(R.id.nameTxt);
+        TextView contentTxt = (TextView) row.findViewById(R.id.contentTxt);
+
+        nameTxt.setText(data.getWriter().getUserName());
+        contentTxt.setText(data.getContent());
+
+
+
+
 
 
         return row;
     }
 
-    @Override
-    public int getCount() {
-        return 20;
-    }
 }

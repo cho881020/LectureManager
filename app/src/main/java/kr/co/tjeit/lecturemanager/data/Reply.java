@@ -1,5 +1,8 @@
 package kr.co.tjeit.lecturemanager.data;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.util.Calendar;
 
@@ -17,8 +20,29 @@ public class Reply implements Serializable {
     private int user_id; // 어떤 사용자가 작성한 댓글인지 사용자의 번호를 기록
 //    ex. user_id => 25 : 이 댓글의 작성자의 이름? 천고바해킹하지마세요요
 
-   //    댓글 데이터의 관계설정
+    //    댓글 데이터의 관계설정
     private User writer;
+
+    public static Reply getReplyFromJson(JSONObject json) {
+        Reply tempReply = new Reply();
+
+//        데이터 파싱
+
+        try {
+            tempReply.setId(json.getInt("id"));
+            tempReply.setContent(json.getString("content"));
+            tempReply.setUser_id(json.getInt("user_id"));
+            tempReply.setCreatedAt(Calendar.getInstance());
+//            User클래스에서 만들어둔 static 메쏘드를 활용해서
+//            다시 파싱을 구현하는 일 없이. 간단하게 코딩을 마무리.
+//            => getUserFromJsonObject 기능 활용
+            tempReply.setWriter(User.getUserFromJsonObject(json.getJSONObject("writer")));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return tempReply;
+    }
 
     public Reply() {
     }

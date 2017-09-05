@@ -60,6 +60,7 @@ public class EditMyProfileActivity extends BaseActivity {
     public void setValues() {
 
         nameEdt.setText(myInfo.getUserName());
+        phoneEdt.setText(myInfo.getPhoneNum());
 
     }
 

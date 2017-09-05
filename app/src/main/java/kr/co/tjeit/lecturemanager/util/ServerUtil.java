@@ -2,6 +2,7 @@ package kr.co.tjeit.lecturemanager.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Handler;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -29,14 +30,98 @@ public class ServerUtil {
 
     // 사용자 관련 함수 모음
 
+    //    페이스북 로그인
+    public static void facebook_login(Context context, String id, String name, String profile ,final JsonResponseHandler handler) {
+        String url = BASE_URL + "mobile/facebook_login";
+
+        Map<String, String> data = new HashMap<String, String>();
+        data.put("uid", id);
+        data.put("name", name);
+        data.put("profile_url", profile);
+
+        AsyncHttpRequest.post(context, url, data, true, new AsyncHttpRequest.HttpResponseHandler() {
+            @Override
+            public boolean onPrepare() {
+                return true;
+            }
+
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                try {
+                    JSONObject json = new JSONObject(response);
+
+                    if (handler != null)
+                        handler.onResponse(json);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onCancelled() {
+
+            }
+        });
+    }
+
+
+
     //    자체 로그인 기능
-    public static void sign_in(final Context context, final String id, final String pw, final JsonResponseHandler handler) {
+    public static void sign_in(Context context, String id, String pw, final JsonResponseHandler handler) {
         String url = BASE_URL + "mobile/sign_in";
-        //		String registrationId = ContextUtil.getRegistrationId(context);
 
         Map<String, String> data = new HashMap<String, String>();
         data.put("user_id", id);
         data.put("password", pw);
+
+        AsyncHttpRequest.post(context, url, data, true, new AsyncHttpRequest.HttpResponseHandler() {
+            @Override
+            public boolean onPrepare() {
+                return true;
+            }
+
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                try {
+                    JSONObject json = new JSONObject(response);
+
+                    if (handler != null)
+                        handler.onResponse(json);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onCancelled() {
+
+            }
+        });
+    }
+
+    //    댓글
+    public static void register_reply(final Context context, final int id, final String content, final JsonResponseHandler handler) {
+        String url = BASE_URL + "mobile/register_reply";
+        //		String registrationId = ContextUtil.getRegistrationId(context);
+
+        Map<String, String> data = new HashMap<String, String>();
+        data.put("user_id", id + "");
+//        data.put("password", pw);
+        data.put("content", content);
+//        data.put("profile_photo", profilePhoto);
+//        data.put("phone_num", phoneNum);
 
         AsyncHttpRequest.post(context, url, data, true, new AsyncHttpRequest.HttpResponseHandler() {
 
@@ -71,7 +156,54 @@ public class ServerUtil {
         });
     }
 
-//    사용자 정보 수정
+
+    //   전체 댓글 보기
+    public static void get_all_replies(final Context context, final JsonResponseHandler handler) {
+        String url = BASE_URL + "mobile/get_all_replies";
+        //		String registrationId = ContextUtil.getRegistrationId(context);
+
+        Map<String, String> data = new HashMap<String, String>();
+//        data.put("user_id", id+"");
+////        data.put("password", pw);
+//        data.put("content", content);
+//        data.put("profile_photo", profilePhoto);
+//        data.put("phone_num", phoneNum);
+
+        AsyncHttpRequest.post(context, url, data, true, new AsyncHttpRequest.HttpResponseHandler() {
+
+            @Override
+            public boolean onPrepare() {
+                return true;
+            }
+
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                try {
+                    JSONObject json = new JSONObject(response);
+
+                    if (handler != null)
+                        handler.onResponse(json);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onCancelled() {
+
+            }
+
+        });
+    }
+
+
+    //    사용자 정보 수정
     public static void update_user_info(final Context context, final String userId, final String name, final String phoneNum, final JsonResponseHandler handler) {
         String url = BASE_URL + "mobile/update_user_info";
         //		String registrationId = ContextUtil.getRegistrationId(context);
@@ -115,7 +247,6 @@ public class ServerUtil {
 
         });
     }
-
 
 
     //    모든 회원 목록 받아오기
@@ -164,7 +295,7 @@ public class ServerUtil {
     }
 
     //    회원 가입 기능
-    public static void sign_up(final Context context, final String id, final String pw, final String name,final String profilePhoto, final String phoneNum, final JsonResponseHandler handler) {
+    public static void sign_up(final Context context, final String id, final String pw, final String name, final String profilePhoto, final String phoneNum, final JsonResponseHandler handler) {
         String url = BASE_URL + "mobile/sign_up";
         //		String registrationId = ContextUtil.getRegistrationId(context);
 
@@ -252,46 +383,5 @@ public class ServerUtil {
 
 
     // 회원 가입
-    public static void facebook_login(final Context context, final String name, final String uid, final String email, final JsonResponseHandler handler) {
-        String url = BASE_URL + "mobile/facebook_login";
-        //		String registrationId = ContextUtil.getRegistrationId(context);
-
-        Map<String, String> data = new HashMap<String, String>();
-        data.put("uid", uid);
-        data.put("name", name);
-        data.put("email", email);
-
-        AsyncHttpRequest.post(context, url, data, true, new AsyncHttpRequest.HttpResponseHandler() {
-
-            @Override
-            public boolean onPrepare() {
-                return true;
-            }
-
-            @Override
-            public void onResponse(String response) {
-                System.out.println(response);
-                try {
-                    JSONObject json = new JSONObject(response);
-
-                    if (handler != null)
-                        handler.onResponse(json);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onCancelled() {
-
-            }
-
-        });
-    }
 
 }

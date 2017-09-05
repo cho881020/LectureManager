@@ -24,6 +24,7 @@ public class MyProfileActivity extends BaseActivity {
     private TextView idTxt;
     private TextView phoneTxt;
     private TextView editProfileBtn;
+    private TextView userIdTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,10 @@ public class MyProfileActivity extends BaseActivity {
 
     @Override
     public void setValues() {
+
+        phoneTxt.setText(ContextUtil.getLoginUser(mContext).getPhoneNum());
+        userIdTxt.setText(ContextUtil.getLoginUser(mContext).getUserId());
+        nameTxt.setText(ContextUtil.getLoginUser(mContext).getUserName());
 
 
 //        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
@@ -104,8 +109,8 @@ public class MyProfileActivity extends BaseActivity {
     @Override
     public void bindViews() {
         this.profileEdtBtn = (Button) findViewById(R.id.profileEdtBtn);
-        this.editProfileBtn = (TextView) findViewById(R.id.editProfileBtn);
-        this.idTxt = (TextView) findViewById(R.id.idTxt);
+        this.phoneTxt = (TextView) findViewById(R.id.phoneTxt);
+        this.userIdTxt = (TextView) findViewById(R.id.userIdTxt);
         this.nameTxt = (TextView) findViewById(R.id.nameTxt);
         this.profileImg = (CircleImageView) findViewById(R.id.profileImg);
     }

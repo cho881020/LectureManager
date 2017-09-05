@@ -111,7 +111,7 @@ public class StudentListActivity extends BaseActivity {
                     for (int i = 0; i < users.length(); i++) {
                         JSONObject user = users.getJSONObject(i);
 
-                        User tempUser = User.getUserFromJsonObject(json.getJSONObject("user"));
+                        User tempUser = User.getUserFromJsonObject(user);
 
                         GlobalData.allUsers.add(tempUser);
                     }
