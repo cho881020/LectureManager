@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -42,6 +43,9 @@ public class LoginActivity extends BaseActivity {
     private SessionCallback callback;
     private CallbackManager callbackManager;
     private ProfileTracker profileTracker;
+
+    UserData loginUser = null;
+
 
     private Button signUpBtn;
     private Button loginBtn;
@@ -91,30 +95,25 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void onResponse(JSONObject json) {
                         try {
-                            String message = json.getString("message");
-
-
-
-
                             if (json.getBoolean("result")) {
-                                UserData loginUser = UserData.getUserDataFromJsonObject(json.getJSONObject("user"));
-
+                                loginUser = UserData.getUserDataFromJsonObject(json.getJSONObject("user"));
                                 ContextUtil.login(mContext, loginUser);
-                                Toast.makeText(mContext, loginUser.getUserName() + "님이 로그인하셨습니다.", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(mContext, MainActivity.class);
+                                Toast.makeText(mContext, loginUser.getUserName() + "님이 로그인했습니다.", Toast.LENGTH_SHORT).show();
                                 startActivity(intent);
                                 finish();
                             }
                             else {
-                                Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+                                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                                builder.setMessage("아이디와 비번을 확인해주세요.")
+                                        .setTitle("로그인 실패")
+                                        .setPositiveButton("확인", null).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
                 });
-
-
             }
         });
     }
@@ -136,7 +135,20 @@ public class LoginActivity extends BaseActivity {
                 else {
                     Toast.makeText(mContext, currentProfile.getName() + "님 접속", Toast.LENGTH_SHORT).show();
 //                    ContextUtil.login(mContext, new UserData(currentProfile.getId(), currentProfile.getName(), currentProfile.getProfilePictureUri(500,500).toString(), "임시폰번"));
-                    Intent intent = new Intent(mContext, MyProfileActivity.class);
+                    ServerUtil.facebook_login(mContext, currentProfile.getName(), currentProfile.getId(), currentProfile.getProfilePictureUri(500, 500).toString(), new ServerUtil.JsonResponseHandler() {
+                        @Override
+                        public void onResponse(JSONObject json) {
+                            try {
+                                if (json.getBoolean("result")) {
+                                    loginUser = UserData.getUserDataFromJsonObject(json.getJSONObject("userInfo"));
+                                    ContextUtil.login(mContext, loginUser);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                    Intent intent = new Intent(mContext, MainActivity.class);
                     startActivity(intent);
                     finish();
                 }

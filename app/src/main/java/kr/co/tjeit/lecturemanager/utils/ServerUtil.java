@@ -114,7 +114,8 @@ public class ServerUtil {
         });
     }
 
-    // 자체 로그인 기능
+
+    // 로그인 기능
     public static void sign_in(final Context context, final String id, final String pw, final JsonResponseHandler handler) {
         String url = BASE_URL+"mobile/sign_in";
         //		String registrationId = ContextUtil.getRegistrationId(context);
@@ -154,7 +155,6 @@ public class ServerUtil {
 
         });
     }
-
     // 모든 회원 목록 받아오기
     public static void get_all_users(final Context context, final JsonResponseHandler handler) {
         String url = BASE_URL+"mobile/get_all_users";
@@ -315,15 +315,15 @@ public class ServerUtil {
         });
     }
 
-    // 회원 가입
-    public static void facebook_login(final Context context, final String name, final String uid, final String email, final JsonResponseHandler handler) {
+    // 페북 로그인 기능
+    public static void facebook_login(final Context context, final String name, final String uid, final String profile_url, final JsonResponseHandler handler) {
         String url = BASE_URL+"mobile/facebook_login";
         //		String registrationId = ContextUtil.getRegistrationId(context);
 
         Map<String, String> data = new HashMap<String, String>();
         data.put("uid", uid);
         data.put("name", name);
-        data.put("email", email);
+        data.put("profile_url", profile_url);
 
         AsyncHttpRequest.post(context, url,  data, true, new AsyncHttpRequest.HttpResponseHandler() {
 
