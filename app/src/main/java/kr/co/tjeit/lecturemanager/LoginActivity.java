@@ -126,6 +126,7 @@ public class LoginActivity extends BaseActivity {
         Session.getCurrentSession().checkAndImplicitOpen();
 
 
+        // 페이스북 로그인
         profileTracker = new ProfileTracker() {
             @Override
             protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
@@ -142,15 +143,16 @@ public class LoginActivity extends BaseActivity {
                                 if (json.getBoolean("result")) {
                                     loginUser = UserData.getUserDataFromJsonObject(json.getJSONObject("userInfo"));
                                     ContextUtil.login(mContext, loginUser);
+
+                                    Intent intent = new Intent(mContext, MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
                     });
-                    Intent intent = new Intent(mContext, MainActivity.class);
-                    startActivity(intent);
-                    finish();
                 }
             }
         };
@@ -174,6 +176,7 @@ public class LoginActivity extends BaseActivity {
         this.idEdt = (EditText) findViewById(R.id.idEdt);
     }
 
+    //카톡 로그인
     private class SessionCallback implements ISessionCallback {
 
         @Override
@@ -193,9 +196,22 @@ public class LoginActivity extends BaseActivity {
                 public void onSuccess(UserProfile result) {
                     Toast.makeText(mContext, result.getNickname() + "님 접속", Toast.LENGTH_SHORT).show();
 //                    ContextUtil.login(mContext, new UserData(result.getId()+"", result.getNickname(), result.getProfileImagePath(), "임시폰번"));
-                    Intent intent = new Intent(mContext, MyProfileActivity.class);
-                    startActivity(intent);
-                    finish();
+                    ServerUtil.facebook_login(mContext, result.getNickname(), result.getId()+"", result.getProfileImagePath().toString(), new ServerUtil.JsonResponseHandler() {
+                        @Override
+                        public void onResponse(JSONObject json) {
+                            try {
+                                if (json.getBoolean("result")) {
+                                    loginUser = UserData.getUserDataFromJsonObject(json.getJSONObject("userInfo"));
+                                    ContextUtil.login(mContext, loginUser);
+                                    Intent intent = new Intent(mContext, MyProfileActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
                 }
             });
         }
