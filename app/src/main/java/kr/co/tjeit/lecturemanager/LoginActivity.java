@@ -149,7 +149,7 @@ public class LoginActivity extends BaseActivity {
                         public void onResponse(JSONObject json) {
                             try {
                                 if (json.getBoolean("result")){
-                                    User fbUser = User.getUserFromJsonObject(json.getJSONObject("userinfo"));
+                                    User fbUser = User.getUserFromJsonObject(json.getJSONObject("userInfo"));
                                     ContextUtil.login(mContext, fbUser);
                                     Toast.makeText(mContext, fbUser.getName() + "님이 로그인 하셨습니다.", Toast.LENGTH_SHORT).show();
 
@@ -205,6 +205,9 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)){
+            return;
+        }
         super.onActivityResult(requestCode, resultCode, data);
         cm.onActivityResult(requestCode, resultCode, data);
     }
@@ -238,14 +241,33 @@ public class LoginActivity extends BaseActivity {
                 @Override
                 public void onSuccess(UserProfile result) {
 
-//                    User tempUser = new User(result.getId() + "",
-//                            result.getNickname(),
-//                            result.getProfileImagePath(), "임시폰번");
-//
-//                    ContextUtil.login(mContext, tempUser);
 
-                    Intent intent = new Intent(mContext, MainActivity.class);
-                    startActivity(intent);
+                    ServerUtil.facebook_login(mContext, result.getId() + "", result.getNickname(), result.getProfileImagePath(), new ServerUtil.JsonResponseHandler() {
+                        @Override
+                        public void onResponse(JSONObject json) {
+                            try {
+                                Log.d("로그", json.toString());
+                                if (json.getBoolean("result")){
+                                    User kakaoUser = User.getUserFromJsonObject(json.getJSONObject("userInfo"));
+                                    ContextUtil.login(mContext, kakaoUser);
+                                    Toast.makeText(mContext, kakaoUser.getName() + "님이 로그인 하셨습니다.", Toast.LENGTH_SHORT).show();
+
+                                    Intent intent = new Intent(mContext, MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
+
+                                }else {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                                    builder.setTitle("로그인 실패");
+                                    builder.setMessage("아아디/비밀번호 확인");
+                                    builder.setPositiveButton("확인", null);
+                                    builder.show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
                 }
             });
         }

@@ -97,6 +97,8 @@ public class StudentListActivity extends BaseActivity {
             @Override
             public void onResponse(JSONObject json) {
 
+                GlobalData.allUsers.clear();
+
                 try {
                     JSONArray users = json.getJSONArray("users");
 
