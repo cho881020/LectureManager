@@ -101,6 +101,8 @@ public class StudentListActivity extends BaseActivity {
     @Override
     public void setValues() {
 
+        GlobalData.allUsers.clear();
+
         ServerUtil.get_all_users(mContext, new ServerUtil.JsonResponseHandler() {
             @Override
             public void onResponse(JSONObject json) {

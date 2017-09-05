@@ -30,6 +30,7 @@ public class ServerUtil {
 
     // 사용자 관련 함수 모음
 
+
     //    페이스북 로그인
     public static void facebook_login(Context context, String id, String name, String profile ,final JsonResponseHandler handler) {
         String url = BASE_URL + "mobile/facebook_login";
