@@ -18,7 +18,6 @@ public class ContextUtil {
     private static final String ID = "ID";
     private static final String USER_ID = "USER_ID";
     private static final String USER_NAME = "USER_NAME";
-    private static final String USER_GENDER = "USER_GENDER";
     private static final String USER_PHONE = "USER_PHONE";
     private static final String USER_PROFILE_URL = "USER_PROFILE_URL";
 

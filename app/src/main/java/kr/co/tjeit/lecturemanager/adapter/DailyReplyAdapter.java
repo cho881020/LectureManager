@@ -9,10 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import org.w3c.dom.Text;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import kr.co.tjeit.lecturemanager.R;
 import kr.co.tjeit.lecturemanager.data.Reply;
 import kr.co.tjeit.lecturemanager.data.User;
@@ -46,9 +49,12 @@ public class DailyReplyAdapter extends ArrayAdapter<Reply> {
 
         TextView writerNameTxt = (TextView) row.findViewById(R.id.writerNameTxt);
         TextView contentTxt = (TextView) row.findViewById(R.id.contentTxt);
+        CircleImageView profileImg = (CircleImageView) row.findViewById(R.id.profileImg);
 
         writerNameTxt.setText(data.getWriter().getName());
         contentTxt.setText(data.getContent());
+
+        Glide.with(mContext).load(data.getWriter().getProfileURL()).into(profileImg);
 
 
         return row;

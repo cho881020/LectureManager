@@ -26,7 +26,6 @@ public class User implements Serializable{
         User tempUser = new User();
 
 //        json을 파싱해서, tempUser의 내용물로 채워주자.
-
         try {
             tempUser.setId(json.getInt("id"));
             tempUser.setUserId(json.getString("user_id"));

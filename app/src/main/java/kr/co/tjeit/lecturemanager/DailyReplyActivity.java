@@ -74,7 +74,7 @@ public class DailyReplyActivity extends BaseActivity {
                     @Override
                     public void onResponse(JSONObject json) {
                         replyContentEdt.setText("");
-
+                        getRepliesFromServer();
                     }
                 });
             }

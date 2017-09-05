@@ -28,6 +28,8 @@ import com.kakao.util.exception.KakaoException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Locale;
+
 import kr.co.tjeit.lecturemanager.data.User;
 import kr.co.tjeit.lecturemanager.util.ContextUtil;
 import kr.co.tjeit.lecturemanager.util.ServerUtil;
@@ -53,7 +55,6 @@ public class LoginActivity extends BaseActivity {
         bindViews();
         setupEvents();
         setValues();
-
 
 
     }
@@ -82,21 +83,21 @@ public class LoginActivity extends BaseActivity {
                                 try {
                                     if (json.getBoolean("result")) {
 //                                        로그인에 성공
-                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
-
                                         User loginUser = User.getUserFromJsonObject(json.getJSONObject("user"));
+
+                                        String welcomeMessageStr = String.format(Locale.KOREA, "%s님이 로그인했습니다.", loginUser.getName());
+                                        Toast.makeText(mContext, welcomeMessageStr, Toast.LENGTH_SHORT).show();
+//                                        로그인에 성공하면 ~~님이 로그인했습니다. Toast 띄우기.
+
                                         ContextUtil.login(mContext, loginUser);
 //                                        실제로 로그인했다는 사실을 기록
 //                                        로그인처리가 되고 나면, 실제 사용자 정보가 프로필 조회 화면에서 나타나도록 만들어 보자.
 
-                                        Toast.makeText(mContext, loginUser.getName()+"님이 로그인했습니다.", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
 
-//                                        로그인에 성공하면
-//                                        ~~님이 로그인했습니다. Toast 띄우기.
-                                    }
-                                    else {
+                                    } else {
 //                                        로그인에 실패
                                         AlertDialog.Builder alert = new AlertDialog.Builder(mContext);
                                         alert.setTitle("로그인 실패");
@@ -151,8 +152,25 @@ public class LoginActivity extends BaseActivity {
             protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
                 if (currentProfile != null) {
 
-//                    User tempUser = new User(currentProfile.getId(), currentProfile.getName(), currentProfile.getProfilePictureUri(400, 400).toString(), "임시폰번");
-//                    ContextUtil.login(mContext, tempUser);
+                    ServerUtil.facebook_login(mContext,
+                            currentProfile.getId().toString(),
+                            currentProfile.getName().toString(),
+                            currentProfile.getProfilePictureUri(500, 500).toString(), new ServerUtil.JsonResponseHandler() {
+                                @Override
+                                public void onResponse(JSONObject json) {
+                                    try {
+                                        if (json.getBoolean("result")) {
+                                            User loginUser = User.getUserFromJsonObject(json.getJSONObject("userInfo"));
+                                            String welcomeMessageStr = String.format(Locale.KOREA, "%s님이 로그인했습니다.", loginUser.getName());
+                                            Toast.makeText(mContext, welcomeMessageStr, Toast.LENGTH_SHORT).show();
+                                            ContextUtil.login(mContext, loginUser);
+
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
 
                     Intent intent = new Intent(mContext, MainActivity.class);
                     startActivity(intent);
@@ -161,7 +179,6 @@ public class LoginActivity extends BaseActivity {
                 }
             }
         };
-
 
 
     }
@@ -205,12 +222,29 @@ public class LoginActivity extends BaseActivity {
 
                 @Override
                 public void onSuccess(UserProfile result) {
-//                    User tempUser = new User(result.getId() + "", result.getNickname(), result.getProfileImagePath(), "임시폰번");
-//                    ContextUtil.login(mContext, tempUser);
 
-                    Intent intent = new Intent(mContext, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                    ServerUtil.facebook_login(mContext,
+                            result.getId() + "",
+                            result.getNickname().toString(),
+                            result.getProfileImagePath().toString(), new ServerUtil.JsonResponseHandler() {
+                                @Override
+                                public void onResponse(JSONObject json) {
+                                    try {
+                                        if (json.getBoolean("result")) {
+                                            User loginUser = User.getUserFromJsonObject(json.getJSONObject("userInfo"));
+                                            String welcomeMessageStr = String.format(Locale.KOREA, "%s님이 로그인했습니다.", loginUser.getName());
+                                            Toast.makeText(mContext, welcomeMessageStr, Toast.LENGTH_SHORT).show();
+                                            ContextUtil.login(mContext, loginUser);
+
+                                            Intent intent = new Intent(mContext, MainActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
                 }
             });
         }

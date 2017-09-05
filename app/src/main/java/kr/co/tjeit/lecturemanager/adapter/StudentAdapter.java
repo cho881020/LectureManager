@@ -16,7 +16,9 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 import kr.co.tjeit.lecturemanager.R;
 import kr.co.tjeit.lecturemanager.data.User;
+import kr.co.tjeit.lecturemanager.util.ContextUtil;
 import kr.co.tjeit.lecturemanager.util.GlobalData;
+import kr.co.tjeit.lecturemanager.util.ServerUtil;
 
 /**
  * Created by the on 2017-08-31.
@@ -50,6 +52,7 @@ public class StudentAdapter extends ArrayAdapter<User> {
         CircleImageView profileImg = (CircleImageView) row.findViewById(R.id.profileImg);
 
         nameTxt.setText(data.getName()+"");
+        Glide.with(mContext).load(data.getProfileURL()).into(profileImg);
 
 
 

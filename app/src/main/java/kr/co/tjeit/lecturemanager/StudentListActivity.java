@@ -111,16 +111,17 @@ public class StudentListActivity extends BaseActivity {
 
     @Override
     public void setValues() {
-        this.studentListView = (ListView) findViewById(R.id.studentListView);
-        this.logoutBtn = (Button) findViewById(R.id.logoutBtn);
 
+        mStudentList.clear();
 
         mAdapter = new StudentAdapter(mContext, GlobalData.students);
         studentListView.setAdapter(mAdapter);
 
+
         ServerUtil.get_all_users(mContext, new ServerUtil.JsonResponseHandler() {
             @Override
             public void onResponse(JSONObject json) {
+                GlobalData.students.clear();
 
                 try {
                     JSONArray users = json.getJSONArray("users");
