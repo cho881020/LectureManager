@@ -3,11 +3,14 @@ package kr.co.tjeit.lecturemanager.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresPermission;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import org.json.JSONObject;
 import org.w3c.dom.Text;
@@ -50,13 +53,11 @@ public class ReplyAdapter extends ArrayAdapter<Reply> {
         Reply data = mList.get(position);
         TextView nameTxt = (TextView) row.findViewById(R.id.nameTxt);
         TextView contentTxt = (TextView) row.findViewById(R.id.contentTxt);
+        CircleImageView profileImg = (CircleImageView) row.findViewById(R.id.profileImg);
 
         nameTxt.setText(data.getWriter().getUserName());
         contentTxt.setText(data.getContent());
-
-
-
-
+        Glide.with(mContext).load(data.getWriter().getProfileUrl()).into(profileImg);
 
 
         return row;

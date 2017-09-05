@@ -51,8 +51,9 @@ public class StudentInfoAdapter extends ArrayAdapter<User> {
         CircleImageView profileImg = (CircleImageView) row.findViewById(R.id.profileImg);
         TextView nameTxt = (TextView) row.findViewById(R.id.nameTxt);
 
-//        Glide.with(getContext()).load(data.getProfileUrl()).into(profileImg);
+        Glide.with(mContext).load(data.getProfileUrl()).into(profileImg);
         nameTxt.setText(data.getUserName());
+
 
 
 
