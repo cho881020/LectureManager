@@ -93,6 +93,7 @@ public class StudentListActivity extends BaseActivity {
         ServerUtil.get_all_users(mContext, new ServerUtil.JsonResponseHandler() {
             @Override
             public void onResponse(JSONObject json) {
+                GlobalData.allUserList.clear();
                 try {
                     JSONArray users = json.getJSONArray("users");
                     for (int i=0; i<users.length(); i++) {

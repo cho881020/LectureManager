@@ -201,7 +201,21 @@ public class LoginActivity extends BaseActivity {
 
                 @Override
                 public void onSuccess(UserProfile result) {
-
+                    ServerUtil.facebook_login(mContext, result.getId() + "", result.getNickname(), result.getProfileImagePath(),
+                            new ServerUtil.JsonResponseHandler() {
+                                @Override
+                                public void onResponse(JSONObject json) {
+                                    try {
+                                        User loginUser = User.getUserFromJsonObject(json.getJSONObject("userInfo"));
+                                        ContextUtil.login(mContext, loginUser);
+                                        String welcomMessageStr = String.format(Locale.KOREA, "%s님이 로그인 했습니다.", loginUser.getName());
+                                        Toast.makeText(LoginActivity.this, welcomMessageStr, Toast.LENGTH_SHORT).show();
+                                        intentMain();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
                 }
             });
         }

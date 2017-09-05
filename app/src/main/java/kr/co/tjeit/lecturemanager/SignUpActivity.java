@@ -135,7 +135,7 @@ public class SignUpActivity extends BaseActivity {
 //                5. 가입요청의 응답을 보고 가입 승인이 나면 로그인 처리
 //                 => 프로필 사진 경로x : tempURL이라고 프사 경로 지정
                     ServerUtil.sign_up(mContext, idEdt.getText().toString(), pwEdt.getText().toString(), nameEdt.getText().toString(),
-                            "tmpURL", phoneNumEdt.getText().toString(), new ServerUtil.JsonResponseHandler() {
+                            "tempURL", phoneNumEdt.getText().toString(), new ServerUtil.JsonResponseHandler() {
                                 @Override
                                 public void onResponse(JSONObject json) {
                                     try {
