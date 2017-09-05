@@ -110,8 +110,8 @@ public class DailyReplyActivity extends BaseActivity {
                         Reply tempReply = Reply.getReplyFromJson(replyJson);
 
                         mReplyList.add(tempReply);
-
                     }
+
                     mAdapter.notifyDataSetChanged();
                     replyListView.smoothScrollToPosition(mReplyList.size()-1);
 

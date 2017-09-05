@@ -1,7 +1,9 @@
 package kr.co.tjeit.lecturemanager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -71,7 +73,8 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                ServerUtil.sign_in(mContext, idEdt.getText().toString(),
+                ServerUtil.sign_in(mContext,
+                        idEdt.getText().toString(),
                         pwEdt.getText().toString(), new ServerUtil.JsonResponseHandler() {
                             @Override
                             public void onResponse(JSONObject json) {
@@ -79,7 +82,6 @@ public class LoginActivity extends BaseActivity {
                                 try {
                                     if (json.getBoolean("result")) {
 //                                        로그인에 성공
-
                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                         startActivity(intent);
                                         finish();
@@ -96,8 +98,11 @@ public class LoginActivity extends BaseActivity {
                                     }
                                     else {
 //                                        로그인에 실패
-
-                                        Toast.makeText(mContext, "로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show();
+                                        AlertDialog.Builder alert = new AlertDialog.Builder(mContext);
+                                        alert.setTitle("로그인 실패");
+                                        alert.setMessage("로그인에 실패했습니다. \n아이디와 비밀번호를 확인해주세요.");
+                                        alert.setPositiveButton("확인", null);
+                                        alert.show();
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
