@@ -102,14 +102,7 @@ public class LoginActivity extends BaseActivity {
 
 //                            userData에 getUserFromJsonObject에 자주하는 파싱정보를 넣어두고
 //                            tempuser에 다 담아두고~
-//                           User tempUser = User.getUserFromJsonObject(json.getJSONObject("user"));
-
-                                User temp = new User();
-                                temp.setId(json.getJSONObject("user").getInt("id"));
-                                temp.setUserId(json.getJSONObject("user").getString("user_id"));
-                                temp.setUserName(json.getJSONObject("user").getString("name"));
-                                temp.setProfileUrl(json.getJSONObject("user").getString("profile_photo"));
-                                temp.setPhoneNum(json.getJSONObject("user").getString("phone_num"));
+                                User temp = User.getUserFromJsonObject(json.getJSONObject("user"));
 
 
                                 String welcomMessageStr = String.format(Locale.KOREA, "%s님이 로그인 했습니다.", temp.getUserName());
