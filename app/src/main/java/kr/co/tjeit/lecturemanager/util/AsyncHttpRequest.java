@@ -123,14 +123,18 @@ public class AsyncHttpRequest {
 
 				if (bitmap != null)
 				{
+//					Bitmap => 웹에 전송 가능한 byte[] 형태로 변환
 					Bitmap myBitmap = bitmap;
 					ByteArrayOutputStream bao = new ByteArrayOutputStream();
 					myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bao);
 					byte [] ba = bao.toByteArray();
+
+//					2. 파일 명 지정. my_profile20170907_130511321.jpg
 					ByteArrayInputStream bs = new ByteArrayInputStream(ba);
 					SimpleDateFormat sdfNow = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
 					String dateTime = sdfNow.format(new Date(System.currentTimeMillis()));
 
+//					profile, post
 					String fileName = fileType+"_"+dateTime+".jpg";
 
 					request.part("image", fileName,"image/jpg", bs);

@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -49,6 +51,7 @@ public class ReplyAdapter extends ArrayAdapter<Reply> {
 
         userNameTxt.setText(data.getWriter().getName());
         contentTxt.setText(data.getContent());
+        Glide.with(mContext).load(data.getWriter().getProfileImgPath()).into(profileImg);
 
         return row;
     }

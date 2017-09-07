@@ -78,48 +78,7 @@ public class ServerUtil {
         });
     }
 
-
-    // 회원 가입시 아이디 중복 체크
-    public static void check_dupl_id(final Context context, final String id, final JsonResponseHandler handler) {
-        String url = BASE_URL+"mobile/check_dupl_id";
-        //		String registrationId = ContextUtil.getRegistrationId(context);
-
-        Map<String, String> data = new HashMap<String, String>();
-        data.put("user_id", id);
-
-        AsyncHttpRequest.post(context, url,  data, false, new AsyncHttpRequest.HttpResponseHandler() {
-
-            @Override
-            public boolean onPrepare() {
-                return true;
-            }
-
-            @Override
-            public void onResponse(String response) {
-                System.out.println(response);
-                try {
-                    JSONObject json = new JSONObject(response);
-
-                    if (handler != null)
-                        handler.onResponse(json);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            @Override
-            public void onFinish() {
-
-            }
-
-            @Override
-            public void onCancelled() {
-
-            }
-
-        });
-    }
-
-    // 자체 로그인 기능
+    // 로그인 기능
     public static void sign_in(final Context context,
                                final String id, final String password,
                                final JsonResponseHandler handler) {
@@ -162,6 +121,52 @@ public class ServerUtil {
 
         });
     }
+
+
+
+
+
+    // 회원 가입시 아이디 중복 체크
+    public static void check_dupl_id(final Context context, final String id, final JsonResponseHandler handler) {
+        String url = BASE_URL+"mobile/check_dupl_id";
+        //		String registrationId = ContextUtil.getRegistrationId(context);
+
+        Map<String, String> data = new HashMap<String, String>();
+        data.put("user_id", id);
+
+        AsyncHttpRequest.post(context, url,  data, false, new AsyncHttpRequest.HttpResponseHandler() {
+
+            @Override
+            public boolean onPrepare() {
+                return true;
+            }
+
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                try {
+                    JSONObject json = new JSONObject(response);
+
+                    if (handler != null)
+                        handler.onResponse(json);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onCancelled() {
+
+            }
+
+        });
+    }
+
+
 
     // 모든 회원 목록 받아오기
     public static void get_all_users(final Context context,
@@ -338,6 +343,54 @@ public class ServerUtil {
     }
 
 
+////    로그인.
+////    BASE_URL : 적혀있음.
+////    상세주소 :mobile/sign_in
+////    통신방식 : POST
+////    헤더 : 추가 요구 X
+////    파라미터. id : user_id, pw : password
+//
+//    public static void sign_in(Context context, String id, String pw, final JsonResponseHandler handler){
+////        1. 주소 작성 후 String 변수에 저장
+//        String url = BASE_URL+"mobile/sing_in";
+////        http://13.124.238.13/mobile/sign_in 접속 주소 저장
+//
+////        데이터를 저장할 Map 형식 변수 생성
+////        생성된 변수에 K/V 하나씩 추가.
+////        보내줘야할 실제 데이터는 메쏘드의 재료로 받자.
+//        Map<String , String> params = new HashMap<>();
+//        params.put("user_id", id);
+//        params.put("password", pw);
+//
+//        AsyncHttpRequest.post(context, url, params, true, new AsyncHttpRequest.HttpResponseHandler() {
+//            @Override
+//            public boolean onPrepare() {
+//                return false;
+//            }
+//
+//            @Override
+//            public void onResponse(String response) {
+//                if(handler!=null){
+//                    try {
+//                        JSONObject json = new JSONObject(response);
+//                        handler.onResponse(json);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFinish() {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled() {
+//
+//            }
+//        });
+//    }
 
 
 
@@ -345,14 +398,14 @@ public class ServerUtil {
 
 
     // 회원 가입
-    public static void facebook_login(final Context context, final String name, final String uid, final String email, final JsonResponseHandler handler) {
+    public static void facebook_login(final Context context, final String uid, final String name, final String profile_url, final JsonResponseHandler handler) {
         String url = BASE_URL+"mobile/facebook_login";
         //		String registrationId = ContextUtil.getRegistrationId(context);
 
         Map<String, String> data = new HashMap<String, String>();
         data.put("uid", uid);
         data.put("name", name);
-        data.put("email", email);
+        data.put("profile_url", profile_url);
 
         AsyncHttpRequest.post(context, url,  data, true, new AsyncHttpRequest.HttpResponseHandler() {
 
@@ -385,6 +438,49 @@ public class ServerUtil {
 
         });
     }
+
+
+    // 이미지 올리기
+    public static void updateProfilePhoto(final Context context, final String user_id, Bitmap bitmap, final JsonResponseHandler handler) {
+        String url = BASE_URL+"mobile/updateProfilePhoto";
+        //		String registrationId = ContextUtil.getRegistrationId(context);
+
+        Map<String, String> data = new HashMap<String, String>();
+        data.put("user_id", user_id);
+
+        AsyncHttpRequest.postWithImageFile(context, url,  data, bitmap,"profile", new AsyncHttpRequest.HttpResponseHandler() {
+
+            @Override
+            public boolean onPrepare() {
+                return true;
+            }
+
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                try {
+                    JSONObject json = new JSONObject(response);
+
+                    if (handler != null)
+                        handler.onResponse(json);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onCancelled() {
+
+            }
+
+        });
+    }
+
+
 
 
 

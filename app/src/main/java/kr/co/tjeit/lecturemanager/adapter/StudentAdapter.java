@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -50,6 +52,7 @@ public class StudentAdapter extends ArrayAdapter<User> {
 //        회원가입? 실제로 회원가입
 
         nameTxt.setText(data.getName());
+        Glide.with(mContext).load(data.getProfileImgPath()).into(profileImg);
 
         return row;
     }
