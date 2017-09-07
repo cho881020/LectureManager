@@ -1,5 +1,6 @@
 package kr.co.tjeit.lecturemanager;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -11,10 +12,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
 
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import kr.co.tjeit.lecturemanager.data.User;
@@ -59,10 +63,28 @@ public class MyProfileActivity extends BaseActivity {
         profileImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent,REQ_FOR_GALLEY);
+                TedPermission.with(mContext).setPermissionListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted() {
+//                        모든 퍼미션이 허가를 받았을 때 실행
+                        Toast.makeText(mContext, "모든 허가가 완료 되었다.", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent();
+                        intent.setType("image/*");
+                        intent.setAction(Intent.ACTION_PICK);
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(intent,REQ_FOR_GALLEY);
+                    }
+
+                    @Override
+                    public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+//                        퍼미션이 거부 당한 경우에
+//                        어떤 어떤 퍼미션이 거부됐는지, deniedPermissions에 담겨 옴
+                        Toast.makeText(mContext, "거부된 권한 : "+deniedPermissions.get(0)+".", Toast.LENGTH_SHORT).show();
+                    }
+                }).setDeniedMessage("퍼미션을 거부할 경우, 프로필 사진 수정 기능을 활용할 수 없습니다. 설정 -> 권한 탭에서 수정해주세요")
+                .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE).check();
+
             }
         });
 
