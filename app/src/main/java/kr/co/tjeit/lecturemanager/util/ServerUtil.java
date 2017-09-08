@@ -91,8 +91,8 @@ public class ServerUtil {
         data.put("user_id", id);
         data.put("password", password);
 
-        String token = FirebaseInstanceId.getInstance().getToken();
-        data.put("deviceToken",token);
+        data.put("os","Android");
+        data.put("deviceToken",FirebaseInstanceId.getInstance().getToken());
 
 
         AsyncHttpRequest.post(context, url,  data, true, new AsyncHttpRequest.HttpResponseHandler() {
@@ -402,7 +402,7 @@ public class ServerUtil {
 
 
 
-    // 회원 가입
+    // 페북 로그인
     public static void facebook_login(final Context context, final String uid, final String name, final String profile_url, final JsonResponseHandler handler) {
         String url = BASE_URL+"mobile/facebook_login";
         //		String registrationId = ContextUtil.getRegistrationId(context);
@@ -411,6 +411,11 @@ public class ServerUtil {
         data.put("uid", uid);
         data.put("name", name);
         data.put("profile_url", profile_url);
+
+//        디바이스 토큰을 서버에 보내주는 데이터로 추가
+
+        data.put("os","Android");
+        data.put("deviceToken",FirebaseInstanceId.getInstance().getToken());
 
         AsyncHttpRequest.post(context, url,  data, true, new AsyncHttpRequest.HttpResponseHandler() {
 
@@ -443,6 +448,105 @@ public class ServerUtil {
 
         });
     }
+
+
+    // 쪽지 보내기
+    public static void send_message(final Context context, final int userId,final int writerId, final String content,final JsonResponseHandler handler) {
+        String url = BASE_URL+"mobile/send_message)";
+        //		String registrationId = ContextUtil.getRegistrationId(context);
+
+        Map<String, String> data = new HashMap<String, String>();
+        data.put("user_id", userId+"");
+        data.put("writer_id",writerId+"");
+        data.put("content", content);
+
+//        디바이스 토큰을 서버에 보내주는 데이터로 추가
+
+        data.put("os","Android");
+        data.put("deviceToken",FirebaseInstanceId.getInstance().getToken());
+
+        AsyncHttpRequest.post(context, url,  data, true, new AsyncHttpRequest.HttpResponseHandler() {
+
+            @Override
+            public boolean onPrepare() {
+                return true;
+            }
+
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                try {
+                    JSONObject json = new JSONObject(response);
+
+                    if (handler != null)
+                        handler.onResponse(json);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onCancelled() {
+
+            }
+
+        });
+    }
+
+
+    // 받은 쪽지 목록
+    public static void get_my_message(final Context context, final JsonResponseHandler handler) {
+        String url = BASE_URL+"mobile/get_my_message";
+        //		String registrationId = ContextUtil.getRegistrationId(context);
+
+        Map<String, String> data = new HashMap<String, String>();
+//        누구의 쪽지 목록을 받을것인가? => "로그인한 사람"의 쪽지 목록
+        data.put("user_id", ContextUtil.getLoginUserData(context).getId()+"");
+
+        AsyncHttpRequest.post(context, url,  data, true, new AsyncHttpRequest.HttpResponseHandler() {
+
+            @Override
+            public boolean onPrepare() {
+                return true;
+            }
+
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                try {
+                    JSONObject json = new JSONObject(response);
+
+                    if (handler != null)
+                        handler.onResponse(json);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onCancelled() {
+
+            }
+
+        });
+    }
+
+
+
+
+
+
+
+
+
 
 
     // 이미지 올리기

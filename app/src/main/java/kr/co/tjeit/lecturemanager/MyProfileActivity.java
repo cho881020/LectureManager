@@ -29,19 +29,19 @@ public class MyProfileActivity extends BaseActivity {
 
     private de.hdodenhof.circleimageview.CircleImageView profileImg;
     private android.widget.TextView nameTxt;
-//    private android.widget.Button linkBtn;
+    //    private android.widget.Button linkBtn;
 //    private TextView genderTxt;
     private TextView userIdTxt;
     private TextView phoneNumTxt;
     private Button editProfileBtn;
     final int REQ_FOR_GALLEY = 1;
+    private Button checkMessageBtn;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile);
-
 
 
         bindViews();
@@ -52,6 +52,14 @@ public class MyProfileActivity extends BaseActivity {
 
     @Override
     public void setupEvents() {
+        checkMessageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, CheckMessageActivity.class);
+                startActivity(intent);
+            }
+        });
+
         editProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,17 +81,17 @@ public class MyProfileActivity extends BaseActivity {
                         intent.setType("image/*");
                         intent.setAction(Intent.ACTION_PICK);
 //                intent.setAction(Intent.ACTION_GET_CONTENT);
-                        startActivityForResult(intent,REQ_FOR_GALLEY);
+                        startActivityForResult(intent, REQ_FOR_GALLEY);
                     }
 
                     @Override
                     public void onPermissionDenied(ArrayList<String> deniedPermissions) {
 //                        퍼미션이 거부 당한 경우에
 //                        어떤 어떤 퍼미션이 거부됐는지, deniedPermissions에 담겨 옴
-                        Toast.makeText(mContext, "거부된 권한 : "+deniedPermissions.get(0)+".", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "거부된 권한 : " + deniedPermissions.get(0) + ".", Toast.LENGTH_SHORT).show();
                     }
                 }).setDeniedMessage("퍼미션을 거부할 경우, 프로필 사진 수정 기능을 활용할 수 없습니다. 설정 -> 권한 탭에서 수정해주세요")
-                .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE).check();
+                        .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE).check();
 
             }
         });
@@ -94,9 +102,8 @@ public class MyProfileActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQ_FOR_GALLEY){
-            if(resultCode==RESULT_OK)
-            {
+        if (requestCode == REQ_FOR_GALLEY) {
+            if (resultCode == RESULT_OK) {
 //                서버에 프로필 사진 전송, 후처리리
 //                사진 전송 => Bitmap 따서 서버에 보낸다.
 
@@ -114,7 +121,7 @@ public class MyProfileActivity extends BaseActivity {
                             profileImg.setImageBitmap(myBitmap);
                         }
                     });
-                    
+
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -186,9 +193,11 @@ public class MyProfileActivity extends BaseActivity {
     @Override
     public void bindViews() {
         this.editProfileBtn = (Button) findViewById(R.id.editProfileBtn);
+        this.checkMessageBtn = (Button) findViewById(R.id.checkMessageBtn);
         this.phoneNumTxt = (TextView) findViewById(R.id.phoneNumTxt);
         this.userIdTxt = (TextView) findViewById(R.id.userIdTxt);
         this.nameTxt = (TextView) findViewById(R.id.nameTxt);
         this.profileImg = (CircleImageView) findViewById(R.id.profileImg);
+
     }
 }

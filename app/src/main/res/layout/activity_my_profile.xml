@@ -49,6 +49,12 @@
             android:text="전화걸기"/>
     </LinearLayout>
     <Button
+        android:id="@+id/checkMessageBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:text="수신된 쪽지 확인"/>
+    <Button
         android:id="@+id/editProfileBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

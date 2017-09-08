@@ -16,13 +16,13 @@ public class ViewStudentInfoActivity extends BaseActivity {
     private User selectUser;
     private TextView idTxt;
     private TextView phoneTxt;
+    private Button sendMsgBtn;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_student_info);
-
 
 
         bindViews();
@@ -34,7 +34,7 @@ public class ViewStudentInfoActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                Uri myUri = Uri.parse("tel:"+phoneTxt.getText().toString());
+                Uri myUri = Uri.parse("tel:" + phoneTxt.getText().toString());
                 Intent myIntent = new Intent(Intent.ACTION_DIAL, myUri);
                 startActivity(myIntent);
 
@@ -46,6 +46,14 @@ public class ViewStudentInfoActivity extends BaseActivity {
 
     @Override
     public void setupEvents() {
+        sendMsgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, SendMessageActivity.class);
+                intent.putExtra("sendMessageStudent", selectUser);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -59,10 +67,12 @@ public class ViewStudentInfoActivity extends BaseActivity {
 
     @Override
     public void bindViews() {
+        this.sendMsgBtn = (Button) findViewById(R.id.sendMsgBtn);
         this.callBtn = (Button) findViewById(R.id.callBtn);
         this.phoneTxt = (TextView) findViewById(R.id.phoneTxt);
         this.idTxt = (TextView) findViewById(R.id.idTxt);
         this.studentNameTxt = (TextView) findViewById(R.id.studentNameTxt);
+
 
     }
 }
