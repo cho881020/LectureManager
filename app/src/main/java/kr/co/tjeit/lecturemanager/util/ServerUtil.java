@@ -1,6 +1,7 @@
 package kr.co.tjeit.lecturemanager.util;
 
 import android.content.Context;
+import android.content.MutableContextWrapper;
 import android.graphics.Bitmap;
 import android.util.Log;
 
@@ -501,6 +502,47 @@ public class ServerUtil {
 //        보내는 사람의 아이디? 보내는 사람: 무조건 나 자신 (로그인한 사용자)
 
         data.put("writer_id", ContextUtil.getLoginUser(context).getId()+"");
+
+        AsyncHttpRequest.post(context, url,  data, true, new AsyncHttpRequest.HttpResponseHandler() {
+
+            @Override
+            public boolean onPrepare() {
+                return true;
+            }
+
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                try {
+                    JSONObject json = new JSONObject(response);
+
+                    if (handler != null)
+                        handler.onResponse(json);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onCancelled() {
+
+            }
+
+        });
+    }
+
+    // 쪽지 보내기
+    public static void get_my_message(final Context context, final JsonResponseHandler handler) {
+        String url = BASE_URL+"mobile/get_my_message";
+        //		String registrationId = ContextUtil.getRegistrationId(context);
+
+        Map<String, String> data = new HashMap<String, String>();
+//        누구의 쪽지 목록을 받을것인가? => "로그인한 사람"의 쪽지 목록
+        data.put("user_id", ContextUtil.getLoginUser(context).getId()+"");
 
         AsyncHttpRequest.post(context, url,  data, true, new AsyncHttpRequest.HttpResponseHandler() {
 
