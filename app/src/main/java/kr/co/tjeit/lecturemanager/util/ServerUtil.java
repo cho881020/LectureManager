@@ -534,4 +534,51 @@ public class ServerUtil {
         });
     }
 
+    public static void get_mymessage(final Context context, final JsonResponseHandler handler) {
+        String url = BASE_URL+"mobile/get_mymessage";
+        //		String registrationId = ContextUtil.getRegistrationId(context);
+
+        Map<String, String> data = new HashMap<String, String>();
+//        누구의 쪽지 목록을 받을것인가? => "로그인"한 사람의 쪽지 목록
+
+        data.put("user_id", ContextUtil.getLoginUser(context).getId()+"");
+
+//        보내는 사람의 아이디? 보내는 사람: 무조건 나 자신 (로그인한 사용자)
+
+        data.put("writer_id", ContextUtil.getLoginUser(context).getId()+"");
+
+        AsyncHttpRequest.post(context, url,  data, true, new AsyncHttpRequest.HttpResponseHandler() {
+
+            @Override
+            public boolean onPrepare() {
+                return true;
+            }
+
+            @Override
+            public void onResponse(String response) {
+                System.out.println(response);
+                try {
+                    JSONObject json = new JSONObject(response);
+
+                    if (handler != null)
+                        handler.onResponse(json);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onCancelled() {
+
+            }
+
+        });
+    }
+
+
+
 }
