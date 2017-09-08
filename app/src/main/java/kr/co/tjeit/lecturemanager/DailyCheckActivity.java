@@ -1,6 +1,5 @@
 package kr.co.tjeit.lecturemanager;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,31 +13,33 @@ import java.util.Date;
 
 public class DailyCheckActivity extends BaseActivity {
 
+    CalendarDay mCalendarDay = null;
     private android.widget.TextView dateTxt;
-    private android.widget.ToggleButton checkStudentBtn;
-    private android.widget.ToggleButton checkTeacherBtn;
-
-    CalendarDay mCalendarDay;
+    private android.widget.ToggleButton studentToggleBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_check);
-        mCalendarDay = getIntent().getParcelableExtra("date");
+        mCalendarDay = getIntent().getParcelableExtra("출석확인날짜");
         bindViews();
-        setUpEvents();
+        setupEvents();
         setValues();
     }
 
     @Override
-    public void setUpEvents() {
+    public void setupEvents() {
 
     }
 
     @Override
     public void setValues() {
-        SimpleDateFormat fm1 = new SimpleDateFormat("yyyy년 M월 dd일");
-        dateTxt.setText(fm1.format(mCalendarDay.getDate()));
+
+        SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy년 M월 d일");
+        dateTxt.setText(myDateFormat.format(mCalendarDay.getDate()));
+
+//        현재 날짜 (Calendar.getInstance)와,
+//        화면에 적힌 날짜 (mCalendarDay) 를 비교.
 
         Calendar today = Calendar.getInstance();
         // 현재 시간을 받아오는 기능
@@ -50,23 +51,25 @@ public class DailyCheckActivity extends BaseActivity {
 
 //        선택된 날짜가 오늘보다 이후인가? || 오늘인가?
 
-
         if (selectedDate.after(todayDate)) {
             Toast.makeText(mContext, "오늘보다 이후의 날짜", Toast.LENGTH_SHORT).show();
         }
-        else if (today.get(Calendar.YEAR) == mCalendarDay.getYear() && today.get(Calendar.MONTH) == mCalendarDay.getMonth() && today.get(Calendar.DAY_OF_MONTH) == mCalendarDay.getDay()) {
+        else if (today.get(Calendar.YEAR) == mCalendarDay.getYear() &&
+                today.get(Calendar.MONTH) == mCalendarDay.getMonth() &&
+                today.get(Calendar.DAY_OF_MONTH) == mCalendarDay.getDay()) {
+
             Toast.makeText(mContext, "오늘 날짜", Toast.LENGTH_SHORT).show();
         }
         else {
-            checkStudentBtn.setEnabled(false);
+            studentToggleBtn.setEnabled(false);
             Toast.makeText(mContext, "이미 지나간 날짜입니다.", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     @Override
     public void bindViews() {
-        this.checkTeacherBtn = (ToggleButton) findViewById(R.id.checkTeacherBtn);
-        this.checkStudentBtn = (ToggleButton) findViewById(R.id.checkStudentBtn);
+        this.studentToggleBtn = (ToggleButton) findViewById(R.id.studentToggleBtn);
         this.dateTxt = (TextView) findViewById(R.id.dateTxt);
     }
 }

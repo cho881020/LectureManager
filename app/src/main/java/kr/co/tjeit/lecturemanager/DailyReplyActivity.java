@@ -16,75 +16,72 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-import kr.co.tjeit.lecturemanager.adapters.ReplyAdapter;
-import kr.co.tjeit.lecturemanager.datas.Reply;
-import kr.co.tjeit.lecturemanager.utils.ContextUtil;
-import kr.co.tjeit.lecturemanager.utils.GloblaData;
-import kr.co.tjeit.lecturemanager.utils.ServerUtil;
+import kr.co.tjeit.lecturemanager.adapter.ReplyAdapter;
+import kr.co.tjeit.lecturemanager.data.Reply;
+import kr.co.tjeit.lecturemanager.util.ContextUtil;
+import kr.co.tjeit.lecturemanager.util.ServerUtil;
 
 public class DailyReplyActivity extends BaseActivity {
 
-    private List<Reply> replyList = new ArrayList<>();
-    ReplyAdapter mReplyAdapter;
-    CalendarDay mCalendarDay;
+    private android.widget.TextView dateTxt;
+    private android.widget.ListView replyListView;
 
-    private ListView replyListView;
-    private TextView dateTxt;
-    private EditText replyEdt;
-    private Button addBtn;
-    private TextView checkTxt;
-    private TextView studentListTxt;
+    CalendarDay mCalendarDay = null;
+
+    ReplyAdapter mAdapter;
+    List<Reply> mReplyList = new ArrayList<>();
+    private android.widget.Button checkBtn;
+    private Button studentListBtn;
+    private Button registerBtn;
+    private android.widget.EditText replyEdt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_reply);
-
+        mCalendarDay = getIntent().getParcelableExtra("클릭된날짜");
         bindViews();
+        setupEvents();
         setValues();
-        setUpEvents();
     }
 
     @Override
-    public void setUpEvents() {
-        addBtn.setOnClickListener(new View.OnClickListener() {
+    public void setupEvents() {
+
+        registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//
-                ServerUtil.register_reply(mContext, replyEdt.getText().toString(), ContextUtil.getLoginUser(mContext).getId(), new ServerUtil.JsonResponseHandler() {
-                    @Override
-                    public void onResponse(JSONObject json) {
-                        try {
-                            if (json.getBoolean("result")) {
+                ServerUtil.register_reply(mContext,
+                        ContextUtil.getLoginUser(mContext).getId(),
+                        replyEdt.getText().toString(),
+                        new ServerUtil.JsonResponseHandler() {
+                            @Override
+                            public void onResponse(JSONObject json) {
+//                                댓글 등록후의 동작 구현
+
                                 replyEdt.setText("");
                                 getRepliesFromServer();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
 
+                            }
+                        });
             }
         });
 
-        checkTxt.setOnClickListener(new View.OnClickListener() {
+        studentListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, DailyCheckActivity.class);
-                intent.putExtra("date", mCalendarDay);
+                Intent intent = new Intent(mContext, StudentListActivity.class);
                 startActivity(intent);
             }
         });
 
-        studentListTxt.setOnClickListener(new View.OnClickListener() {
+        checkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, StudentListActivity.class);
-                intent.putExtra("date", mCalendarDay);
+                Intent intent = new Intent(mContext, DailyCheckActivity.class);
+                intent.putExtra("출석확인날짜", mCalendarDay);
                 startActivity(intent);
             }
         });
@@ -92,48 +89,54 @@ public class DailyReplyActivity extends BaseActivity {
 
     @Override
     public void setValues() {
-//        String dateStr = getIntent().getParcelableExtra("날짜");
-        mCalendarDay = getIntent().getParcelableExtra("날짜");
-        mReplyAdapter = new ReplyAdapter(mContext, replyList);
-        replyListView.setAdapter(mReplyAdapter);
-        mReplyAdapter.notifyDataSetChanged();
-//        dateTxt.setText(dateStr);
-        SimpleDateFormat fm1 = new SimpleDateFormat("yyyy년 M월 dd일");
-        dateTxt.setText(fm1.format(mCalendarDay.getDate()));
-        getRepliesFromServer();
 
+        SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy년 M월 d일");
+        dateTxt.setText(myDateFormat.format(mCalendarDay.getDate()));
+
+        mAdapter = new ReplyAdapter(mContext, mReplyList);
+        replyListView.setAdapter(mAdapter);
+
+        getRepliesFromServer();
 
     }
 
     void getRepliesFromServer() {
+
         ServerUtil.get_all_replies(mContext, new ServerUtil.JsonResponseHandler() {
             @Override
             public void onResponse(JSONObject json) {
-                try {
-                    JSONArray replys = json.getJSONArray("replies");
+//                서버에서 모든 댓글 목록을 받아온 후에 진행할 일.
 
-                    for (int i = 0; i <replys.length(); i++) {
-                        JSONObject reply = replys.getJSONObject(i);
-                        Reply tempReply = Reply.getReplyFromJsonObject(reply);
-                        replyList.add(tempReply);
+                try {
+                    JSONArray replies = json.getJSONArray("replies");
+
+                    mReplyList.clear();
+
+                    for (int i=0 ; i < replies.length() ; i++) {
+                        JSONObject replyJson = replies.getJSONObject(i);
+                        Reply tempReply = Reply.getReplyFromJson(replyJson);
+                        mReplyList.add(tempReply);
                     }
-                    mReplyAdapter.notifyDataSetChanged();
-                    replyListView.smoothScrollToPosition(replyList.size() - 1);
+
+                    mAdapter.notifyDataSetChanged();
+                    replyListView.smoothScrollToPosition(mReplyList.size()-1);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
             }
         });
+
     }
 
     @Override
     public void bindViews() {
-        this.addBtn = (Button) findViewById(R.id.addBtn);
+        this.registerBtn = (Button) findViewById(R.id.registerBtn);
         this.replyEdt = (EditText) findViewById(R.id.replyEdt);
         this.replyListView = (ListView) findViewById(R.id.replyListView);
-        this.studentListTxt = (TextView) findViewById(R.id.studentListTxt);
-        this.checkTxt = (TextView) findViewById(R.id.checkTxt);
+        this.checkBtn = (Button) findViewById(R.id.checkBtn);
         this.dateTxt = (TextView) findViewById(R.id.dateTxt);
+        this.studentListBtn = (Button) findViewById(R.id.studentListBtn);
     }
 }

@@ -3,43 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="kr.co.tjeit.lecturemanager.DailyReplyActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#555555">
+
+        <Button
+            android:id="@+id/studentListBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="학생목록"
+            android:layout_gravity="center_vertical"/>
+
         <TextView
             android:id="@+id/dateTxt"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
-            android:textStyle="bold"
+            android:text="날짜가 표시됩니다."
             android:textSize="17sp"
-            android:text="날짜가 표시됩니다."/>
+            android:layout_gravity="center"/>
 
-        <TextView
-            android:id="@+id/checkTxt"
+        <Button
+            android:id="@+id/checkBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="출석체크"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            android:layout_gravity="center_vertical|right"
-            android:layout_marginRight="10dp"/>
+            android:layout_gravity="right|center_vertical"
+            android:text="출석체크"/>
 
-        <TextView
-            android:id="@+id/studentListTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="학생 목록"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            android:layout_gravity="center_vertical|left"
-            android:layout_marginLeft="10dp"/>
     </FrameLayout>
 
     <ListView
@@ -49,10 +44,11 @@
         android:layout_weight="1"></ListView>
 
     <LinearLayout
-        android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
+
         <EditText
             android:id="@+id/replyEdt"
             android:layout_width="0dp"
@@ -60,9 +56,10 @@
             android:layout_weight="1"/>
 
         <Button
-            android:id="@+id/addBtn"
+            android:id="@+id/registerBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="등록"/>
+
     </LinearLayout>
 </LinearLayout>

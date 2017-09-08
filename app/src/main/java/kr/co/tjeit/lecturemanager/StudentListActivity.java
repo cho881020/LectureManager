@@ -13,43 +13,50 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import kr.co.tjeit.lecturemanager.adapters.StudentAdapter;
-import kr.co.tjeit.lecturemanager.utils.GloblaData;
-import kr.co.tjeit.lecturemanager.datas.UserData;
-import kr.co.tjeit.lecturemanager.utils.ContextUtil;
-import kr.co.tjeit.lecturemanager.utils.ServerUtil;
+import kr.co.tjeit.lecturemanager.adapter.StudentAdapter;
+import kr.co.tjeit.lecturemanager.data.User;
+import kr.co.tjeit.lecturemanager.util.GlobalData;
+import kr.co.tjeit.lecturemanager.util.ServerUtil;
+
+// 저만의 브런치 입니다. (조경진)
 
 public class StudentListActivity extends BaseActivity {
 
-//    String[] students = {"고동윤", "권성민", "김현철", "박석영",
-//            "박수현", "박영주", "손익상", "이승헌", "이요한", "한상열"};
-    private UserData tempUser = null;
-
     private ListView studentListView;
-    private StudentAdapter mStudentAdapter;
-    private android.widget.Button profileBtn;
+    private android.widget.Button myProfileBtn;
+
+    StudentAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_list);
-
         bindViews();
+        setupEvents();
         setValues();
-        setUpEvents();
+
+
 
     }
 
     @Override
-    public void setUpEvents() {
+    public void setupEvents() {
+
+        myProfileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, MyProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
         studentListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                Toast.makeText(StudentListActivity.this, position+"번 줄", Toast.LENGTH_SHORT).show();
 
-                Intent myIntent = new Intent(mContext, ViewStudentInfoActivity.class);
-                myIntent.putExtra("student", GloblaData.allUsers.get(position));
-
+                Intent myIntent = new Intent(StudentListActivity.this, ViewStudentInfoActivity.class);
+                myIntent.putExtra("사용자정보", GlobalData.allUsers.get(position));
                 startActivity(myIntent);
 
             }
@@ -68,8 +75,6 @@ public class StudentListActivity extends BaseActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        GloblaData.allUsers.remove(position);
-                        mStudentAdapter.notifyDataSetChanged();
 
                     }
                 });
@@ -80,47 +85,49 @@ public class StudentListActivity extends BaseActivity {
             }
         });
 
-        profileBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, MyProfileActivity.class);
-                startActivity(intent);
-            }
-        });
+
     }
 
     @Override
     public void setValues() {
-        tempUser = ContextUtil.getLoginUser(mContext);
-        mStudentAdapter = new StudentAdapter(mContext, GloblaData.allUsers);
 
-        // 서버에서 수강생 정보 받아와서 뿌려주기 (GlobalData 활용)
+        mAdapter = new StudentAdapter(mContext, GlobalData.allUsers);
+        studentListView.setAdapter(mAdapter);
+
         ServerUtil.get_all_users(mContext, new ServerUtil.JsonResponseHandler() {
             @Override
             public void onResponse(JSONObject json) {
+
+                GlobalData.allUsers.clear();
+
                 try {
                     JSONArray users = json.getJSONArray("users");
 
-                    for (int i = 0; i < users.length(); i++) {
+                    for (int i = 0 ; i < users.length() ; i++) {
                         JSONObject user = users.getJSONObject(i);
-                        UserData tempUser = UserData.getUserDataFromJsonObject(user);
-                        GloblaData.allUsers.add(tempUser);
+
+                        User tempUser = User.getUserFromJsonObject(user);
+
+                        GlobalData.allUsers.add(tempUser);
+
                     }
 
-                    mStudentAdapter.notifyDataSetChanged();
+                    mAdapter.notifyDataSetChanged();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
             }
         });
-        studentListView.setAdapter(mStudentAdapter);
-        mStudentAdapter.notifyDataSetChanged();
+
     }
 
     @Override
     public void bindViews() {
-        this.studentListView = (ListView) findViewById(R.id.studentListView);
-        this.profileBtn = (Button) findViewById(R.id.profileBtn);
+
+        this.myProfileBtn = (Button) findViewById(R.id.myProfileBtn);
+        studentListView = (ListView) findViewById(R.id.studentListView);
     }
 }
 
