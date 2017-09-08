@@ -11,9 +11,7 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
-//    댓글 데이터의 고유 속성
-
-    private int id; // DB와의 연동을 고려하는 변수.
+    private int id; // DB와의 연동을 고려하는 변수. : 몇번째 사용자인지.
     private String userId;
     private String name;
     private String profileURL;
@@ -21,30 +19,25 @@ public class User implements Serializable {
 
     public static User getUserFromJsonObject(JSONObject json) {
 //        매번 파싱하기 매우 귀찮다.
-
         User tempUser = new User();
-
 //        json을 파싱해서, tempUser의 내용물로 채워주기.
-
         try {
             tempUser.setId(json.getInt("id"));
             tempUser.setUserId(json.getString("user_id"));
             tempUser.setName(json.getString("name"));
-            tempUser.setProfileURL(json.getString("profile_photo"));
+            tempUser.setProfileURL("http://13.124.238.13" + json.getJSONObject("profile_photo").getString("url"));
             tempUser.setPhoneNum(json.getString("phone_num"));
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+
         return tempUser;
+
     }
-
-
 
     public User() {
     }
-
 
     public User(int id, String userId, String name, String profileURL, String phoneNum) {
         this.id = id;

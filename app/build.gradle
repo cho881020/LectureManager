@@ -5,7 +5,7 @@ android {
     buildToolsVersion "26.0.0"
     defaultConfig {
         applicationId "kr.co.tjeit.lecturemanager"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -31,5 +31,11 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.github.bumptech.glide:glide:4.0.0'
     compile 'com.prolificinteractive:material-calendarview:1.4.3'
+    compile 'gun0912.ted:tedpermission:2.0.0'
+    compile 'com.google.firebase:firebase-messaging:10.2.6'
     testCompile 'junit:junit:4.12'
 }
+
+
+
+apply plugin: 'com.google.gms.google-services'

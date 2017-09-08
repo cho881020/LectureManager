@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".GlobalApplication"
@@ -62,7 +63,21 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".DailyReplyActivity" />
         <activity android:name=".DailyCheckActivity" />
-        <activity android:name=".EditMyProfileActivity"></activity>
+        <activity android:name=".EditMyProfileActivity" />
+
+        <service android:name=".fcm.FCMService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".fcm.FCMIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".SendMessageActivity" />
+        <activity android:name=".CheckMessageActivity"></activity>
     </application>
 
 </manifest>

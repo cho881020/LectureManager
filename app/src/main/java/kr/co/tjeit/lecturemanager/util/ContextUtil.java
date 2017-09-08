@@ -15,6 +15,9 @@ public class ContextUtil {
 
     private static final String prefName = "LecturePref";
 
+//    1. 사용자 숫자 ID
+//    2. 사용자 폰번
+
     private static final String ID = "ID";
     private static final String USER_ID = "USER_ID";
     private static final String USER_NAME = "USER_NAME";
@@ -25,6 +28,7 @@ public class ContextUtil {
         SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
 
         pref.edit().putInt(ID, 0).commit();
+        pref.edit().putString(USER_ID, "").commit();
         pref.edit().putString(USER_NAME, "").commit();
         pref.edit().putString(USER_PROFILE_URL, "").commit();
         pref.edit().putString(USER_PHONE_NUM, "").commit();
@@ -48,7 +52,8 @@ public class ContextUtil {
         if (pref.getString(USER_ID, "").equals("")) {
 //            로그인이 안된 상태
             loginUser = null;
-        } else {
+        }
+        else {
             loginUser = new User();
             loginUser.setId(pref.getInt(ID, 0));
             loginUser.setUserId(pref.getString(USER_ID, ""));

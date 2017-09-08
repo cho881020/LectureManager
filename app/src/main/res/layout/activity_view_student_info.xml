@@ -95,5 +95,10 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/sendMessageBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="쪽지 보내기"/>
 
 </LinearLayout>

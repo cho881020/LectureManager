@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import kr.co.tjeit.lecturemanager.R;
@@ -21,16 +23,16 @@ import kr.co.tjeit.lecturemanager.data.User;
 
 public class StudentAdapter extends ArrayAdapter<User> {
 
-    Context mConext;
+    Context mContext;
     List<User> mList;
     LayoutInflater inf;
 
     public StudentAdapter(Context context, List<User> list) {
         super(context, R.layout.student_list_item, list);
 
-        mConext = context;
+        mContext = context;
         mList = list;
-        inf = LayoutInflater.from(mConext);
+        inf = LayoutInflater.from(mContext);
     }
 
     @NonNull
@@ -49,8 +51,7 @@ public class StudentAdapter extends ArrayAdapter<User> {
         ImageView profileImg = (ImageView) row.findViewById(R.id.profileImg);
         TextView nameTxt = (TextView) row.findViewById(R.id.nameTxt);
 
-//        TODO - 회원가입 기능 완료후에 이미지 표시 작업 필요
-//        회원가입? 실제로 회원가입. => 서버 통신 필요.
+        Glide.with(mContext).load(data.getProfileURL()).into(profileImg);
 
         nameTxt.setText(data.getName());
 

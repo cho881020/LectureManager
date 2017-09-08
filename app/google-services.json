@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "165813141601",
+    "firebase_url": "https://lecturemanager-ba2c5.firebaseio.com",
+    "project_id": "lecturemanager-ba2c5",
+    "storage_bucket": "lecturemanager-ba2c5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:165813141601:android:4390dc2ac71def43",
+        "android_client_info": {
+          "package_name": "kr.co.tjeit.lecturemanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "165813141601-p2v4cl6t7o8tact7gq4vf46ta318ppj3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHQs8W_Wl-m5UvOf90uSYqjj5Magtm7QE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

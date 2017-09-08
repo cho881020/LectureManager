@@ -31,46 +31,47 @@
         android:text="이름표시"/>
 
     <TextView
-        android:id="@+id/idTxt"
+        android:id="@+id/userIdTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
         android:layout_marginTop="10dp"
-        android:text="ID표시"/>
+        android:text="아이디표시"
+        android:textSize="20sp" />
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/phonNumTxt"
+            android:id="@+id/phoneTxt"
+            android:textSize="18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:layout_marginTop="10dp"
-            android:text="전화번호표시"/>
+            android:text="전화번호 표시"/>
 
         <Button
-            android:id="@+id/callBtn"
             android:layout_width="wrap_content"
-            android:text="전화걸기"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="전화걸기"/>
 
     </LinearLayout>
-
     <Button
-        android:id="@+id/EditProfileBtn"
-        android:layout_width="wrap_content"
-        android:text="프로필수정"
-        android:layout_height="wrap_content" />
-
-
-    <Button
-        android:id="@+id/linkBtn"
+        android:id="@+id/checkMessageBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="페이스북 페이지 방문"/>
+        android:textSize="17sp"
+        android:text="수신된 쪽지 확인"/>
+
+
+    <Button
+        android:id="@+id/editProfileBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:text="프로필 수정"/>
+
 
 </LinearLayout>

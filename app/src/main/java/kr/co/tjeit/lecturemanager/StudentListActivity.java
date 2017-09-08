@@ -90,6 +90,7 @@ public class StudentListActivity extends BaseActivity {
 
     @Override
     public void setValues() {
+
         mAdapter = new StudentAdapter(mContext, GlobalData.allUsers);
         studentListView.setAdapter(mAdapter);
 
@@ -102,10 +103,10 @@ public class StudentListActivity extends BaseActivity {
                 try {
                     JSONArray users = json.getJSONArray("users");
 
-                    for ( int i = 0; i < users.length();i++){
+                    for (int i = 0 ; i < users.length() ; i++) {
                         JSONObject user = users.getJSONObject(i);
 
-                     User tempUser = User.getUserFromJsonObject(user);
+                        User tempUser = User.getUserFromJsonObject(user);
 
                         GlobalData.allUsers.add(tempUser);
 

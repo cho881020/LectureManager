@@ -7,7 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -44,9 +47,11 @@ public class ReplyAdapter extends ArrayAdapter<Reply> {
 
         Reply data = mList.get(position);
 
+        ImageView profileImg = (ImageView) row.findViewById(R.id.profileImg);
         TextView writerNameTxt = (TextView) row.findViewById(R.id.writerNameTxt);
         TextView contentTxt = (TextView) row.findViewById(R.id.contentTxt);
 
+        Glide.with(mContext).load(data.getWriter().getProfileURL()).into(profileImg);
         writerNameTxt.setText(data.getWriter().getName());
         contentTxt.setText(data.getContent());
 
@@ -54,6 +59,5 @@ public class ReplyAdapter extends ArrayAdapter<Reply> {
 
         return row;
     }
-
 
 }
