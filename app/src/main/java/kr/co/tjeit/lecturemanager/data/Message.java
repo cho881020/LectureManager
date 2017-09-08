@@ -1,9 +1,13 @@
 package kr.co.tjeit.lecturemanager.data;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Created by user on 2017-09-08.
@@ -22,7 +26,25 @@ public class Message implements Serializable {
 //        쪽지를 서버에서 받으면 파싱을 전담하는 메쏘드
         Message message = new Message();
 //        파싱작업을 진행 (문제)
+        try {
+            message.setContent(json.getString("content"));
+            message.setWriter(User.getUserFromJsonObject(json.getJSONObject("writer")));
 
+            // 1. 내용물 분석 삽입
+
+
+            // 2. 시간 받아서 바꿔주기
+            String timeStr = json.getString("created_at");
+            message.createdAt = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-'T'hh:mm:ss.SSS'Z'", Locale.KOREAN);
+
+            message.createdAt.setTime(sdf.parse(timeStr));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return message;
 
     }

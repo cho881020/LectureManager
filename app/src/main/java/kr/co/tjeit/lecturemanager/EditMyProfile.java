@@ -30,11 +30,11 @@ public class EditMyProfile extends BaseActivity {
         myInfo = ContextUtil.getLoginUser(mContext);
         bindViews();
         setValues();
-        setUpEvents();
+        setupEvents();
     }
 
     @Override
-    public void setUpEvents() {
+    public void setupEvents() {
         editProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

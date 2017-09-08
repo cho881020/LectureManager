@@ -50,7 +50,7 @@ public class ReplyAdapter extends ArrayAdapter<Reply> {
         Reply data = mList.get(position);
 
         ImageView profileImg = (ImageView) row.findViewById(R.id.profileImg);
-        TextView userNameTxt = (TextView) row.findViewById(R.id.userNameTxt);
+        TextView userNameTxt = (TextView) row.findViewById(R.id.writerNameTxt);
         TextView replyTimeTxt = (TextView) row.findViewById(R.id.replyTimeTxt);
         TextView contentTxt = (TextView) row.findViewById(R.id.contentTxt);
 
