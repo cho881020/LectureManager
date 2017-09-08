@@ -12,31 +12,30 @@
         android:layout_height="50dp"
         android:background="#555555">
 
-        <TextView
-            android:id="@+id/selectDateTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="날짜가 표시됩니다."
-            android:textColor="#FFFFFF"
-            android:textSize="17sp" />
-
         <Button
             android:id="@+id/studentListBtn"
-            android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="학생 목록"/>
+            android:text="학생목록"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:id="@+id/dateTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:text="날짜가 표시됩니다."
+            android:textSize="17sp"
+            android:layout_gravity="center"/>
 
         <Button
-            android:id="@+id/attendBtn"
+            android:id="@+id/checkBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
-            android:text="출석 체크"/>
+            android:text="출석체크"/>
 
     </FrameLayout>
-
 
     <ListView
         android:id="@+id/replyListView"
@@ -45,25 +44,22 @@
         android:layout_weight="1"></ListView>
 
     <LinearLayout
-        android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/replyContentEdt"
+            android:id="@+id/replyEdt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"/>
 
         <Button
-            android:id="@+id/replyBtn"
+            android:id="@+id/registerBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="등록" />
-
+            android:text="등록"/>
 
     </LinearLayout>
-
-
 </LinearLayout>

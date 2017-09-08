@@ -52,7 +52,7 @@ public class AsyncHttpRequest {
         } else {
             AlertDialog.Builder alert = new AlertDialog.Builder(context);
             alert.setTitle("인터넷 연결 실패");
-            alert.setMessage("인터넷에 연결할 수 없습니다. 와이파이 / 데이터 연결 상태를 확인해 주세요.");
+            alert.setMessage("인터넷에 연결 할 수 없습니다. 와이파이 / 데이터를 확인해주세요.");
             alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -109,7 +109,12 @@ public class AsyncHttpRequest {
 //		new AsyncHttpRequestTask(context, async, true, handler).execute();
 //	}
 
-	public static void postWithImageFile(final Context context, final String url , final Map<String, String> params, final Bitmap bitmap, final String fileType, final HttpResponseHandler handler) {
+	public static void postWithImageFile(final Context context,
+										 final String url ,
+										 final Map<String, String> params,
+										 final Bitmap bitmap,
+										 final String fileType,
+										 final HttpResponseHandler handler) {
 		AsyncTaskHandler async = new AsyncTaskHandler() {
 			@Override
 			public String doInBackground() {
@@ -123,14 +128,18 @@ public class AsyncHttpRequest {
 
 				if (bitmap != null)
 				{
+//					Bitmap => 웹에 전송 가능한 byte[] 형태로 변환
 					Bitmap myBitmap = bitmap;
 					ByteArrayOutputStream bao = new ByteArrayOutputStream();
 					myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bao);
 					byte [] ba = bao.toByteArray();
 					ByteArrayInputStream bs = new ByteArrayInputStream(ba);
+
+//					2. 파일 명 지정. my_profile20170907_130511321.jpg
 					SimpleDateFormat sdfNow = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
 					String dateTime = sdfNow.format(new Date(System.currentTimeMillis()));
 
+//					 profile, post
 					String fileName = fileType+"_"+dateTime+".jpg";
 
 					request.part("image", fileName,"image/jpg", bs);

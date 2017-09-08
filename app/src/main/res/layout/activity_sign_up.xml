@@ -76,18 +76,6 @@
             android:inputType="textPassword"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="비밀번호 확인"/>
-
-        <EditText
-            android:id="@+id/pwCheckEdt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="비밀번호 확인"
-            android:inputType="textPassword"/>
-
-        <TextView
             android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -106,7 +94,7 @@
             android:text="핸드폰번호"/>
 
         <EditText
-            android:id="@+id/phoneNumEdt"
+            android:id="@+id/phoneEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="phone"

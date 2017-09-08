@@ -15,23 +15,25 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import kr.co.tjeit.lecturemanager.R;
-import kr.co.tjeit.lecturemanager.data.User;
+import kr.co.tjeit.lecturemanager.data.Reply;
 
 /**
  * Created by user on 2017-08-31.
  */
 
-public class StudentAdapter extends ArrayAdapter<User> {
+public class ReplyAdapter extends ArrayAdapter<Reply> {
 
     Context mContext;
-    List<User> mList;
+    List<Reply> mList;
     LayoutInflater inf;
 
-    public StudentAdapter(Context context, List<User> list) {
-        super(context, R.layout.student_list_item, list);
+    public ReplyAdapter(Context context, List<Reply> list) {
+        super(context, R.layout.reply_list_item, list);
 
         mContext = context;
         mList = list;
+
+//        LayoutInflater 만들때는 LayoutInflater.from => 재료로 컨텍스트
         inf = LayoutInflater.from(mContext);
     }
 
@@ -39,24 +41,23 @@ public class StudentAdapter extends ArrayAdapter<User> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View row = convertView;
-        if (row == null ) {
-            row = inf.inflate(R.layout.student_list_item, null);
+        if (row == null) {
+            row = inf.inflate(R.layout.reply_list_item, null);
         }
 
-        User data = mList.get(position);
+        Reply data = mList.get(position);
 
-//        JAVA의 객체지향 3요소중 다형성.
-//        CircleImageView는 ImageView의 자식.
-//        부모는 자식을 담아둘 수 있음.
         ImageView profileImg = (ImageView) row.findViewById(R.id.profileImg);
-        TextView nameTxt = (TextView) row.findViewById(R.id.nameTxt);
+        TextView writerNameTxt = (TextView) row.findViewById(R.id.writerNameTxt);
+        TextView contentTxt = (TextView) row.findViewById(R.id.contentTxt);
 
-        Glide.with(mContext).load(data.getProfileURL()).into(profileImg);
-
-        nameTxt.setText(data.getName());
+        Glide.with(mContext).load(data.getWriter().getProfileURL()).into(profileImg);
+        writerNameTxt.setText(data.getWriter().getName());
+        contentTxt.setText(data.getContent());
 
 
 
         return row;
     }
+
 }

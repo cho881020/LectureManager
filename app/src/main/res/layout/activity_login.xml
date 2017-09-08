@@ -65,9 +65,10 @@
                 android:text="로그인" />
 
         </LinearLayout>
-
     </LinearLayout>
 
+    <!-- 카카오톡 로그인 -->
+    <!-- 로그인 성공하면 Toast 로그인한 사람 닉네임-->
     <com.facebook.login.widget.LoginButton
         android:id="@+id/fbLoginBtn"
         android:layout_width="wrap_content"
@@ -78,27 +79,29 @@
 
     <com.kakao.usermgmt.LoginButton
         android:id="@+id/com_kakao_login"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"/>
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="15dp"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="아직 회원이 아니신가요?"/>
+            android:text="아직 회원이 아니신가요?" />
+
         <Button
             android:id="@+id/signUpBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="회원가입"/>
+            android:text="회원가입" />
+
 
     </LinearLayout>
 

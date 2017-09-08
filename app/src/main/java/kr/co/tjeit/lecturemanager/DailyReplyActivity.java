@@ -18,44 +18,54 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.co.tjeit.lecturemanager.adapter.DailyReplyAdapter;
+import kr.co.tjeit.lecturemanager.adapter.ReplyAdapter;
 import kr.co.tjeit.lecturemanager.data.Reply;
-import kr.co.tjeit.lecturemanager.data.User;
 import kr.co.tjeit.lecturemanager.util.ContextUtil;
-import kr.co.tjeit.lecturemanager.util.GlobalData;
 import kr.co.tjeit.lecturemanager.util.ServerUtil;
 
 public class DailyReplyActivity extends BaseActivity {
 
-    private android.widget.TextView selectDateTxt;
+    private android.widget.TextView dateTxt;
     private android.widget.ListView replyListView;
 
-    List<Reply> mReplyList = new ArrayList<>();
-    DailyReplyAdapter mAdapter;
     CalendarDay mCalendarDay = null;
-    private android.widget.Button attendBtn;
+
+    ReplyAdapter mAdapter;
+    List<Reply> mReplyList = new ArrayList<>();
+    private android.widget.Button checkBtn;
     private Button studentListBtn;
-    private android.widget.EditText replyContentEdt;
-    private Button replyBtn;
+    private Button registerBtn;
+    private android.widget.EditText replyEdt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_reply);
-        mCalendarDay = getIntent().getParcelableExtra("DayData");
+        mCalendarDay = getIntent().getParcelableExtra("클릭된날짜");
         bindViews();
-        setValues();
         setupEvents();
+        setValues();
     }
 
     @Override
     public void setupEvents() {
-        attendBtn.setOnClickListener(new View.OnClickListener() {
+
+        registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, DailyCheckActivity.class);
-                intent.putExtra("DayData2", mCalendarDay);
-                startActivity(intent);
+                ServerUtil.register_reply(mContext,
+                        ContextUtil.getLoginUser(mContext).getId(),
+                        replyEdt.getText().toString(),
+                        new ServerUtil.JsonResponseHandler() {
+                            @Override
+                            public void onResponse(JSONObject json) {
+//                                댓글 등록후의 동작 구현
+
+                                replyEdt.setText("");
+                                getRepliesFromServer();
+
+                            }
+                        });
             }
         });
 
@@ -67,48 +77,44 @@ public class DailyReplyActivity extends BaseActivity {
             }
         });
 
-        replyBtn.setOnClickListener(new View.OnClickListener() {
+        checkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ServerUtil.register_reply(mContext, ContextUtil.getLoginUser(mContext).getId(), replyContentEdt.getText().toString(), new ServerUtil.JsonResponseHandler() {
-                    @Override
-                    public void onResponse(JSONObject json) {
-                        replyContentEdt.setText("");
-                        getRepliesFromServer();
-                    }
-                });
+                Intent intent = new Intent(mContext, DailyCheckActivity.class);
+                intent.putExtra("출석확인날짜", mCalendarDay);
+                startActivity(intent);
             }
         });
-
-
     }
 
     @Override
     public void setValues() {
 
         SimpleDateFormat myDateFormat = new SimpleDateFormat("yyyy년 M월 d일");
-        selectDateTxt.setText(myDateFormat.format(mCalendarDay.getDate()));
+        dateTxt.setText(myDateFormat.format(mCalendarDay.getDate()));
 
-        mAdapter = new DailyReplyAdapter(mContext, mReplyList);
+        mAdapter = new ReplyAdapter(mContext, mReplyList);
         replyListView.setAdapter(mAdapter);
 
         getRepliesFromServer();
+
     }
 
-    void getRepliesFromServer () {
+    void getRepliesFromServer() {
+
         ServerUtil.get_all_replies(mContext, new ServerUtil.JsonResponseHandler() {
             @Override
             public void onResponse(JSONObject json) {
+//                서버에서 모든 댓글 목록을 받아온 후에 진행할 일.
+
                 try {
                     JSONArray replies = json.getJSONArray("replies");
 
                     mReplyList.clear();
 
-                    for (int i = 0; i < replies.length(); i++) {
+                    for (int i=0 ; i < replies.length() ; i++) {
                         JSONObject replyJson = replies.getJSONObject(i);
-
                         Reply tempReply = Reply.getReplyFromJson(replyJson);
-
                         mReplyList.add(tempReply);
                     }
 
@@ -118,18 +124,19 @@ public class DailyReplyActivity extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
             }
         });
-    }
 
+    }
 
     @Override
     public void bindViews() {
-        this.replyBtn = (Button) findViewById(R.id.replyBtn);
-        this.replyContentEdt = (EditText) findViewById(R.id.replyContentEdt);
+        this.registerBtn = (Button) findViewById(R.id.registerBtn);
+        this.replyEdt = (EditText) findViewById(R.id.replyEdt);
         this.replyListView = (ListView) findViewById(R.id.replyListView);
-        this.attendBtn = (Button) findViewById(R.id.attendBtn);
+        this.checkBtn = (Button) findViewById(R.id.checkBtn);
+        this.dateTxt = (TextView) findViewById(R.id.dateTxt);
         this.studentListBtn = (Button) findViewById(R.id.studentListBtn);
-        this.selectDateTxt = (TextView) findViewById(R.id.selectDateTxt);
     }
 }

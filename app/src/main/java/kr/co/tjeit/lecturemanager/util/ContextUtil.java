@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import kr.co.tjeit.lecturemanager.data.User;
 
 /**
- * Created by the on 2017-08-31.
+ * Created by user on 2017-08-31.
  */
 
 public class ContextUtil {
@@ -15,12 +15,14 @@ public class ContextUtil {
 
     private static final String prefName = "LecturePref";
 
+//    1. 사용자 숫자 ID
+//    2. 사용자 폰번
+
     private static final String ID = "ID";
     private static final String USER_ID = "USER_ID";
     private static final String USER_NAME = "USER_NAME";
-    private static final String USER_PHONE = "USER_PHONE";
     private static final String USER_PROFILE_URL = "USER_PROFILE_URL";
-
+    private static final String USER_PHONE_NUM = "USER_PHONE_NUM";
 
     public static void logout(Context context) {
         SharedPreferences pref = context.getSharedPreferences(prefName, Context.MODE_PRIVATE);
@@ -29,7 +31,7 @@ public class ContextUtil {
         pref.edit().putString(USER_ID, "").commit();
         pref.edit().putString(USER_NAME, "").commit();
         pref.edit().putString(USER_PROFILE_URL, "").commit();
-        pref.edit().putString(USER_PHONE, "").commit();
+        pref.edit().putString(USER_PHONE_NUM, "").commit();
 
     }
 
@@ -40,7 +42,7 @@ public class ContextUtil {
         pref.edit().putString(USER_ID, loginUser.getUserId()).commit();
         pref.edit().putString(USER_NAME, loginUser.getName()).commit();
         pref.edit().putString(USER_PROFILE_URL, loginUser.getProfileURL()).commit();
-        pref.edit().putString(USER_PHONE, loginUser.getPhoneNum()).commit();
+        pref.edit().putString(USER_PHONE_NUM, loginUser.getPhoneNum()).commit();
 
     }
 
@@ -57,12 +59,11 @@ public class ContextUtil {
             loginUser.setUserId(pref.getString(USER_ID, ""));
             loginUser.setName(pref.getString(USER_NAME, ""));
             loginUser.setProfileURL(pref.getString(USER_PROFILE_URL, ""));
-            loginUser.setPhoneNum(pref.getString(USER_PHONE, ""));
+            loginUser.setPhoneNum(pref.getString(USER_PHONE_NUM, ""));
         }
 
 
         return loginUser;
     }
-
 
 }

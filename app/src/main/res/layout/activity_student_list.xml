@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,50 +8,30 @@
     android:orientation="vertical"
     tools:context="kr.co.tjeit.lecturemanager.StudentListActivity">
 
-
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <FrameLayout
+        android:layout_height="wrap_content">
+        <TextView
+            android:background="#555555"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="#555555"
-                android:gravity="center"
-                android:text="수강생 목록"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp" />
-
-            <Button
-                android:id="@+id/myProfileBtn"
-                android:layout_width="80dp"
-                android:layout_height="50dp"
-                android:layout_gravity="right|center_vertical"
-                android:text="내 프로필" />
-
-
-        </FrameLayout>
-
+            android:layout_height="50dp"
+            android:text="수강생 목록"/>
 
         <Button
-            android:layout_marginBottom="5dp"
-            android:id="@+id/logoutBtn"
-            android:layout_width="match_parent"
+            android:id="@+id/myProfileBtn"
+            android:layout_gravity="right|center_vertical"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="로그아웃" />
+            android:text="프로필 조회"/>
 
+    </FrameLayout>
 
-        <ListView
-            android:id="@+id/studentListView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
-
-
-    </LinearLayout>
+    <ListView
+        android:id="@+id/studentListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
 
 </LinearLayout>
