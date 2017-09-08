@@ -62,7 +62,6 @@ public class CheckMessageActivity extends BaseActivity {
 
     @Override
     public void bindViews() {
-
         this.messageListView = (ListView) findViewById(R.id.messageListView);
     }
 }
