@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -88,6 +90,9 @@ public class ServerUtil {
         Map<String, String> data = new HashMap<String, String>();
         data.put("user_id", id);
         data.put("password", password);
+
+        String token = FirebaseInstanceId.getInstance().getToken();
+        data.put("deviceToken",token);
 
 
         AsyncHttpRequest.post(context, url,  data, true, new AsyncHttpRequest.HttpResponseHandler() {
