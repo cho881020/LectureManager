@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.co.tjeit.lecturemanager.adapter.MessageAdapter;
 import kr.co.tjeit.lecturemanager.data.Message;
 import kr.co.tjeit.lecturemanager.util.ServerUtil;
 
@@ -17,6 +18,7 @@ public class CheckMessageActivity extends BaseActivity {
 
     private android.widget.ListView messageListView;
     List<Message> mMessageList = new ArrayList<>();
+    MessageAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,9 @@ public class CheckMessageActivity extends BaseActivity {
 
     @Override
     public void setValues() {
+
+        mAdapter = new MessageAdapter(mContext, mMessageList);
+        messageListView.setAdapter(mAdapter);
 
         ServerUtil.get_mymessage(mContext, new ServerUtil.JsonResponseHandler() {
             @Override
